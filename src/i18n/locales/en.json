@@ -1,0 +1,39 @@
+{
+  "translation": {
+    "erp1": "Quick Access",
+    "erp2": "Masters",
+    "erp3": "Vouchers",
+    "erp4": "Books",
+    "erp5": "Reports",
+
+    "erp6": "Add Voucher",
+    "erp7": "Voucher List",
+    "erp8": "Ledger",
+    "erp9": "Stock Item",
+
+    "erp10": "Accounts",
+    "erp11": "Items",
+    "erp12": "Cost Centers",
+
+    "erp13": "Add Voucher",
+    "erp14": "Vouchers List",
+    "erp15": "Filter",
+    "erp16": "Offline Vouchers",
+
+    "erp17": "Purchase Register",
+    "erp18": "Sales Register",
+    "erp19": "Goods Receipt Book",
+    "erp20": "Goods Delivery Book",
+    "erp21": "Order Book",
+    "erp22": "Order Requirements",
+
+    "erp23": "Ledger",
+    "erp24": "Stock Item",
+    "erp25": "Profit & Loss",
+    "erp26": "Balance Sheet",
+    "erp27": "Trial Balance",
+    "erp28": "Stock Summary",
+    "erp29": "Pending Orders",
+    "erp30": "Bills Pending"
+  }
+}

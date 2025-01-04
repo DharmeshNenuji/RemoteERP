@@ -1,4 +1,4 @@
-import {Dimensions, Platform, StatusBar} from 'react-native'
+import {Dimensions, PixelRatio, Platform, StatusBar} from 'react-native'
 import {isTablet} from 'react-native-device-info'
 
 const {width: WINDOW_WIDTH, height: WINDOW_HEIGHT} = Dimensions.get('window')
@@ -38,7 +38,7 @@ const font = (size: number) => {
 const getStatusBarHeight = () => {
   const statusBarHeight: number = Platform.select({
     ios: isIPhoneX ? 78 : 20,
-    android: (StatusBar.currentHeight ?? 0) > 24 ? 0 : StatusBar.currentHeight ?? 0,
+    android: (StatusBar.currentHeight ?? 0) > 24 ? 0 : (StatusBar.currentHeight ?? 0),
     default: 0
   })
   return statusBarHeight
@@ -66,9 +66,14 @@ const verticalScale = (size: number) => (longDimension / guidelineBaseHeight) * 
 const moderateScale = (size: number, factor = 0.5) => size + (scale(size) - size) * factor
 
 const isTab = isTablet()
-
+const getFontSize = (baseSize: number) => {
+  const scale = screenWidth / 400 // baseline width
+  const newSize = baseSize * scale
+  return Math.round(PixelRatio.roundToNearestPixel(newSize))
+}
 export {
   font,
+  getFontSize,
   getStatusBarHeight,
   heightPx,
   isAndroidNouch,
@@ -80,4 +85,5 @@ export {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
   verticalScale,
-  widthPx}
+  widthPx
+}
