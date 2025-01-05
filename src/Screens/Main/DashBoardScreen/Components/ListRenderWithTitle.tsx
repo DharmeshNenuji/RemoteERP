@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(10),
     flex: 1,
     justifyContent: 'center',
-    marginBottom: verticalScale(8),
-    padding: scale(8)
+    marginBottom: verticalScale(5),
+    padding: scale(5)
   },
   itemContent: {
     alignItems: 'center',
