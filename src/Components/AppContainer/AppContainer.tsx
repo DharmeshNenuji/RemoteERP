@@ -1,5 +1,5 @@
 import React from 'react'
-import type { StyleProp, ViewStyle} from 'react-native'
+import type {StyleProp, ViewStyle} from 'react-native'
 import {SafeAreaView, StatusBar, View} from 'react-native'
 
 import {Colors, CommonStyle} from '@/Theme'

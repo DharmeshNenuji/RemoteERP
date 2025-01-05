@@ -1,5 +1,5 @@
 import type {RouteProp} from '@react-navigation/native'
-import { useRoute as useMyRoute} from '@react-navigation/native'
+import {useRoute as useMyRoute} from '@react-navigation/native'
 
 import type {RootRouteProps} from '@/Types/screen.types'
 

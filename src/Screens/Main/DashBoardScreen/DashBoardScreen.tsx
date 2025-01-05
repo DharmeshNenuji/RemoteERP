@@ -18,7 +18,13 @@ export default () => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {DATA.map(({title, data}, index) => {
           return (
-            <ListRenderWithTitle isNormalView={index === 0} key={title} data={data} title={title} />
+            <ListRenderWithTitle
+              mainIndex={index}
+              isNormalView={index === 0}
+              key={title}
+              data={data}
+              title={title}
+            />
           )
         })}
         <View style={styles.noView} />

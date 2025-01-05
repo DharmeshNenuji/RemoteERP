@@ -1,4 +1,4 @@
 import AppNavigation from './AppNavigation'
-import {navigate,navigationRef} from './RootNavigator'
+import {navigate, navigationRef} from './RootNavigator'
 
-export {AppNavigation, navigate,navigationRef}
+export {AppNavigation, navigate, navigationRef}
