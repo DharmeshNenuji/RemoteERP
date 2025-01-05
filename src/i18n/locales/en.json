@@ -15,8 +15,6 @@
     "erp10": "Accounts",
     "erp11": "Items",
     "erp12": "Cost Centers",
-
-    "erp13": "Add Voucher",
     "erp14": "Vouchers List",
     "erp15": "Filter",
     "erp16": "Offline Vouchers",
@@ -28,12 +26,13 @@
     "erp21": "Order Book",
     "erp22": "Order Requirements",
 
-    "erp24": "Stock Item",
     "erp25": "Profit & Loss",
     "erp26": "Balance Sheet",
     "erp27": "Trial Balance",
     "erp28": "Stock Summary",
     "erp29": "Pending Orders",
-    "erp30": "Bills Pending"
+    "erp30": "Bills Pending",
+    "erp31": "Add Account",
+    "erp32": "Accounts List"
   }
 }

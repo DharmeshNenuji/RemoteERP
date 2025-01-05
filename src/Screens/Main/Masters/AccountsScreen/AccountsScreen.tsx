@@ -1,10 +1,11 @@
 import React from 'react'
 import {useTranslation} from 'react-i18next'
-import {Text} from 'react-native'
 
 import {AppContainer} from '@/Components'
 import AppHeader from '@/Components/AppHeader/AppHeader'
 import {Colors} from '@/Theme'
+
+import AccountsTabView from './Components/AccountsTabView'
 
 export default () => {
   const {t} = useTranslation()
@@ -15,7 +16,7 @@ export default () => {
         textColor={Colors.blackShade14}
         title={t('erp10')}
       />
-      <Text>AccountsScreen</Text>
+      <AccountsTabView />
     </AppContainer>
   )
 }

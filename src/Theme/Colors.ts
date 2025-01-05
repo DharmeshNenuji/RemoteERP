@@ -5,5 +5,6 @@ export default {
   blue: '#3595E8',
   transparent: 'transparent',
   backdrop: 'rgba(0,0,0,0.5)',
-  blackShade14: '#14141E'
+  blackShade14: '#14141E',
+  greyShade14: '##14141E'
 }

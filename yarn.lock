@@ -3364,11 +3364,13 @@ __metadata:
     react-native-device-info: "npm:^14.0.2"
     react-native-gesture-handler: "npm:^2.21.2"
     react-native-mmkv: "npm:^3.2.0"
+    react-native-pager-view: "npm:^6.6.1"
     react-native-reanimated: "npm:^3.16.6"
     react-native-safe-area-context: "npm:^5.0.0"
     react-native-screens: "npm:^4.4.0"
     react-native-splash-screen: "https://github.com/SolankiYogesh/react-native-splash-screen"
     react-native-svg: "npm:^15.10.1"
+    react-native-tab-view: "npm:^4.0.5"
     typescript: "npm:5.0.4"
     typescript-eslint: "npm:^8.19.0"
   languageName: unknown
@@ -9165,6 +9167,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-pager-view@npm:^6.6.1":
+  version: 6.6.1
+  resolution: "react-native-pager-view@npm:6.6.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/31dfc7aea625b749e182073a5416b6cd7501289a38effd0631cfa9f938b51dee7bb2f57d66a31a407f2bb15742b90a9520bfeb59d9881e8fbb0681a73ddcd89f
+  languageName: node
+  linkType: hard
+
 "react-native-reanimated@npm:^3.16.6":
   version: 3.16.6
   resolution: "react-native-reanimated@npm:3.16.6"
@@ -9232,6 +9244,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/f6b9491f321e80b56b50a0d0a4872fbc7adbe04892a7fca953eb1d1e984597f02a95a08560443bab7c074e6767631245d6f737c571d6a6977987311d44d3a717
+  languageName: node
+  linkType: hard
+
+"react-native-tab-view@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "react-native-tab-view@npm:4.0.5"
+  dependencies:
+    use-latest-callback: "npm:^0.2.1"
+  peerDependencies:
+    react: ">= 18.2.0"
+    react-native: "*"
+    react-native-pager-view: ">= 6.0.0"
+  checksum: 10c0/8eade6c916df4aaf5c2729ab245428e3db9128a4477d74ba488cbfefb86ad203ec1416344f579eb48fd765fe92b28f319f45c16e37d7f32f5ad3090749ca5e43
   languageName: node
   linkType: hard
 

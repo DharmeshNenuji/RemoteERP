@@ -10,11 +10,7 @@ export default () => {
   const {t} = useTranslation()
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
-      <AppHeader
-        backgroundColor={Colors.white}
-        textColor={Colors.blackShade14}
-        title={t('erp13')}
-      />
+      <AppHeader backgroundColor={Colors.white} textColor={Colors.blackShade14} title={t('erp6')} />
       <Text>AddVoucherScreen</Text>
     </AppContainer>
   )

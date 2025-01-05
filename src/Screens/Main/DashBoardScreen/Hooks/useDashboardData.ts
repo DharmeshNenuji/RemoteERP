@@ -35,7 +35,7 @@ export default () => {
       {
         title: t('erp3'),
         data: [
-          {title: t('erp13'), svg: SVGByteCode.add_voucher, path: Screen.AddVoucherScreen},
+          {title: t('erp6'), svg: SVGByteCode.add_voucher, path: Screen.AddVoucherScreen},
           {title: t('erp14'), svg: SVGByteCode.calender},
           {title: t('erp15'), svg: SVGByteCode.filter},
           {title: t('erp16'), svg: SVGByteCode.off_voucher}
@@ -56,7 +56,7 @@ export default () => {
         title: t('erp5'),
         data: [
           {title: t('erp8'), svg: SVGByteCode.calculator, path: Screen.LedgerScreen},
-          {title: t('erp24'), svg: SVGByteCode.stock},
+          {title: t('erp9'), svg: SVGByteCode.stock},
           {title: t('erp25'), svg: SVGByteCode.profit, path: Screen.ProfitLossScreen},
           {title: t('erp26'), svg: SVGByteCode.balance},
           {title: t('erp27'), svg: SVGByteCode.trialSheet},
