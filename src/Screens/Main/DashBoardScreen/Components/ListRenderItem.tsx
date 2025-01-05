@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
 import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {useNavigation} from '@/Hooks'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
 import type {DashboardItemType} from '../Hooks/useDashboardData'
@@ -19,12 +20,22 @@ type ListRenderItemProps = {
 } & ItemType<DashboardItemType>
 
 const ListRenderItem = ({isNormalView, item}: ListRenderItemProps) => {
+  const navigation = useNavigation()
+
+  const onPressItem = useCallback(() => {
+    if (item.path) {
+      navigation.navigate(item.path)
+    } else {
+      Alert.alert('Pressed:', item.title)
+    }
+  }, [item, navigation])
+
   return (
     <TouchableOpacity
       style={{
         width: itemWidth
       }}
-      onPress={() => Alert.alert('Pressed:', item.title)}
+      onPress={onPressItem}
     >
       <View style={styles.itemContent}>
         <View

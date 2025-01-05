@@ -1,5 +1,5 @@
 import React from 'react'
-import type {StyleProp, ViewStyle} from 'react-native'
+import type {StatusBarStyle, StyleProp, ViewStyle} from 'react-native'
 import {SafeAreaView, StatusBar, View} from 'react-native'
 
 import {Colors, CommonStyle} from '@/Theme'
@@ -10,6 +10,7 @@ type AppContainerProps = {
   children: React.ReactNode
   statusbarColor?: string
   style?: StyleProp<ViewStyle>
+  barStyle?: StatusBarStyle
 }
 
 const AppContainer = (props: AppContainerProps) => {
@@ -18,7 +19,8 @@ const AppContainer = (props: AppContainerProps) => {
     isBottomSafeArea,
     children,
     statusbarColor = Colors.primary,
-    style = {}
+    style = {},
+    barStyle = 'light-content'
   } = props
   const TopComponent = isTopSafeArea ? SafeAreaView : View
   const BottomComponent = isBottomSafeArea ? SafeAreaView : View
@@ -30,7 +32,7 @@ const AppContainer = (props: AppContainerProps) => {
           backgroundColor: statusbarColor
         }}
       />
-      <StatusBar barStyle={'light-content'} animated backgroundColor={statusbarColor} />
+      <StatusBar barStyle={barStyle} animated backgroundColor={statusbarColor} />
       <View style={[CommonStyle.flex, style]}>{children}</View>
       <BottomComponent />
     </View>

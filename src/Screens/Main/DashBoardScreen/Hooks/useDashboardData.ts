@@ -1,11 +1,13 @@
 import {useMemo} from 'react'
 import {useTranslation} from 'react-i18next'
 
+import {Screen} from '@/Helpers'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 
 export type DashboardItemType = {
   title: string
   svg: string
+  path?: keyof typeof Screen
 }
 
 export default () => {
@@ -18,14 +20,14 @@ export default () => {
         data: [
           {title: t('erp6'), svg: SVGByteCode.add_voucher},
           {title: t('erp7'), svg: SVGByteCode.calender},
-          {title: t('erp8'), svg: SVGByteCode.calculator},
+          {title: t('erp8'), svg: SVGByteCode.calculator, path: Screen.LedgerScreen},
           {title: t('erp9'), svg: SVGByteCode.stock}
         ]
       },
       {
         title: t('erp2'),
         data: [
-          {title: t('erp10'), svg: SVGByteCode.accounts},
+          {title: t('erp10'), svg: SVGByteCode.accounts, path: Screen.AccountsScreen},
           {title: t('erp11'), svg: SVGByteCode.items},
           {title: t('erp12'), svg: SVGByteCode.sites}
         ]
@@ -33,7 +35,7 @@ export default () => {
       {
         title: t('erp3'),
         data: [
-          {title: t('erp13'), svg: SVGByteCode.add_voucher},
+          {title: t('erp13'), svg: SVGByteCode.add_voucher, path: Screen.AddVoucherScreen},
           {title: t('erp14'), svg: SVGByteCode.calender},
           {title: t('erp15'), svg: SVGByteCode.filter},
           {title: t('erp16'), svg: SVGByteCode.off_voucher}
@@ -53,9 +55,9 @@ export default () => {
       {
         title: t('erp5'),
         data: [
-          {title: t('erp23'), svg: SVGByteCode.calculator},
+          {title: t('erp8'), svg: SVGByteCode.calculator, path: Screen.LedgerScreen},
           {title: t('erp24'), svg: SVGByteCode.stock},
-          {title: t('erp25'), svg: SVGByteCode.profit},
+          {title: t('erp25'), svg: SVGByteCode.profit, path: Screen.ProfitLossScreen},
           {title: t('erp26'), svg: SVGByteCode.balance},
           {title: t('erp27'), svg: SVGByteCode.trialSheet},
           {title: t('erp28'), svg: SVGByteCode.summary},

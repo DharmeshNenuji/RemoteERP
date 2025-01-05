@@ -28,15 +28,12 @@
     "erp21": "Order Book",
     "erp22": "Order Requirements",
 
-    "erp23": "Ledger",
     "erp24": "Stock Item",
     "erp25": "Profit & Loss",
     "erp26": "Balance Sheet",
     "erp27": "Trial Balance",
     "erp28": "Stock Summary",
     "erp29": "Pending Orders",
-    "erp30": "Bills Pending",
-
-    "erp31": "Bills Pending"
+    "erp30": "Bills Pending"
   }
 }

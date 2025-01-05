@@ -14,7 +14,7 @@ export default () => {
   const {t} = useTranslation()
   return (
     <AppContainer>
-      <AppHeader title={t('erp')} />
+      <AppHeader title={t('erp')} isBack={false} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {DATA.map(({title, data}, index) => {
           return (
