@@ -4,3 +4,7 @@ type AppLoaderRefType = {
 type RootStackParamList = {
   DashBoardScreen: undefined
 }
+type ItemType<T> = {
+  item: T
+  index: number
+}

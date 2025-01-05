@@ -1,5 +1,6 @@
 {
   "translation": {
+    "erp": "Remote ERP",
     "erp1": "Quick Access",
     "erp2": "Masters",
     "erp3": "Vouchers",
@@ -34,6 +35,8 @@
     "erp27": "Trial Balance",
     "erp28": "Stock Summary",
     "erp29": "Pending Orders",
-    "erp30": "Bills Pending"
+    "erp30": "Bills Pending",
+
+    "erp31": "Bills Pending"
   }
 }

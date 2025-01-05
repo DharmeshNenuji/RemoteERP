@@ -2,8 +2,8 @@ import type {StyleProp, ViewStyle} from 'react-native'
 import {Pressable, StyleSheet, Text, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
-import {scale} from '@/Helpers/Responsive'
-import {Colors} from '@/Theme'
+import {getFontSize, scale} from '@/Helpers/Responsive'
+import {Colors, Fonts} from '@/Theme'
 
 type AppHeader = {
   leftImage?: string
@@ -13,7 +13,7 @@ type AppHeader = {
   rightImage?: string
   rightImageStyle?: StyleProp<ViewStyle>
   onPressRightImage?: () => void
-  backgroundColor: string
+  backgroundColor?: string
 }
 
 export default ({
@@ -31,7 +31,7 @@ export default ({
       <Pressable style={leftImageStyle} onPress={onPressLeftImage}>
         {leftImage && <SvgFromXml xml={leftImage} />}
       </Pressable>
-      <Text>{title}</Text>
+      <Text style={styles.titleStyle}>{title}</Text>
       <Pressable style={rightImageStyle} onPress={onPressRightImage}>
         {rightImage && <SvgFromXml xml={rightImage} />}
       </Pressable>
@@ -44,5 +44,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: scale(10)
+  },
+  titleStyle: {
+    color: Colors.white,
+    fontFamily: Fonts[600],
+    fontSize: getFontSize(22),
+    lineHeight: 26
   }
 })
