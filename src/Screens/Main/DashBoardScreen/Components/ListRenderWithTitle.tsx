@@ -12,15 +12,21 @@ type ListRenderWithTitleProps = {
   data: DashboardItemType[]
   isNormalView?: boolean
   mainIndex: number
+  isShadow?: boolean
 }
 
 const NUMBER_COLUMNS = 4
 const GAP = scale(10)
-const ListRenderWithTitle = ({data, title, isNormalView = false}: ListRenderWithTitleProps) => {
+const ListRenderWithTitle = ({
+  data,
+  title,
+  isNormalView = false,
+  isShadow = true
+}: ListRenderWithTitleProps) => {
   const keyExtractor = useCallback((item: DashboardItemType) => item.title.toString(), [])
 
   return (
-    <View style={[styles.container, !isNormalView && CommonStyle.shadow]}>
+    <View style={[styles.container, !isNormalView && isShadow && CommonStyle.shadow]}>
       <Text style={styles.titleStyle}>{title}</Text>
       <FlatList
         nestedScrollEnabled

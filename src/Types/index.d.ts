@@ -8,6 +8,7 @@ type RootStackParamList = {
   AccountsScreen: undefined
   //  Voucher flow
   AddVoucherScreen: undefined
+  PurchaseScreen: undefined
   // Reports flow
   LedgerScreen: undefined
   ProfitLossScreen: undefined
