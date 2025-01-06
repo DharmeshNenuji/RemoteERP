@@ -52,6 +52,8 @@
     "erp48": "Stock Journal",
     "erp49": "Order Requirement",
     "erp50": "Physical Stock",
-    "erp51": "Purchase Voucher"
+    "erp51": "Purchase Voucher",
+    "erp52": "Login Success",
+    "erp53": "Something went wrong"
   }
 }

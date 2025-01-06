@@ -3,12 +3,10 @@
 
 import axios, {type AxiosRequestConfig} from 'axios'
 
-import Config from '../Config/Config'
-
 type Methodtype = 'post' | 'get' | 'put' | 'delete' | 'patch'
 
 const axiosInstance = axios.create({
-  baseURL: Config.API_URL
+  baseURL: 'https://app.remoteerp.in/api/'
 })
 
 axiosInstance.interceptors.response.use(
@@ -52,7 +50,8 @@ const APICall = async (
   onUploadProgress?: (progressEvent: any) => void
 ) => {
   const config: AxiosRequestConfig<any> = {
-    method
+    method,
+    withCredentials: true
   }
   if (url) {
     config.url = url

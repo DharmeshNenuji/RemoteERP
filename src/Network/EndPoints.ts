@@ -1,1 +1,3 @@
-export default {}
+export default {
+  login: '/?tag=user_login'
+}

@@ -11,6 +11,7 @@
     "clean": "echo '🧹 Cleaning Mobile Workspace...'; rm -rf yarn.lock node_modules /node_modules ios/build ios/Pods ios/Podfile.lock android/.gradle android/build android/app/build android/app/.cxx && echo '✅ Mobile workspace cleaned!'"
   },
   "dependencies": {
+    "@backpackapp-io/react-native-toast": "^0.13.0",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@react-navigation/native": "^7.0.14",
@@ -30,7 +31,8 @@
     "react-native-screens": "^4.4.0",
     "react-native-splash-screen": "https://github.com/SolankiYogesh/react-native-splash-screen",
     "react-native-svg": "^15.10.1",
-    "react-native-tab-view": "^4.0.5"
+    "react-native-tab-view": "^4.0.5",
+    "zustand": "^5.0.2"
   },
   "lint-staged": {
     "packages/*/src/**/*.{js,jsx}": [
