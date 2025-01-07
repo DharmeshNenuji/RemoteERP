@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator()
 
 export default () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="AccountsScreen">
       {/* Main flow */}
       <Stack.Screen name={Screen.DashBoardScreen} component={DashBoardScreen} />
       {/* Master flow */}

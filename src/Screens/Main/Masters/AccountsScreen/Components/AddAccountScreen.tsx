@@ -1,12 +1,25 @@
 import React from 'react'
-import {Text, View} from 'react-native'
+import {useForm} from 'react-hook-form'
+import {StyleSheet, View} from 'react-native'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
-const AddAccountScreen = () => {
+import {AppInput} from '@/Components'
+import {Colors} from '@/Theme'
+
+export default () => {
+  const {control} = useForm()
   return (
-    <View>
-      <Text>AddAccountScreen</Text>
+    <View style={styles.container}>
+      <KeyboardAwareScrollView>
+        <AppInput name="Name" control={control} />
+      </KeyboardAwareScrollView>
     </View>
   )
 }
 
-export default AddAccountScreen
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.themeBackground,
+    flex: 1
+  }
+})

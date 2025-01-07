@@ -54,6 +54,25 @@
     "erp50": "Physical Stock",
     "erp51": "Purchase Voucher",
     "erp52": "Login Success",
-    "erp53": "Something went wrong"
+    "erp53": "Something went wrong",
+    "erp54": "Direct Expenses",
+    "erp55": "Indirect Expenses",
+    "erp56": "Direct Income",
+    "erp57": "Indirect Income",
+    "erp58": "Capital",
+    "erp59": "Loan Taken",
+    "erp60": "Loan Given",
+    "erp61": "Sundry Creditors",
+    "erp62": "Sundry Debtors",
+    "erp63": "Duties & Taxes",
+    "erp64": "Reserves & Surplus",
+    "erp65": "Fixed Assets",
+    "erp66": "Provisions",
+    "erp67": "Fixed Deposits or Investments",
+    "erp68": "Deposits",
+    "erp69": "Cash",
+    "erp70": "Bank",
+    "erp71": "Stock In Hand",
+    "erp72": "Suspense"
   }
 }
