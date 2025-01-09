@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
 import {useController} from 'react-hook-form'
-import type {TextInputProps} from 'react-native'
+import type {StyleProp, TextInputProps, ViewStyle} from 'react-native'
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
@@ -10,23 +10,42 @@ import {Colors, Fonts} from '@/Theme'
 
 export type AppInputProps = {
   name: string
-  leftImage?: string
+
+  rightImage?: string
+  label: string
+  error?: string
   control?: Control<FieldValues>
+  isMultiLine?: boolean
+  parentStyle?: StyleProp<ViewStyle>
 } & TextInputProps
 
-export default ({name, leftImage, control, ...rest}: AppInputProps) => {
+export default ({
+  name,
+  rightImage,
+  control,
+  label,
+  error,
+  isMultiLine = false,
+  parentStyle = {},
+  ...rest
+}: AppInputProps) => {
   const [isFocus, setIsFocus] = useState(false)
   const {field} = useController({
     control,
     name
   })
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleTextStyle}>{name}</Text>
+    <View style={[styles.container, parentStyle]}>
+      <Text style={styles.titleTextStyle}>{label}</Text>
       <View style={styles.inputContainer}>
         <TextInput
           {...rest}
-          style={[styles.inputStyle, isFocus && styles.activeInputStyle]}
+          style={[
+            styles.inputStyle,
+            isFocus && styles.activeInputStyle,
+            isMultiLine && styles.multiLineInputStyle
+          ]}
           onFocus={(event) => {
             if (rest?.onFocus) {
               rest.onFocus(event)
@@ -41,13 +60,16 @@ export default ({name, leftImage, control, ...rest}: AppInputProps) => {
           }}
           value={field.value}
           onChangeText={field.onChange}
+          multiline={isMultiLine}
+          numberOfLines={isMultiLine ? 4 : 1}
         />
-        {leftImage && (
+        {rightImage && (
           <Pressable style={styles.leftImageContainer}>
-            <SvgFromXml xml={leftImage} />
+            <SvgFromXml width={verticalScale(22)} height={verticalScale(22)} xml={rightImage} />
           </Pressable>
         )}
       </View>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   )
 }
@@ -58,6 +80,10 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%'
+  },
+  errorText: {
+    color: Colors.redShadeB00,
+    fontSize: moderateScale(12)
   },
   inputContainer: {
     alignItems: 'center',
@@ -72,13 +98,19 @@ const styles = StyleSheet.create({
   inputStyle: {
     color: Colors.black,
     flex: 1,
-    height: verticalScale(35)
+    height: verticalScale(35),
+
+    textAlignVertical: 'top' // Makes the text start from the top when multiline
   },
   leftImageContainer: {
     alignItems: 'center',
-    height: '100%',
+    height: verticalScale(22),
     justifyContent: 'center',
-    paddingHorizontal: scale(5)
+    paddingHorizontal: scale(5),
+    width: verticalScale(22)
+  },
+  multiLineInputStyle: {
+    maxHeight: verticalScale(100)
   },
   titleTextStyle: {
     color: Colors.blackShade14,

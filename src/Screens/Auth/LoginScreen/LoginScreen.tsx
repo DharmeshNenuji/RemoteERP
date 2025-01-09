@@ -58,11 +58,11 @@ export default () => {
           showToast(t('erp52'))
           NavigateToMain()
         } else {
-          showToast(t('erp53'))
+          showToast(t('erp53'), 'error')
         }
       })
-      .catch(() => {
-        showToast(t('erp53'))
+      .catch((error) => {
+        showToast(error?.message, 'error')
       })
   }, [animate, t])
 

@@ -1808,6 +1808,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gorhom/bottom-sheet@npm:^5.0.6":
+  version: 5.0.6
+  resolution: "@gorhom/bottom-sheet@npm:5.0.6"
+  dependencies:
+    "@gorhom/portal": "npm:1.0.14"
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.16.1"
+    react-native-reanimated: ">=3.16.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: 10c0/99eb540c13d13d3da844cdf598fa6b7db962088b3570d25ef3a77788a1388adf6e9b3f2f90f3bca8503041348e33a052ad0e8bb602796735368c6ca2810959a4
+  languageName: node
+  linkType: hard
+
+"@gorhom/portal@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@gorhom/portal@npm:1.0.14"
+  dependencies:
+    nanoid: "npm:^3.3.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/86f33afc2ac2656a86a6f3fd1e41565419839576ede2c38333434a93a0a2fe4fb6fc18ab3360579427f2a1fc3b4564b933cc5ae1793a7e2825c93860a00b215f
+  languageName: node
+  linkType: hard
+
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -3351,6 +3385,7 @@ __metadata:
     "@eslint/compat": "npm:^1.2.4"
     "@eslint/eslintrc": "npm:^3.2.0"
     "@eslint/js": "npm:^9.17.0"
+    "@gorhom/bottom-sheet": "npm:^5.0.6"
     "@react-native-community/cli": "npm:15.0.1"
     "@react-native-community/cli-platform-android": "npm:15.0.1"
     "@react-native-community/cli-platform-ios": "npm:15.0.1"
@@ -3371,6 +3406,7 @@ __metadata:
     "@typescript-eslint/utils": "npm:^8.19.0"
     axios: "npm:^1.7.9"
     babel-plugin-module-resolver: "npm:^5.0.2"
+    dayjs: "npm:^1.11.13"
     eslint: "npm:^9.17.0"
     eslint-config-airbnb-base: "npm:^15.0.0"
     eslint-config-prettier: "npm:^9.1.0"
@@ -3396,7 +3432,9 @@ __metadata:
     react-i18next: "npm:^15.4.0"
     react-native: "npm:0.76.5"
     react-native-config: "npm:^1.5.3"
+    react-native-date-picker: "npm:^5.0.8"
     react-native-device-info: "npm:^14.0.2"
+    react-native-element-dropdown: "npm:^2.12.2"
     react-native-gesture-handler: "npm:^2.21.2"
     react-native-keyboard-controller: "npm:^1.15.2"
     react-native-mmkv: "npm:^3.2.0"
@@ -4684,7 +4722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.8.15":
+"dayjs@npm:^1.11.13, dayjs@npm:^1.8.15":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: 10c0/a3caf6ac8363c7dade9d1ee797848ddcf25c1ace68d9fe8678ecf8ba0675825430de5d793672ec87b24a69bf04a1544b176547b2539982275d5542a7955f35b7
@@ -8332,7 +8370,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:3.3.8":
+"nanoid@npm:3.3.8, nanoid@npm:^3.3.1":
   version: 3.3.8
   resolution: "nanoid@npm:3.3.8"
   bin:
@@ -9226,12 +9264,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-date-picker@npm:^5.0.8":
+  version: 5.0.8
+  resolution: "react-native-date-picker@npm:5.0.8"
+  peerDependencies:
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
+  checksum: 10c0/e8641b8c1b1a426de1040ce33faeacea5ed22b7d956a4339527014a526e8ee7aba280e39e8c70d5bcc397fc8bb4a9fb58dd06d8e91114b896b62e9cf73520e15
+  languageName: node
+  linkType: hard
+
 "react-native-device-info@npm:^14.0.2":
   version: 14.0.2
   resolution: "react-native-device-info@npm:14.0.2"
   peerDependencies:
     react-native: "*"
   checksum: 10c0/ac1704cfccd563714ebe7f3abf076af2d26caca6a5bd4789edb1ea67b1d7ce2036924663a7a185d4f99b1730de96b7e69e36b363828b19159081109a8dc588c8
+  languageName: node
+  linkType: hard
+
+"react-native-element-dropdown@npm:^2.12.2":
+  version: 2.12.2
+  resolution: "react-native-element-dropdown@npm:2.12.2"
+  dependencies:
+    lodash: "npm:^4.17.21"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/af3ab395e3e11020ba9169743401ee3db39b6dcce3046d7f8d0b9195139460308d9159dfbc678b15816f5402b30e8321f5aced04a669fbcefb33986f80f002aa
   languageName: node
   linkType: hard
 
