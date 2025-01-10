@@ -1,9 +1,10 @@
-import React, {useMemo, useState} from 'react'
+import React, {useCallback, useMemo, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {StyleSheet, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
 import {AppButton, AppInput} from '@/Components'
+import {showToast} from '@/Helpers'
 import {verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors} from '@/Theme'
@@ -20,17 +21,26 @@ export default () => {
     handleSubmit,
     formState: {errors}
   } = useForm()
-  const {FIELDS} = useAddAccountData()
+  const FIELDS = useAddAccountData()
   const [selectedType, setSelectedType] = useState<string>('')
   const Fields = useMemo(
     () => FIELDS[selectedType as keyof typeof FIELDS]?.data ?? FIELDS['purchase'].data,
     [FIELDS, selectedType]
   )
+
   const validations = useAccountValidations()
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log(data)
   }
+
+  const onPressValidate = useCallback(() => {
+    if (!selectedType) {
+      showToast('Please select account group', 'error')
+      return
+    }
+    handleSubmit(onSubmit)
+  }, [handleSubmit, selectedType])
 
   return (
     <View style={styles.container}>
@@ -124,17 +134,33 @@ export default () => {
               control={control}
               name={field}
               rules={rules}
-              render={({field: {onChange, onBlur, value}}) => (
-                <AppInput
-                  name={field}
-                  control={control}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  error={errors[field]?.message as string}
-                  {...props}
-                />
-              )}
+              render={({field: {onChange, onBlur, value}}) =>
+                field === 'tax_type' ? (
+                  <FormDropDown
+                    value={value}
+                    control={control}
+                    name="tax_type"
+                    options={validations.tax_type.options}
+                    // @ts-ignore
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    valueField="value"
+                    labelField="title"
+                    data={validations?.tax_type?.options ?? []}
+                    {...validations.tax_type}
+                  />
+                ) : (
+                  <AppInput
+                    name={field}
+                    control={control}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    error={errors[field]?.message as string}
+                    {...props}
+                  />
+                )
+              }
             />
           )
         })}
@@ -155,7 +181,7 @@ export default () => {
             />
           )}
         />
-        <AppButton title="Save" onPress={handleSubmit(onSubmit)} />
+        <AppButton title="Save" onPress={onPressValidate} />
       </KeyboardAwareScrollView>
     </View>
   )

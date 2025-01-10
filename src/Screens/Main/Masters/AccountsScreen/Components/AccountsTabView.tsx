@@ -12,7 +12,7 @@ const renderScene = SceneMap({
   accountList: AccountListScreen
 })
 
-const AccountsTabView = () => {
+export default () => {
   const {t} = useTranslation()
   const {width} = useWindowDimensions()
   const [index, setIndex] = useState(0)
@@ -42,5 +42,3 @@ const AccountsTabView = () => {
     />
   )
 }
-
-export default AccountsTabView

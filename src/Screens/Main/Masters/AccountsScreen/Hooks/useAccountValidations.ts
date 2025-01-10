@@ -14,6 +14,41 @@ const BalanceTypeData = [
   }
 ]
 
+const TaxTypeData = [
+  {
+    title: 'State Tax',
+    value: 'cr'
+  },
+  {
+    title: 'Central Tax',
+    value: 'dr'
+  },
+  {
+    title: 'Integrated Tax',
+    value: 'dr'
+  },
+  {
+    title: 'TDS Payable',
+    value: 'dr'
+  },
+  {
+    title: 'TDS Receivable',
+    value: 'dr'
+  },
+  {
+    title: 'TCS Payable',
+    value: 'dr'
+  },
+  {
+    title: 'TCS Receivable',
+    value: 'dr'
+  },
+  {
+    title: 'Other Deductions',
+    value: 'dr'
+  }
+]
+
 export type BalanceType = typeof BalanceTypeData
 
 export default () => {
@@ -64,6 +99,13 @@ export default () => {
           required: t('erp75')
         },
         options: BalanceTypeData
+      },
+      tax_type: {
+        label: t('erp106'),
+        rules: {
+          required: t('erp75')
+        },
+        options: TaxTypeData
       },
       gstn: {
         label: t('erp89'),

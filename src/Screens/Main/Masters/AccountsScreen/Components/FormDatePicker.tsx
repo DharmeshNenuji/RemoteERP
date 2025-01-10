@@ -3,9 +3,9 @@ import React, {useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
 import {useController} from 'react-hook-form'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import DatePicker from 'react-native-date-picker'
 import {SvgFromXml} from 'react-native-svg'
 
+import {AppDatePicker} from '@/Components'
 import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, Fonts} from '@/Theme'
@@ -40,16 +40,13 @@ export default ({control, name, error, label, ...rest}: FormDatePickerProps) => 
         </View>
       </View>
       {error && <Text style={styles.errorText}>{error}</Text>}
-      <DatePicker
-        modal
-        mode="date"
-        open={open}
-        date={new Date(field.value)}
-        onConfirm={(date) => {
-          field.onChange(date.toISOString())
-        }}
-        onCancel={() => setOpen(false)}
-      />
+      {open && (
+        <AppDatePicker
+          date={field.value}
+          onChange={field.onChange}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </TouchableOpacity>
   )
 }

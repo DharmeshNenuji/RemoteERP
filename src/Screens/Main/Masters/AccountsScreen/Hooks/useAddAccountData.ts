@@ -96,10 +96,5 @@ export default () => {
     [t]
   )
 
-  return useMemo(
-    () => ({
-      FIELDS
-    }),
-    [FIELDS]
-  )
+  return useMemo(() => FIELDS, [FIELDS])
 }

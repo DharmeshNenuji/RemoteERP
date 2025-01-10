@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     color: Colors.black,
     flex: 1,
     height: verticalScale(35),
-
     textAlignVertical: 'top' // Makes the text start from the top when multiline
   },
   leftImageContainer: {
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
     width: verticalScale(22)
   },
   multiLineInputStyle: {
+    height: verticalScale(100),
     maxHeight: verticalScale(100)
   },
   titleTextStyle: {

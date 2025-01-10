@@ -15,7 +15,7 @@ type AccountDropDownProps = {
   onChange: (value: string) => void
 }
 export default memo(({onChange, value}: AccountDropDownProps) => {
-  const {FIELDS} = useAddAccountData()
+  const FIELDS = useAddAccountData()
   const {t} = useTranslation()
   const data = useMemo(
     () =>

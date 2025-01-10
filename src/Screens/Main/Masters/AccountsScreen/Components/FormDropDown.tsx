@@ -1,6 +1,5 @@
 import type {Control, FieldValues} from 'react-hook-form'
 import {useController} from 'react-hook-form'
-import {useTranslation} from 'react-i18next'
 import {StyleSheet, Text, View} from 'react-native'
 import type {DropdownProps} from 'react-native-element-dropdown/lib/typescript/components/Dropdown/model'
 
@@ -11,22 +10,22 @@ import {Colors, Fonts} from '@/Theme'
 type FormDropDownProps = {
   name: string
   control: Control<FieldValues>
+  label?: string
 } & DropdownProps<any>
 
-export default ({control, name, style, ...rest}: FormDropDownProps) => {
+export default ({control, name, style, label, ...rest}: FormDropDownProps) => {
   const {field} = useController({
     control,
     name
   })
-  const {t} = useTranslation()
 
   return (
     <View style={style}>
-      <Text style={styles.titleTextStyle}>{t('erp88')}</Text>
+      <Text style={styles.titleTextStyle}>{label}</Text>
       <AppDropDown
         {...rest}
         value={field.value}
-        onChange={field.onChange}
+        onChange={({value}) => field.onChange(value)}
         valueField={'value'}
         labelField={'title'}
       />
