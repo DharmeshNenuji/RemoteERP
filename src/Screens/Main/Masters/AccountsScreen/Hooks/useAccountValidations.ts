@@ -201,6 +201,11 @@ export default () => {
         rules: {
           required: t('erp85')
         }
+      },
+      stock_balances: {
+        label: t('erp107'),
+        keyboardType: 'default',
+        rules: {}
       }
     }
     return Validations

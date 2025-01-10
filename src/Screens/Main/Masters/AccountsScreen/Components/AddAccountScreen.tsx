@@ -1,19 +1,22 @@
 import React, {useCallback, useMemo, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
-import {StyleSheet, View} from 'react-native'
+import {useTranslation} from 'react-i18next'
+import {StyleSheet, Text, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
-import {AppButton, AppInput} from '@/Components'
+import {AppButton, AppControllerInput} from '@/Components'
 import {showToast} from '@/Helpers'
-import {verticalScale} from '@/Helpers/Responsive'
+import {getFontSize, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
-import {Colors} from '@/Theme'
+import {Colors, Fonts} from '@/Theme'
 
 import useAccountValidations from '../Hooks/useAccountValidations'
 import useAddAccountData from '../Hooks/useAddAccountData'
 import AccountDropDown from './AccountDropDown'
 import FormDatePicker from './FormDatePicker'
 import FormDropDown from './FormDropDown'
+import type {StockBalancesType} from './StockBalanceComponent'
+import StockBalanceComponent from './StockBalanceComponent'
 
 export default () => {
   const {
@@ -22,7 +25,12 @@ export default () => {
     formState: {errors}
   } = useForm()
   const FIELDS = useAddAccountData()
-  const [selectedType, setSelectedType] = useState<string>('')
+  const [selectedType, setSelectedType] = useState<string>('stock_balances')
+  const isStockBalance = useMemo(() => selectedType === 'stock_balances', [selectedType])
+  const [stockBalances, setStockBalances] = useState<StockBalancesType[]>([
+    {closing_date: new Date().toISOString(), value: ''}
+  ])
+  const {t} = useTranslation()
   const Fields = useMemo(
     () => FIELDS[selectedType as keyof typeof FIELDS]?.data ?? FIELDS['purchase'].data,
     [FIELDS, selectedType]
@@ -30,8 +38,8 @@ export default () => {
 
   const validations = useAccountValidations()
 
-  const onSubmit = (data: any) => {
-    console.log(data)
+  const onSubmit = () => {
+    // console.log(data)
   }
 
   const onPressValidate = useCallback(() => {
@@ -42,6 +50,27 @@ export default () => {
     handleSubmit(onSubmit)
   }, [handleSubmit, selectedType])
 
+  const onChangeStockBalance = useCallback((value: StockBalancesType, index: number) => {
+    setStockBalances((state) => {
+      const clone = [...state]
+      clone[index] = value
+      return clone
+    })
+  }, [])
+
+  const onPressAddRemoveStockBalance = useCallback((isAdd: boolean, index: number) => {
+    setStockBalances((state) => {
+      const clone = [...state]
+      if (isAdd) {
+        clone.push({closing_date: new Date().toISOString(), value: ''})
+      } else {
+        clone.splice(index, 1)
+      }
+
+      return clone
+    })
+  }, [])
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView contentContainerStyle={styles.contentStyle}>
@@ -50,7 +79,7 @@ export default () => {
           name={'name'}
           rules={validations['name'].rules}
           render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
+            <AppControllerInput
               name="name"
               control={control}
               onBlur={onBlur}
@@ -63,45 +92,49 @@ export default () => {
         />
 
         <AccountDropDown value={selectedType} onChange={setSelectedType} />
-        <Controller
-          control={control}
-          name={'opening_date'}
-          rules={validations['opening_date'].rules}
-          render={({field: {onChange, onBlur, value}}) => {
-            return (
-              <FormDatePicker
-                rightImage={SVGByteCode.calender2}
-                name="opening_date"
-                control={control}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                error={errors['opening_date']?.message as string}
-                {...validations.opening_date}
-              />
-            )
-          }}
-        />
-        <View style={styles.row}>
+        {!isStockBalance && (
           <Controller
             control={control}
-            name={'opening_bal'}
-            rules={validations['opening_bal'].rules}
+            name={'opening_date'}
+            rules={validations['opening_date'].rules}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <AppInput
-                  name="opening_bal"
+                <FormDatePicker
+                  rightImage={SVGByteCode.calender2}
+                  name="opening_date"
                   control={control}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  error={errors['opening_bal']?.message as string}
-                  {...validations.opening_bal}
-                  parentStyle={styles.inputHalf} // Apply style for half width
+                  error={errors['opening_date']?.message as string}
+                  {...validations.opening_date}
                 />
               )
             }}
           />
+        )}
+        <View style={[styles.row, isStockBalance && styles.end]}>
+          {!isStockBalance && (
+            <Controller
+              control={control}
+              name={'opening_bal'}
+              rules={validations['opening_bal'].rules}
+              render={({field: {onChange, onBlur, value}}) => {
+                return (
+                  <AppControllerInput
+                    name="opening_bal"
+                    control={control}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    error={errors['opening_bal']?.message as string}
+                    {...validations.opening_bal}
+                    parentStyle={styles.inputHalf} // Apply style for half width
+                  />
+                )
+              }}
+            />
+          )}
           <Controller
             control={control}
             name={'opening_bal_type'}
@@ -150,7 +183,7 @@ export default () => {
                     {...validations.tax_type}
                   />
                 ) : (
-                  <AppInput
+                  <AppControllerInput
                     name={field}
                     control={control}
                     onBlur={onBlur}
@@ -164,12 +197,21 @@ export default () => {
             />
           )
         })}
+        <Text style={styles.titleTextStyle}>{t('erp107')}</Text>
+        {stockBalances.map((i, index) => (
+          <StockBalanceComponent
+            value={i}
+            onPressAddRemove={(state) => onPressAddRemoveStockBalance(state, index)}
+            key={`${index.toString()}`}
+            onChange={(state) => onChangeStockBalance(state, index)}
+          />
+        ))}
         <Controller
           control={control}
           name={'description'}
           rules={validations['description'].rules}
           render={({field: {onChange, onBlur, value}}) => (
-            <AppInput
+            <AppControllerInput
               name="description"
               isMultiLine
               control={control}
@@ -196,6 +238,9 @@ const styles = StyleSheet.create({
     padding: 20,
     rowGap: verticalScale(15)
   },
+  end: {
+    justifyContent: 'flex-end'
+  },
   inputHalf: {
     width: '48%'
   },
@@ -204,5 +249,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: verticalScale(15)
+  },
+  titleTextStyle: {
+    color: Colors.blackShade14,
+    fontFamily: Fonts[400],
+    fontSize: getFontSize(14),
+    lineHeight: 16,
+    opacity: 0.75
   }
 })

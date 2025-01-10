@@ -107,6 +107,9 @@
     "erp103": "Account Group",
     "erp104": "Select Account Group",
     "erp105": "Search...",
-    "erp106": "Tex Type"
+    "erp106": "Tex Type",
+    "erp107": "Stock Balances",
+    "erp108": "Closing Date",
+    "erp109": "Value"
   }
 }

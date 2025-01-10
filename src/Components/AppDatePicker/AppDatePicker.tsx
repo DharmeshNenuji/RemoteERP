@@ -14,7 +14,12 @@ type AppDatePickerProps = {
 export default memo(({date, onChange, onClose}: AppDatePickerProps) => {
   const [isVisible, setIsVisible] = useState(true)
   return (
-    <Modal isVisible={isVisible} onModalHide={onClose}>
+    <Modal
+      onBackButtonPress={() => setIsVisible(false)}
+      onBackdropPress={() => setIsVisible(false)}
+      isVisible={isVisible}
+      onModalHide={onClose}
+    >
       <View style={styles.container}>
         <DateTimePicker
           mode="single"

@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
-import {useController} from 'react-hook-form'
 import type {StyleProp, TextInputProps, ViewStyle} from 'react-native'
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
@@ -9,8 +8,6 @@ import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Respon
 import {Colors, Fonts} from '@/Theme'
 
 export type AppInputProps = {
-  name: string
-
   rightImage?: string
   label: string
   error?: string
@@ -20,7 +17,6 @@ export type AppInputProps = {
 } & TextInputProps
 
 export default ({
-  name,
   rightImage,
   control,
   label,
@@ -30,10 +26,6 @@ export default ({
   ...rest
 }: AppInputProps) => {
   const [isFocus, setIsFocus] = useState(false)
-  const {field} = useController({
-    control,
-    name
-  })
 
   return (
     <View style={[styles.container, parentStyle]}>
@@ -58,8 +50,6 @@ export default ({
             }
             setIsFocus(false)
           }}
-          value={field.value}
-          onChangeText={field.onChange}
           multiline={isMultiLine}
           numberOfLines={isMultiLine ? 4 : 1}
         />
@@ -88,7 +78,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     alignItems: 'center',
     borderColor: Colors.themeBorder,
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(5),
     borderWidth: 1,
     flexDirection: 'row',
     overflow: 'hidden',
