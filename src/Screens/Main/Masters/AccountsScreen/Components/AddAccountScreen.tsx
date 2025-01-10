@@ -25,7 +25,7 @@ export default () => {
     formState: {errors}
   } = useForm()
   const FIELDS = useAddAccountData()
-  const [selectedType, setSelectedType] = useState<string>('stock_balances')
+  const [selectedType, setSelectedType] = useState<string>('')
   const isStockBalance = useMemo(() => selectedType === 'stock_balances', [selectedType])
   const [stockBalances, setStockBalances] = useState<StockBalancesType[]>([
     {closing_date: new Date().toISOString(), value: ''}
@@ -198,14 +198,15 @@ export default () => {
           )
         })}
         <Text style={styles.titleTextStyle}>{t('erp107')}</Text>
-        {stockBalances.map((i, index) => (
-          <StockBalanceComponent
-            value={i}
-            onPressAddRemove={(state) => onPressAddRemoveStockBalance(state, index)}
-            key={`${index.toString()}`}
-            onChange={(state) => onChangeStockBalance(state, index)}
-          />
-        ))}
+        {isStockBalance &&
+          stockBalances.map((i, index) => (
+            <StockBalanceComponent
+              value={i}
+              onPressAddRemove={(state) => onPressAddRemoveStockBalance(state, index)}
+              key={`${index.toString()}`}
+              onChange={(state) => onChangeStockBalance(state, index)}
+            />
+          ))}
         <Controller
           control={control}
           name={'description'}
