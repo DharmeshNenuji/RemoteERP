@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {memo, useMemo} from 'react'
 import {FlatList, StyleSheet, View} from 'react-native'
 
 import {verticalScale} from '@/Helpers/Responsive'
@@ -6,10 +6,10 @@ import storage from '@/Store/storage'
 import {CommonStyle} from '@/Theme'
 
 import {useAddAccount} from '../Provider/AddAccountProvider'
-import type {UserAccountType} from './Components/RenderUserItem'
-import RenderUserItem from './Components/RenderUserItem'
+import type {UserAccountType} from './Components/RenderAccountItem'
+import RenderAccountItem from './Components/RenderAccountItem'
 
-export default () => {
+export default memo(() => {
   const {search} = useAddAccount()
   const userList = useMemo(() => {
     try {
@@ -39,11 +39,11 @@ export default () => {
         data={filteredData}
         contentContainerStyle={styles.container}
         keyExtractor={(item) => item.acc_id.toString()}
-        renderItem={({item, index}) => <RenderUserItem index={index} item={item} />}
+        renderItem={({item, index}) => <RenderAccountItem index={index} item={item} />}
       />
     </View>
   )
-}
+})
 const styles = StyleSheet.create({
   container: {
     marginTop: verticalScale(10)

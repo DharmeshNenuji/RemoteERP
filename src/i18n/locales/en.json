@@ -111,6 +111,8 @@
     "erp107": "Stock Balances",
     "erp108": "Closing Date",
     "erp109": "Value",
-    "erp110": "Search"
+    "erp110": "Search",
+    "erp111": "Edit",
+    "erp112": "Delete"
   }
 }

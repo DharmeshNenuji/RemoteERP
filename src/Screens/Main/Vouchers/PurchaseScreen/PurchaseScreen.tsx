@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {useTranslation} from 'react-i18next'
 import {Text} from 'react-native'
 
@@ -6,7 +6,7 @@ import {AppContainer} from '@/Components'
 import AppHeader from '@/Components/AppHeader/AppHeader'
 import {Colors} from '@/Theme'
 
-export default () => {
+export default memo(() => {
   const {t} = useTranslation()
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
@@ -18,4 +18,4 @@ export default () => {
       <Text>PurchaseScreen</Text>
     </AppContainer>
   )
-}
+})

@@ -51,5 +51,7 @@ export default {
   search: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M10.542 19.25a8.708 8.708 0 1 0 0-17.416 8.708 8.708 0 0 0 0 17.416m9.625.917-1.834-1.834" stroke="#14141E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
-`
+`,
+  pencil: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m11.243 4.81-6.567 6.566c-.25.25-.5.742-.55 1.1l-.358 2.508c-.134.909.508 1.542 1.416 1.417l2.509-.358c.35-.05.841-.3 1.1-.55l6.566-6.567c1.133-1.133 1.667-2.45 0-4.117-1.666-1.666-2.983-1.133-4.116 0" stroke="#12B936" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M10.3 5.751a5.95 5.95 0 0 0 4.117 4.117" stroke="#12B936" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  delete: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 6.591a68 68 0 0 0-6.775-.34c-1.34 0-2.68.072-4.01.206l-1.382.134m3.722-.681.144-.886c.103-.64.186-1.124 1.33-1.124h1.774c1.144 0 1.227.505 1.33 1.124l.144.876m2.269.774-.444 6.805c-.072 1.062-.134 1.887-2.02 1.887H7.74c-1.886 0-1.948-.825-2.02-1.887l-.444-6.805" stroke="#FF465C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 }

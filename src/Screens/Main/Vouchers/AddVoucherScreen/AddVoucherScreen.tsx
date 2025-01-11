@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {useTranslation} from 'react-i18next'
 import {ScrollView, StyleSheet, View} from 'react-native'
 
@@ -10,7 +10,7 @@ import {Colors, CommonStyle} from '@/Theme'
 import ListRenderWithTitle from '../../DashBoardScreen/Components/ListRenderWithTitle'
 import useAddVoucherData from './Hooks/useAddVoucherData'
 
-export default () => {
+export default memo(() => {
   const {t} = useTranslation()
   const DATA = useAddVoucherData()
   return (
@@ -33,7 +33,7 @@ export default () => {
       </ScrollView>
     </AppContainer>
   )
-}
+})
 const styles = StyleSheet.create({
   container: {
     flex: 1,

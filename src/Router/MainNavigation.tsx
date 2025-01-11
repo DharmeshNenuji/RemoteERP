@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import React from 'react'
+import React, {memo} from 'react'
 
 import {Screen} from '@/Helpers'
 import {
@@ -13,9 +13,9 @@ import {
 
 const Stack = createNativeStackNavigator()
 
-export default () => {
+export default memo(() => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="AccountsScreen">
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       {/* Main flow */}
       <Stack.Screen name={Screen.DashBoardScreen} component={DashBoardScreen} />
       {/* Master flow */}
@@ -29,4 +29,4 @@ export default () => {
       <Stack.Screen name={Screen.ProfitLossScreen} component={ProfitLossScreen} />
     </Stack.Navigator>
   )
-}
+})

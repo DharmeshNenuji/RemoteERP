@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import React from 'react'
+import React, {memo} from 'react'
 
 import {Screen} from '@/Helpers'
 import {useUserStore} from '@/Store'
@@ -9,7 +9,7 @@ import MainNavigation from './MainNavigation'
 
 const Stack = createNativeStackNavigator()
 
-export default () => {
+export default memo(() => {
   const isLogin = useUserStore((state) => state.userData)
   return (
     <Stack.Navigator
@@ -20,4 +20,4 @@ export default () => {
       <Stack.Screen name={Screen.Main} component={MainNavigation} />
     </Stack.Navigator>
   )
-}
+})

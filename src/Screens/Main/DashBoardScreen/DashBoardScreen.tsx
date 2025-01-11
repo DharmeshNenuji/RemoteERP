@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {useTranslation} from 'react-i18next'
 import {ScrollView, StyleSheet, View} from 'react-native'
 
@@ -9,7 +9,7 @@ import {scale, verticalScale} from '@/Helpers/Responsive'
 import ListRenderWithTitle from './Components/ListRenderWithTitle'
 import useDashboardData from './Hooks/useDashboardData'
 
-export default () => {
+export default memo(() => {
   const DATA = useDashboardData()
   const {t} = useTranslation()
   return (
@@ -31,7 +31,7 @@ export default () => {
       </ScrollView>
     </AppContainer>
   )
-}
+})
 const styles = StyleSheet.create({
   container: {
     flex: 1,
