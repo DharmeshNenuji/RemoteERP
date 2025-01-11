@@ -24,7 +24,7 @@ const ListRenderItem = ({isNormalView, item}: ListRenderItemProps) => {
 
   const onPressItem = useCallback(() => {
     if (item.path) {
-      navigation.navigate(item.path)
+      navigation.navigate(item.path as any)
     } else {
       Alert.alert('Pressed:', item.title)
     }
@@ -42,7 +42,9 @@ const ListRenderItem = ({isNormalView, item}: ListRenderItemProps) => {
           style={[
             styles.iconContainer,
             {
-              backgroundColor: isNormalView ? Colors.white : Colors.transparent
+              backgroundColor: isNormalView ? Colors.white : Colors.transparent,
+              width: isNormalView ? itemWidth / 1.5 : itemWidth / 2,
+              height: isNormalView ? itemWidth / 1.5 : itemWidth / 2
             },
             isNormalView && CommonStyle.shadow
           ]}
@@ -63,16 +65,13 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     borderRadius: moderateScale(10),
-    flex: 1,
     justifyContent: 'center',
-    marginBottom: verticalScale(5),
-    padding: scale(5)
+    marginVertical: verticalScale(5)
   },
   itemContent: {
     alignItems: 'center',
     borderRadius: moderateScale(12),
-    flex: 1,
-    justifyContent: 'space-between'
+    flex: 1
   },
 
   itemName: {

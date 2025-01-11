@@ -8,10 +8,9 @@ import type {DashboardItemType} from '../Hooks/useDashboardData'
 import ListRenderItem from './ListRenderItem'
 
 type ListRenderWithTitleProps = {
-  title: string
+  title?: string
   data: DashboardItemType[]
   isNormalView?: boolean
-  mainIndex: number
   isShadow?: boolean
 }
 
@@ -27,7 +26,7 @@ const ListRenderWithTitle = ({
 
   return (
     <View style={[styles.container, !isNormalView && isShadow && CommonStyle.shadow]}>
-      <Text style={styles.titleStyle}>{title}</Text>
+      {title && <Text style={styles.titleStyle}>{title}</Text>}
       <FlatList
         nestedScrollEnabled
         numColumns={NUMBER_COLUMNS}
