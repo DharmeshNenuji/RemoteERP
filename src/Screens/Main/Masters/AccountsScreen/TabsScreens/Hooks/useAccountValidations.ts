@@ -67,19 +67,22 @@ export default () => {
         label: t('erp99'),
         rules: {
           required: t('erp101')
-        }
+        },
+        returnKeyType: 'next'
       },
       description: {
         label: t('erp100'),
         rules: {
           required: t('erp102')
-        }
+        },
+        returnKeyType: 'done'
       },
       opening_date: {
         label: t('erp86'),
         rules: {
           required: t('erp73')
-        }
+        },
+        returnKeyType: 'next'
       },
       opening_bal: {
         label: t('erp87'),
@@ -91,21 +94,24 @@ export default () => {
             value: /^[0-9]*$/, // Regex for numbers only
             message: 'Please enter a valid balance'
           }
-        }
+        },
+        returnKeyType: 'next'
       },
       opening_bal_type: {
         label: t('erp88'),
         rules: {
           required: t('erp75')
         },
-        options: BalanceTypeData
+        options: BalanceTypeData,
+        returnKeyType: 'next'
       },
       tax_type: {
         label: t('erp106'),
         rules: {
           required: t('erp75')
         },
-        options: TaxTypeData
+        options: TaxTypeData,
+        returnKeyType: 'next'
       },
       gstn: {
         label: t('erp89'),
@@ -116,7 +122,8 @@ export default () => {
             value: /^[0-9]*$/, // Regex for numbers only
             message: 'Please enter a valid balance'
           }
-        }
+        },
+        returnKeyType: 'next'
       },
       stax: {
         label: t('erp90'),
@@ -127,7 +134,8 @@ export default () => {
             value: /^[0-9]*$/, // Regex for numbers only
             message: 'Please enter a valid balance'
           }
-        }
+        },
+        returnKeyType: 'next'
       },
       ctax: {
         label: t('erp91'),
@@ -157,7 +165,8 @@ export default () => {
         autoCapitalize: 'characters',
         rules: {
           required: t('erp80')
-        }
+        },
+        returnKeyType: 'next'
       },
       contact_no: {
         label: t('erp94'),
@@ -168,14 +177,16 @@ export default () => {
             value: /^[0-9]*$/, // Regex for numbers only
             message: 'Please enter a valid balance'
           }
-        }
+        },
+        returnKeyType: 'next'
       },
       address: {
         label: t('erp95'),
         keyboardType: 'default',
         rules: {
           required: t('erp82')
-        }
+        },
+        returnKeyType: 'next'
       },
       bank_name: {
         label: t('erp96'),
@@ -193,19 +204,22 @@ export default () => {
             value: /^[0-9]*$/, // Regex for numbers only
             message: 'Please enter a valid Bank number'
           }
-        }
+        },
+        returnKeyType: 'next'
       },
       ifsc: {
         label: t('erp98'),
         keyboardType: 'default',
         rules: {
           required: t('erp85')
-        }
+        },
+        returnKeyType: 'next'
       },
       stock_balances: {
         label: t('erp107'),
         keyboardType: 'default',
-        rules: {}
+        rules: {},
+        returnKeyType: 'next'
       }
     }
     return Validations

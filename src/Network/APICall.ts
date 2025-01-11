@@ -3,10 +3,12 @@
 
 import axios, {type AxiosRequestConfig} from 'axios'
 
+import {Config} from '@/Config'
+
 type Methodtype = 'post' | 'get' | 'put' | 'delete' | 'patch'
 
 const axiosInstance = axios.create({
-  baseURL: 'https://app.remoteerp.in/api/'
+  baseURL: Config.API_URL
 })
 
 axiosInstance.interceptors.response.use(
@@ -19,6 +21,7 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(
   (config) => {
     const tempConfig = config
+
     // const token = useUserStore.getState().userData?.token
 
     // if (token) {
@@ -89,6 +92,7 @@ const APICall = async (
         return resolve({status: res.status, data: res.data})
       })
       .catch((error) => {
+        console.log('error', error)
         if (
           error?.response?.status === 500 ||
           error?.status === 500 ||

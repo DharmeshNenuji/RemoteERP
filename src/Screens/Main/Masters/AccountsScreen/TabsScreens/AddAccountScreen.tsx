@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react'
+import React, {useCallback, useMemo, useRef, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import {StyleSheet, Text, View} from 'react-native'
@@ -10,13 +10,13 @@ import {getFontSize, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, Fonts} from '@/Theme'
 
-import useAccountValidations from '../Hooks/useAccountValidations'
-import useAddAccountData from '../Hooks/useAddAccountData'
-import AccountDropDown from './AccountDropDown'
-import FormDatePicker from './FormDatePicker'
-import FormDropDown from './FormDropDown'
-import type {StockBalancesType} from './StockBalanceComponent'
-import StockBalanceComponent from './StockBalanceComponent'
+import AccountDropDown from './Components/AccountDropDown'
+import FormDatePicker from './Components/FormDatePicker'
+import FormDropDown from './Components/FormDropDown'
+import type {StockBalancesType} from './Components/StockBalanceComponent'
+import StockBalanceComponent from './Components/StockBalanceComponent'
+import useAccountValidations from './Hooks/useAccountValidations'
+import useAddAccountData from './Hooks/useAddAccountData'
 
 export default () => {
   const {
@@ -32,10 +32,11 @@ export default () => {
   ])
   const {t} = useTranslation()
   const Fields = useMemo(
-    () => FIELDS[selectedType as keyof typeof FIELDS]?.data ?? FIELDS['purchase'].data,
+    () =>
+      (FIELDS[selectedType as keyof typeof FIELDS]?.data ?? FIELDS['purchase'].data) as string[],
     [FIELDS, selectedType]
   )
-
+  const inputRefs = useRef<{[key: string]: any}>({})
   const validations = useAccountValidations()
 
   const onSubmit = () => {
@@ -57,6 +58,12 @@ export default () => {
       return clone
     })
   }, [])
+
+  const handleFocusNext = (nextField: string) => {
+    if (inputRefs.current[nextField]) {
+      inputRefs.current[nextField].focus()
+    }
+  }
 
   const onPressAddRemoveStockBalance = useCallback((isAdd: boolean, index: number) => {
     setStockBalances((state) => {
@@ -86,6 +93,7 @@ export default () => {
               onChangeText={onChange}
               value={value}
               error={errors['name']?.message as string}
+              onSubmitEditing={() => handleFocusNext('opening_bal')}
               {...validations['name']}
             />
           )}
@@ -124,10 +132,14 @@ export default () => {
                   <AppControllerInput
                     name="opening_bal"
                     control={control}
+                    ref={(el) => {
+                      inputRefs.current.opening_bal = el
+                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
                     error={errors['opening_bal']?.message as string}
+                    onSubmitEditing={() => handleFocusNext(Fields[0] ?? '')}
                     {...validations.opening_bal}
                     parentStyle={styles.inputHalf} // Apply style for half width
                   />
@@ -161,6 +173,7 @@ export default () => {
         </View>
         {Fields.map((field) => {
           const {rules, ...props} = validations[field]
+          const nextField = Fields[Fields.indexOf(field) + 1]
           return (
             <Controller
               key={field}
@@ -191,13 +204,17 @@ export default () => {
                     value={value}
                     error={errors[field]?.message as string}
                     {...props}
+                    onSubmitEditing={() => handleFocusNext(nextField)}
+                    ref={(el) => {
+                      inputRefs.current.opening_bal = el
+                    }}
                   />
                 )
               }
             />
           )
         })}
-        <Text style={styles.titleTextStyle}>{t('erp107')}</Text>
+        {isStockBalance && <Text style={styles.titleTextStyle}>{t('erp107')}</Text>}
         {isStockBalance &&
           stockBalances.map((i, index) => (
             <StockBalanceComponent
@@ -220,6 +237,7 @@ export default () => {
               onChangeText={onChange}
               value={value}
               error={errors['description']?.message as string}
+              onSubmitEditing={onPressValidate}
               {...validations['description']}
             />
           )}

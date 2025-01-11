@@ -47,5 +47,9 @@ export default {
   minus: `<svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.286 1H1.715" stroke="#0066F9" stroke-width="1.5" stroke-linecap="round"/></svg>`,
   plus: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M7 1.643v10.714M12.357 7H1.643" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-</svg>`
+</svg>`,
+  search: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10.542 19.25a8.708 8.708 0 1 0 0-17.416 8.708 8.708 0 0 0 0 17.416m9.625.917-1.834-1.834" stroke="#14141E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`
 }
