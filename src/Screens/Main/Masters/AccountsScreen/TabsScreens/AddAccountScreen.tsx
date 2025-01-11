@@ -8,7 +8,7 @@ import {AppButton, AppControllerInput} from '@/Components'
 import {showToast} from '@/Helpers'
 import {getFontSize, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
-import {Colors, Fonts} from '@/Theme'
+import {Colors, CommonStyle, Fonts} from '@/Theme'
 
 import AccountDropDown from './Components/AccountDropDown'
 import FormDatePicker from './Components/FormDatePicker'
@@ -79,7 +79,7 @@ export default () => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={CommonStyle.flex}>
       <KeyboardAwareScrollView contentContainerStyle={styles.contentStyle}>
         <Controller
           control={control}
@@ -249,10 +249,6 @@ export default () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.themeBackground,
-    flex: 1
-  },
   contentStyle: {
     padding: 20,
     rowGap: verticalScale(15)

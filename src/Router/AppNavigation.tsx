@@ -14,7 +14,7 @@ export default () => {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={isLogin ? Screen.Main : Screen.Main}
+      initialRouteName={!isLogin ? Screen.Main : Screen.Auth}
     >
       <Stack.Screen name={Screen.Auth} component={AuthNavigation} />
       <Stack.Screen name={Screen.Main} component={MainNavigation} />

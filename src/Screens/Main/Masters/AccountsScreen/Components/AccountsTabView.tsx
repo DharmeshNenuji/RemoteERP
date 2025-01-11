@@ -6,6 +6,7 @@ import {SceneMap, TabBar, TabView} from 'react-native-tab-view'
 import AppHeader from '@/Components/AppHeader/AppHeader'
 import {Colors} from '@/Theme'
 
+import {useAddAccount} from '../Provider/AddAccountProvider'
 import AccountListScreen from '../TabsScreens/AccountListScreen'
 import AddAccountScreen from '../TabsScreens/AddAccountScreen'
 const renderScene = SceneMap({
@@ -17,6 +18,7 @@ export default () => {
   const {t} = useTranslation()
   const {width} = useWindowDimensions()
   const [index, setIndex] = useState(1)
+  const {setSearch} = useAddAccount()
   const routes = useMemo(
     () => [
       {key: 'addAccount', title: t('erp31')},
@@ -31,6 +33,7 @@ export default () => {
         backgroundColor={Colors.white}
         textColor={Colors.blackShade14}
         title={t('erp10')}
+        onSearch={setSearch}
         isSearchable={index === 1}
       />
       <TabView

@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next'
 import {ActivityIndicator, Animated, StyleSheet, Text, View} from 'react-native'
 
 import {AppContainer} from '@/Components'
-import {HttpCodes, showToast} from '@/Helpers'
+import {HttpCodes, InitialsAPICall, showToast} from '@/Helpers'
 import {APICall, EndPoints} from '@/Network'
 import {NavigateToMain} from '@/Router/RootNavigator'
 import {useUserStore} from '@/Store'
@@ -55,6 +55,7 @@ export default () => {
       .then((resp) => {
         if (resp.status === HttpCodes.OK && resp?.data) {
           useUserStore.getState().setUserData(resp?.data)
+          new InitialsAPICall()
           showToast(t('erp52'))
           NavigateToMain()
         } else {

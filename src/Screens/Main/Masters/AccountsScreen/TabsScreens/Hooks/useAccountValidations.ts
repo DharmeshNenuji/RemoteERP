@@ -91,7 +91,7 @@ export default () => {
           required: t('erp74'),
           min: 0,
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid balance'
           }
         },
@@ -119,7 +119,7 @@ export default () => {
         rules: {
           required: t('erp76'),
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid balance'
           }
         },
@@ -131,7 +131,7 @@ export default () => {
         rules: {
           required: t('erp77'),
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid balance'
           }
         },
@@ -143,7 +143,7 @@ export default () => {
         rules: {
           required: t('erp78'),
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid balance'
           }
         }
@@ -154,7 +154,7 @@ export default () => {
         rules: {
           required: t('erp79'),
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid balance'
           }
         }
@@ -174,7 +174,7 @@ export default () => {
         rules: {
           required: t('erp81'),
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid balance'
           }
         },
@@ -201,7 +201,7 @@ export default () => {
         rules: {
           required: t('erp84'),
           pattern: {
-            value: /^[0-9]*$/, // Regex for numbers only
+            value: /^[0-9]*$/,
             message: 'Please enter a valid Bank number'
           }
         },

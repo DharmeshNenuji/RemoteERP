@@ -4,6 +4,7 @@
 import axios, {type AxiosRequestConfig} from 'axios'
 
 import {Config} from '@/Config'
+import storage from '@/Store/storage'
 
 type Methodtype = 'post' | 'get' | 'put' | 'delete' | 'patch'
 
@@ -12,7 +13,14 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    const cookie = res.request['responseHeaders']['Set-Cookie']
+
+    if (cookie) {
+      storage.setItem('Cookie', cookie)
+    }
+    return res
+  },
   async (error) => {
     return Promise.reject(error)
   }
@@ -21,15 +29,11 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(
   (config) => {
     const tempConfig = config
-
-    // const token = useUserStore.getState().userData?.token
-
-    // if (token) {
-    //   config.headers = {
-    //     ...config?.headers,
-    //     Authorization: `Bearer ${token}`
-    //   } as any
-    // }
+    const Cookie = storage.getItem('Cookie')
+    if (Cookie && typeof Cookie === 'string') {
+      tempConfig.headers.set('Cookie', Cookie)
+      tempConfig.headers.set('Set-Cookie', Cookie)
+    }
 
     return tempConfig
   },

@@ -4,11 +4,14 @@ import {AppContainer} from '@/Components'
 import {Colors} from '@/Theme'
 
 import AccountsTabView from './Components/AccountsTabView'
+import {AddAccountProvider} from './Provider/AddAccountProvider'
 
 export default () => {
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
-      <AccountsTabView />
+      <AddAccountProvider>
+        <AccountsTabView />
+      </AddAccountProvider>
     </AppContainer>
   )
 }
