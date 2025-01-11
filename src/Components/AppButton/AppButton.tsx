@@ -1,5 +1,5 @@
 import React, {memo} from 'react'
-import type {GestureResponderEvent} from 'react-native'
+import type {GestureResponderEvent, StyleProp, ViewStyle} from 'react-native'
 import {StyleSheet, Text, TouchableOpacity} from 'react-native'
 
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
@@ -8,11 +8,12 @@ import {Colors, Fonts} from '@/Theme'
 type AppButtonProps = {
   onPress: (event: GestureResponderEvent) => void
   title: string
+  style?: StyleProp<ViewStyle>
 }
 
-export default memo(({onPress, title}: AppButtonProps) => {
+export default memo(({onPress, title, style = {}}: AppButtonProps) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   )

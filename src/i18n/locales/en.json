@@ -116,6 +116,8 @@
     "erp112": "Delete",
     "erp113": "Add Vouchers",
     "erp114": "Accounting Voucher",
-    "erp115": "Inventory Voucher"
+    "erp115": "Inventory Voucher",
+    "erp116": "From Date",
+    "erp117": "To Date"
   }
 }

@@ -5,7 +5,8 @@ import AppDropDown from './AppDropDown/AppDropDown'
 import AppControllerInput from './AppInput/AppControllerInput'
 import AppInput from './AppInput/AppInput'
 import AppLoader from './AppLoader/AppLoader'
-
+import DatePickerAnchorButton from './DatePickerAnchorButton'
+import LabelText from './LabelText'
 export {
   AppButton,
   AppContainer,
@@ -13,5 +14,7 @@ export {
   AppDatePicker,
   AppDropDown,
   AppInput,
-  AppLoader
+  AppLoader,
+  DatePickerAnchorButton,
+  LabelText
 }

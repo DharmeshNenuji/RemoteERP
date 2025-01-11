@@ -1,14 +1,14 @@
 import React, {useCallback, useMemo, useRef, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
-import {AppButton, AppControllerInput} from '@/Components'
+import {AppButton, AppControllerInput, LabelText} from '@/Components'
 import {showToast} from '@/Helpers'
-import {getFontSize, verticalScale} from '@/Helpers/Responsive'
+import {verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
-import {Colors, CommonStyle, Fonts} from '@/Theme'
+import {CommonStyle} from '@/Theme'
 
 import AccountDropDown from './Components/AccountDropDown'
 import FormDatePicker from './Components/FormDatePicker'
@@ -214,7 +214,7 @@ export default () => {
             />
           )
         })}
-        {isStockBalance && <Text style={styles.titleTextStyle}>{t('erp107')}</Text>}
+        {isStockBalance && <LabelText label={t('erp107')} />}
         {isStockBalance &&
           stockBalances.map((i, index) => (
             <StockBalanceComponent
@@ -264,12 +264,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: verticalScale(15)
-  },
-  titleTextStyle: {
-    color: Colors.blackShade14,
-    fontFamily: Fonts[400],
-    fontSize: getFontSize(14),
-    lineHeight: 16,
-    opacity: 0.75
   }
 })

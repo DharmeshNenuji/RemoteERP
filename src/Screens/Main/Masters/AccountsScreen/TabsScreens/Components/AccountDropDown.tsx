@@ -1,12 +1,10 @@
 import React, {memo, useMemo} from 'react'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet, Text, View} from 'react-native'
+import {View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
-import {AppDropDown} from '@/Components'
-import {getFontSize, verticalScale} from '@/Helpers/Responsive'
+import {AppDropDown, LabelText} from '@/Components'
 import SVGByteCode from '@/Helpers/SVGByteCode'
-import {Colors, Fonts} from '@/Theme'
 
 import useAddAccountData from '../Hooks/useAddAccountData'
 
@@ -28,7 +26,7 @@ export default memo(({onChange, value}: AccountDropDownProps) => {
 
   return (
     <View>
-      <Text style={styles.titleTextStyle}>{t('erp103')}</Text>
+      <LabelText label={t('erp103')} />
       <AppDropDown
         data={data}
         renderRightIcon={() => {
@@ -47,15 +45,4 @@ export default memo(({onChange, value}: AccountDropDownProps) => {
       />
     </View>
   )
-})
-
-const styles = StyleSheet.create({
-  titleTextStyle: {
-    color: Colors.blackShade14,
-    fontFamily: Fonts[400],
-    fontSize: getFontSize(14),
-    lineHeight: 16,
-    marginBottom: verticalScale(10),
-    opacity: 0.75
-  }
 })
