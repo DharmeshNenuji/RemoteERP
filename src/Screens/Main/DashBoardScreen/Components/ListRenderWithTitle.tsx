@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react'
 import {FlatList, StyleSheet, Text, View} from 'react-native'
 
-import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
 import type {DashboardItemType} from '../Hooks/useDashboardData'
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: Colors.blackShade14,
     fontFamily: Fonts[500],
-    fontSize: getFontSize(16),
+    fontSize: moderateScale(16),
     marginBottom: verticalScale(10)
   }
 })

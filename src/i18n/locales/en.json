@@ -122,6 +122,10 @@
     "erp118": "Cost Center",
     "erp119": "Account",
     "erp120": "Select Cost Center",
-    "erp121": "Select Account"
+    "erp121": "Select Account",
+    "erp122": "Please select cost center",
+    "erp123": "Please select account",
+    "erp124": "Please select from date",
+    "erp125": "Please select to date"
   }
 }

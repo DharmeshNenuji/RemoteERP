@@ -5,8 +5,10 @@ import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import Animated from 'react-native-reanimated'
 import {SvgFromXml} from 'react-native-svg'
 
-import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import {Colors, Fonts} from '@/Theme'
+
+import ErrorText from '../ErrorText'
 
 export type AppInputProps = {
   leftImage?: string
@@ -74,7 +76,7 @@ export default forwardRef<TextInput, AppInputProps>(
             </Pressable>
           )}
         </View>
-        {error && <Text style={styles.errorText}>{error}</Text>}
+        {error && <ErrorText error={error} />}
       </Animated.View>
     )
   }
@@ -87,10 +89,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%'
   },
-  errorText: {
-    color: Colors.redShadeB00,
-    fontSize: moderateScale(12)
-  },
+
   inputContainer: {
     alignItems: 'center',
     borderColor: Colors.themeBorder,
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
   titleTextStyle: {
     color: Colors.blackShade14,
     fontFamily: Fonts[400],
-    fontSize: getFontSize(14),
+    fontSize: moderateScale(14),
     lineHeight: 16,
     marginBottom: verticalScale(10),
     opacity: 0.75

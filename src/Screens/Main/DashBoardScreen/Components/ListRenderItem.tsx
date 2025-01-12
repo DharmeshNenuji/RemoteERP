@@ -2,7 +2,7 @@ import React, {useCallback} from 'react'
 import {Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
-import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import {useNavigation} from '@/Hooks'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   itemName: {
     color: Colors.blackShade14,
     fontFamily: Fonts[400],
-    fontSize: getFontSize(12),
+    fontSize: moderateScale(12),
     textAlign: 'center'
   }
 })

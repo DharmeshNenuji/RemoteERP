@@ -11,10 +11,11 @@ export type UserAccountType = {
 }
 
 export type CostCenterType = {
-  userId: number
-  id: number
-  title: string
-  completed: boolean
+  address: string
+  cost_center_id: number
+  cost_center_name: string
+  pac_amount: string
+  work_order_date: string
 }
 
 export default class InitialsAPICall {

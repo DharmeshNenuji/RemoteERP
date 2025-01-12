@@ -2,7 +2,7 @@ import {memo} from 'react'
 import type {StyleProp, TextStyle} from 'react-native'
 import {StyleSheet, Text} from 'react-native'
 
-import {getFontSize, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, verticalScale} from '@/Helpers/Responsive'
 import {Colors, Fonts} from '@/Theme'
 
 type LabelTextProps = {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   titleTextStyle: {
     color: Colors.blackShade14,
     fontFamily: Fonts[400],
-    fontSize: getFontSize(14),
+    fontSize: moderateScale(14),
     lineHeight: 16,
     marginBottom: verticalScale(10),
     opacity: 0.75

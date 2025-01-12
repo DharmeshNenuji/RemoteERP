@@ -62,15 +62,15 @@ const guidelineBaseHeight = 812
 const scale = (size: number) => (shortDimension / guidelineBaseWidth) * size
 
 const verticalScale = (size: number) => (longDimension / guidelineBaseHeight) * size
-
-const moderateScale = (size: number, factor = 0.5) => size + (scale(size) - size) * factor
-
-const isTab = isTablet()
 const getFontSize = (baseSize: number) => {
   const scale = screenWidth / 400 // baseline width
   const newSize = baseSize * scale
   return Math.round(PixelRatio.roundToNearestPixel(newSize))
 }
+const moderateScale = getFontSize
+
+const isTab = isTablet()
+
 export {
   font,
   getFontSize,

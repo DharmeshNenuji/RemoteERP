@@ -5,7 +5,7 @@ import {Menu, MenuItem} from 'react-native-material-menu'
 import {SvgFromXml} from 'react-native-svg'
 
 import type {UserAccountType} from '@/Helpers/InitialsAPICall'
-import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   groupStyle: {
     color: Colors.blackShade14,
     fontFamily: Fonts[400],
-    fontSize: getFontSize(14)
+    fontSize: moderateScale(14)
   },
   innerContainer: {
     alignItems: 'center',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: Colors.blackShade14,
     fontFamily: Fonts[500],
-    fontSize: getFontSize(16)
+    fontSize: moderateScale(16)
   },
   touchBox: {
     alignItems: 'center',

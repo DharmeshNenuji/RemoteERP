@@ -4,7 +4,7 @@ import type {StyleProp, ViewStyle} from 'react-native'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
-import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors} from '@/Theme'
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     color: Colors.black,
     flex: 1,
-    fontSize: getFontSize(15),
+    fontSize: moderateScale(15),
     textAlignVertical: 'center'
   },
   leftImageContainer: {

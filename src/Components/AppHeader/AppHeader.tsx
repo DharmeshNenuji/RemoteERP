@@ -10,7 +10,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import {SvgFromXml} from 'react-native-svg'
 
-import {getFontSize, scale, verticalScale} from '@/Helpers/Responsive'
+import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {useNavigation} from '@/Hooks'
 import {Colors, Fonts} from '@/Theme'
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     fontFamily: Fonts[600],
-    fontSize: getFontSize(22),
+    fontSize: moderateScale(22),
     lineHeight: 26
   }
 })

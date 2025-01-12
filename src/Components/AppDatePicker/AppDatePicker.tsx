@@ -11,6 +11,8 @@ type AppDatePickerProps = {
   onClose: () => void
 }
 
+const defaultDateString = new Date().toISOString()
+
 export default memo(({date, onChange, onClose}: AppDatePickerProps) => {
   const [isVisible, setIsVisible] = useState(true)
   return (
@@ -23,7 +25,7 @@ export default memo(({date, onChange, onClose}: AppDatePickerProps) => {
       <View style={styles.container}>
         <DateTimePicker
           mode="single"
-          date={date}
+          date={date || defaultDateString}
           onChange={({date}: any) => {
             onChange(date)
             setIsVisible(false)

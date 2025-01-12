@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16)
   },
   selectedTextStyle: {
-    fontSize: moderateScale(16)
+    fontSize: moderateScale(14)
   }
 })

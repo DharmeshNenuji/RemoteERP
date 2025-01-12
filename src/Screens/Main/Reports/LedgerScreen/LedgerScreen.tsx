@@ -8,16 +8,38 @@ import {
   AppDatePicker,
   AppDropDown,
   DatePickerAnchorButton,
+  ErrorText,
   LabelText
 } from '@/Components'
 import AppHeader from '@/Components/AppHeader/AppHeader'
-import {InitialsAPICall} from '@/Helpers'
+import {InitialsAPICall, showToast} from '@/Helpers'
 import {scale, verticalScale} from '@/Helpers/Responsive'
 import {Colors} from '@/Theme'
 
 const ACCOUNT_LIST = InitialsAPICall.getMasterAccounts()
 const COST_CENTER_LIST = InitialsAPICall.getMasterCostCenter()
 
+const ConstCenters = COST_CENTER_LIST.reduce((array, item) => {
+  array.push({
+    value: item.cost_center_id.toString(),
+    title: item.cost_center_name
+  })
+  return array
+}, [] as any[])
+
+const Accounts = ACCOUNT_LIST.reduce((array, item) => {
+  array.push({
+    value: item.acc_id.toString(),
+    title: item.acc_name
+  })
+  return array
+}, [] as any[])
+const InitialErrors = {
+  site: '',
+  account: '',
+  fromDate: '',
+  toDate: ''
+}
 export default memo(() => {
   const {t} = useTranslation()
   const [site, setSite] = useState('')
@@ -26,6 +48,7 @@ export default memo(() => {
   const [toDate, setToDate] = useState('')
   const [isDatePicker, setIsDataPicker] = useState(false)
   const isFromDate = useRef(false)
+  const [errors, setErrors] = useState(InitialErrors)
 
   const onPressOpenDatePicker = useCallback((isFrm: boolean) => {
     isFromDate.current = isFrm
@@ -34,11 +57,50 @@ export default memo(() => {
 
   const onDateChange = useCallback((date: string) => {
     if (isFromDate.current) {
+      setErrors((state) => {
+        const clone = {...state}
+        clone['fromDate'] = ''
+        return clone
+      })
       setFromDate(date)
     } else {
+      setErrors((state) => {
+        const clone = {...state}
+        clone['toDate'] = ''
+        return clone
+      })
       setToDate(date)
     }
   }, [])
+
+  const onPressSearch = useCallback(() => {
+    const cloneErrors = {...InitialErrors}
+    let hasError = false
+
+    if (!site?.trim()) {
+      cloneErrors['site'] = t('erp122')
+      hasError = true
+    }
+    if (!account?.trim()) {
+      cloneErrors['account'] = t('erp123')
+      hasError = true
+    }
+    if (!fromDate) {
+      cloneErrors['fromDate'] = t('erp124')
+      hasError = true
+    }
+    if (!toDate) {
+      cloneErrors['toDate'] = t('erp125')
+      hasError = true
+    }
+
+    setErrors(cloneErrors)
+
+    if (hasError) {
+      return
+    }
+    showToast('Coming soon')
+  }, [site, account, fromDate, toDate, t])
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
@@ -47,37 +109,63 @@ export default memo(() => {
         <View>
           <LabelText label={t('erp118')} />
           <AppDropDown
-            data={COST_CENTER_LIST}
+            data={ConstCenters}
             value={site}
-            onChange={({value}) => setSite(value)}
-            valueField={'title'}
+            search
+            searchPlaceholder={t('erp105')}
+            onChange={({value}) => {
+              setErrors((state) => {
+                const clone = {...state}
+                clone['site'] = ''
+                return clone
+              })
+              setSite(value)
+            }}
             placeholder={t('erp120')}
+            valueField={'value'}
             labelField={'title'}
           />
+          {errors.site && <ErrorText error={errors.site} />}
         </View>
 
         <View>
           <LabelText label={t('erp119')} />
           <AppDropDown
-            data={ACCOUNT_LIST}
+            data={Accounts}
             value={account}
+            search
+            searchPlaceholder={t('erp105')}
             placeholder={t('erp121')}
-            onChange={({value}) => setAccount(value)}
-            valueField={'acc_id'}
+            onChange={({value}) => {
+              setErrors((state) => {
+                const clone = {...state}
+                clone['account'] = ''
+                return clone
+              })
+              setAccount(value)
+            }}
+            valueField={'value'}
             labelField={'title'}
           />
+          {errors.account && <ErrorText error={errors.account} />}
         </View>
+
         <DatePickerAnchorButton
           onPress={() => onPressOpenDatePicker(true)}
           value={fromDate}
           label={t('erp116')}
         />
+        {errors.fromDate && <ErrorText error={errors.fromDate} />}
+
         <DatePickerAnchorButton
           onPress={() => onPressOpenDatePicker(false)}
           value={toDate}
           label={t('erp117')}
         />
-        <AppButton style={styles.selfCenter} title={t('erp110')} onPress={() => {}} />
+        {errors.toDate && <ErrorText error={errors.toDate} />}
+
+        <AppButton style={styles.selfCenter} title={t('erp110')} onPress={onPressSearch} />
+
         {isDatePicker && (
           <AppDatePicker
             onChange={onDateChange}
@@ -89,6 +177,7 @@ export default memo(() => {
     </AppContainer>
   )
 })
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

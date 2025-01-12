@@ -6,6 +6,7 @@ import AppControllerInput from './AppInput/AppControllerInput'
 import AppInput from './AppInput/AppInput'
 import AppLoader from './AppLoader/AppLoader'
 import DatePickerAnchorButton from './DatePickerAnchorButton'
+import ErrorText from './ErrorText'
 import LabelText from './LabelText'
 export {
   AppButton,
@@ -16,5 +17,6 @@ export {
   AppInput,
   AppLoader,
   DatePickerAnchorButton,
+  ErrorText,
   LabelText
 }
