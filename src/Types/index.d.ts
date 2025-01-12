@@ -11,6 +11,12 @@ type RootStackParamList = {
   PurchaseScreen: undefined
   // Reports flow
   LedgerScreen: undefined
+  LedgerDetailsScreen: {
+    acc_id: number
+    site_id: number
+    fromdate: string
+    todate: string
+  }
   ProfitLossScreen: undefined
 }
 type ItemType<T> = {

@@ -20,6 +20,7 @@ export default memo(({...rest}: AccountDropDownProps) => {
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
+      itemTextStyle={styles.selectedTextStyle}
       renderRightIcon={(visible) => {
         return (
           <SvgFromXml

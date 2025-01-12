@@ -12,8 +12,9 @@ import {
   LabelText
 } from '@/Components'
 import AppHeader from '@/Components/AppHeader/AppHeader'
-import {InitialsAPICall, showToast} from '@/Helpers'
+import {InitialsAPICall, Screen, Utility} from '@/Helpers'
 import {scale, verticalScale} from '@/Helpers/Responsive'
+import {useNavigation} from '@/Hooks'
 import {Colors} from '@/Theme'
 
 const ACCOUNT_LIST = InitialsAPICall.getMasterAccounts()
@@ -49,6 +50,7 @@ export default memo(() => {
   const [isDatePicker, setIsDataPicker] = useState(false)
   const isFromDate = useRef(false)
   const [errors, setErrors] = useState(InitialErrors)
+  const navigation = useNavigation()
 
   const onPressOpenDatePicker = useCallback((isFrm: boolean) => {
     isFromDate.current = isFrm
@@ -99,8 +101,13 @@ export default memo(() => {
     if (hasError) {
       return
     }
-    showToast('Coming soon')
-  }, [site, account, fromDate, toDate, t])
+    navigation.navigate(Screen.LedgerDetailsScreen, {
+      acc_id: +account,
+      site_id: +site,
+      fromdate: Utility.formatDated(fromDate),
+      todate: Utility.formatDated(toDate)
+    })
+  }, [site, account, fromDate, toDate, navigation, t])
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>

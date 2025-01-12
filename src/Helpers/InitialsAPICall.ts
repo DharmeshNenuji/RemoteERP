@@ -36,11 +36,16 @@ export default class InitialsAPICall {
       }
     })
   }
-  static getMasterAccounts(): UserAccountType[] {
+  static getMasterAccounts(id?: string | number): UserAccountType[] {
     try {
+      const list = JSON.parse(
+        MMKVStorage.getString('getMasterAccounts') as string
+      ) as UserAccountType[]
+      this.masterAccounts = list
+      if (id) {
+        return list.filter((i) => i?.acc_id?.toString() === id?.toString())
+      }
       if (this.masterAccounts.length === 0) {
-        const list = JSON.parse(MMKVStorage.getString('getMasterAccounts') as string)
-        this.masterAccounts = list
         return list
       } else {
         return this.masterAccounts
@@ -58,11 +63,16 @@ export default class InitialsAPICall {
       }
     })
   }
-  static getMasterCostCenter(): CostCenterType[] {
+  static getMasterCostCenter(id?: string | number): CostCenterType[] {
     try {
+      const list = JSON.parse(
+        MMKVStorage.getString('getConstCenterList') as string
+      ) as CostCenterType[]
+      this.constCenters = list
+      if (id) {
+        return list.filter((i) => i?.cost_center_id?.toString() === id?.toString())
+      }
       if (this.constCenters.length === 0) {
-        const list = JSON.parse(MMKVStorage.getString('getConstCenterList') as string)
-        this.constCenters = list
         return list
       } else {
         return this.constCenters

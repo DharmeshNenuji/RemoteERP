@@ -6,6 +6,7 @@ import {
   AccountsScreen,
   AddVoucherScreen,
   DashBoardScreen,
+  LedgerDetailsScreen,
   LedgerScreen,
   ProfitLossScreen,
   PurchaseScreen
@@ -26,6 +27,7 @@ export default memo(() => {
 
       {/* Reports flow */}
       <Stack.Screen name={Screen.LedgerScreen} component={LedgerScreen} />
+      <Stack.Screen name={Screen.LedgerDetailsScreen} component={LedgerDetailsScreen} />
       <Stack.Screen name={Screen.ProfitLossScreen} component={ProfitLossScreen} />
     </Stack.Navigator>
   )

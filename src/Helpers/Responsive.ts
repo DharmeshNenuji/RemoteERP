@@ -51,7 +51,7 @@ const isIPhoneXSeries = () => {
   return isIPhoneX ? 34 : 0
 }
 
-const isAndroidNouch = Platform.OS === 'android' ? (StatusBar.currentHeight ?? 0) > 24 : false
+const isAndroidNotch = Platform.OS === 'android' ? (StatusBar.currentHeight ?? 0) > 24 : false
 const [shortDimension, longDimension] =
   WINDOW_WIDTH < WINDOW_HEIGHT ? [WINDOW_WIDTH, WINDOW_HEIGHT] : [WINDOW_HEIGHT, WINDOW_WIDTH]
 
@@ -76,7 +76,7 @@ export {
   getFontSize,
   getStatusBarHeight,
   heightPx,
-  isAndroidNouch,
+  isAndroidNotch,
   isIPhoneX,
   isIPhoneXSeries,
   isTab,

@@ -4,6 +4,8 @@
 import axios, {type AxiosRequestConfig} from 'axios'
 
 import {Config} from '@/Config'
+import {HttpCodes, showToast} from '@/Helpers'
+import {NavigateToAuth} from '@/Router/RootNavigator'
 import {MMKVStorage} from '@/Store/storage'
 
 type Methodtype = 'post' | 'get' | 'put' | 'delete' | 'patch'
@@ -22,6 +24,11 @@ axiosInstance.interceptors.response.use(
     return res
   },
   async (error) => {
+    if (error.status === HttpCodes.UNAUTHORIZED) {
+      MMKVStorage.clearAll()
+      showToast('Session expired. Please log in again', 'error')
+      NavigateToAuth()
+    }
     return Promise.reject(error)
   }
 )

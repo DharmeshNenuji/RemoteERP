@@ -44,9 +44,12 @@ export default {
   leftArrow: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m16.347 4.42-7.063 7.063a2.15 2.15 0 0 0 0 3.034l7.063 7.063" stroke="#14141E" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   downArrow: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m3.4 7.425 5.433 5.433a1.655 1.655 0 0 0 2.334 0L16.6 7.425" stroke="#14141E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   calender2: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.333 1.834v2.75m7.334-2.75v2.75M3.208 8.333h15.584m.458-.541v7.792c0 2.75-1.375 4.583-4.583 4.583H7.333c-3.208 0-4.583-1.834-4.583-4.584v-7.79c0-2.75 1.375-4.583 4.583-4.583h7.334c3.208 0 4.583 1.833 4.583 4.583" stroke="#14141E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.387 12.558h.008m-.008 2.75h.008m-3.399-2.75h.008m-.008 2.75h.008m-3.401-2.75h.008m-.008 2.75h.008" stroke="#14141E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  minus: `<svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.286 1H1.715" stroke="#0066F9" stroke-width="1.5" stroke-linecap="round"/></svg>`,
-  plus: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M7 1.643v10.714M12.357 7H1.643" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+  minus: (color = Colors.primary) =>
+    `<svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.286 1H1.715" stroke="${color}" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  plus: (
+    color = Colors.white
+  ) => `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M7 1.643v10.714M12.357 7H1.643" stroke="${color}" stroke-width="1.5" stroke-linecap="round"/>
 </svg>`,
   search: `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M10.542 19.25a8.708 8.708 0 1 0 0-17.416 8.708 8.708 0 0 0 0 17.416m9.625.917-1.834-1.834" stroke="#14141E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

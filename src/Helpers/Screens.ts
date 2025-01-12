@@ -13,6 +13,7 @@ enum Screens {
   PurchaseScreen = 'PurchaseScreen',
   // Reports flow
   LedgerScreen = 'LedgerScreen',
+  LedgerDetailsScreen = 'LedgerDetailsScreen',
   ProfitLossScreen = 'ProfitLossScreen'
 }
 

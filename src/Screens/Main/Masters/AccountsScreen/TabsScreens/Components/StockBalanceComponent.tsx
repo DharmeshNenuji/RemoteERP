@@ -61,13 +61,13 @@ export default ({value, onChange, onPressAddRemove}: StockBalanceComponentProps)
           />
           <View style={styles.boxRow}>
             <TouchableOpacity style={styles.box} onPress={() => onPressAddRemove(false)}>
-              <SvgFromXml xml={SVGByteCode.minus} />
+              <SvgFromXml xml={SVGByteCode.minus()} />
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.box, styles.borderLessBox]}
               onPress={() => onPressAddRemove(true)}
             >
-              <SvgFromXml xml={SVGByteCode.plus} />
+              <SvgFromXml xml={SVGByteCode.plus()} />
             </TouchableOpacity>
           </View>
         </View>

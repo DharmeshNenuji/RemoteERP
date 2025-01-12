@@ -8,6 +8,7 @@ import AppLoader from './AppLoader/AppLoader'
 import DatePickerAnchorButton from './DatePickerAnchorButton'
 import ErrorText from './ErrorText'
 import LabelText from './LabelText'
+import LoadingView from './LoadingView'
 export {
   AppButton,
   AppContainer,
@@ -18,5 +19,6 @@ export {
   AppLoader,
   DatePickerAnchorButton,
   ErrorText,
-  LabelText
+  LabelText,
+  LoadingView
 }

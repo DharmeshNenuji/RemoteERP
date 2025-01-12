@@ -7,6 +7,7 @@ export default {
   transparent: 'transparent',
   backdrop: 'rgba(0,0,0,0.5)',
   blackShade14: '#14141E',
+  blackShade14Opacity10: '#14141E99',
   greyShade14: '#89898e',
   themeBackground: '#f8fafd',
   themeBorder: '#14141E1A',
