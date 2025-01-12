@@ -1,11 +1,9 @@
 import type {Control, FieldValues} from 'react-hook-form'
 import {useController} from 'react-hook-form'
-import {StyleSheet, Text, View} from 'react-native'
+import {View} from 'react-native'
 import type {DropdownProps} from 'react-native-element-dropdown/lib/typescript/components/Dropdown/model'
 
-import {AppDropDown} from '@/Components'
-import {getFontSize, verticalScale} from '@/Helpers/Responsive'
-import {Colors, Fonts} from '@/Theme'
+import {AppDropDown, LabelText} from '@/Components'
 
 type FormDropDownProps = {
   name: string
@@ -21,7 +19,7 @@ export default ({control, name, style, label, ...rest}: FormDropDownProps) => {
 
   return (
     <View style={style}>
-      <Text style={styles.titleTextStyle}>{label}</Text>
+      {label && <LabelText label={label} />}
       <AppDropDown
         {...rest}
         value={field.value}
@@ -32,13 +30,3 @@ export default ({control, name, style, label, ...rest}: FormDropDownProps) => {
     </View>
   )
 }
-const styles = StyleSheet.create({
-  titleTextStyle: {
-    color: Colors.blackShade14,
-    fontFamily: Fonts[400],
-    fontSize: getFontSize(14),
-    lineHeight: 16,
-    marginBottom: verticalScale(10),
-    opacity: 0.75
-  }
-})

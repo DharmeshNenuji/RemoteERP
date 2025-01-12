@@ -1,37 +1,29 @@
 import React, {memo, useMemo} from 'react'
 import {FlatList, StyleSheet, View} from 'react-native'
 
+import InitialsAPICall from '@/Helpers/InitialsAPICall'
 import {verticalScale} from '@/Helpers/Responsive'
-import storage from '@/Store/storage'
 import {CommonStyle} from '@/Theme'
 
 import {useAddAccount} from '../Provider/AddAccountProvider'
-import type {UserAccountType} from './Components/RenderAccountItem'
 import RenderAccountItem from './Components/RenderAccountItem'
 
+const ACCOUNT_LIST = InitialsAPICall.getMasterAccounts()
 export default memo(() => {
   const {search} = useAddAccount()
-  const userList = useMemo(() => {
-    try {
-      const list = storage.getItem('getMasterUsersList') as string
-      return JSON.parse(list) as UserAccountType[]
-    } catch (_) {
-      return []
-    }
-  }, [])
   const filteredData = useMemo(() => {
     if (!search) {
-      return userList
+      return ACCOUNT_LIST
     }
 
     const searchLower = search.toLowerCase()
-    return userList.filter((item) => {
+    return ACCOUNT_LIST.filter((item) => {
       return (
         item.acc_grp.toLowerCase().includes(searchLower) ||
         item.acc_name.toLowerCase().includes(searchLower)
       )
     })
-  }, [search, userList])
+  }, [search])
 
   return (
     <View style={CommonStyle.flex}>

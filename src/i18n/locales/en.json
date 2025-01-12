@@ -118,6 +118,10 @@
     "erp114": "Accounting Voucher",
     "erp115": "Inventory Voucher",
     "erp116": "From Date",
-    "erp117": "To Date"
+    "erp117": "To Date",
+    "erp118": "Cost Center",
+    "erp119": "Account",
+    "erp120": "Select Cost Center",
+    "erp121": "Select Account"
   }
 }

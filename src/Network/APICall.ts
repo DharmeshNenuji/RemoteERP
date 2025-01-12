@@ -4,7 +4,7 @@
 import axios, {type AxiosRequestConfig} from 'axios'
 
 import {Config} from '@/Config'
-import storage from '@/Store/storage'
+import {MMKVStorage} from '@/Store/storage'
 
 type Methodtype = 'post' | 'get' | 'put' | 'delete' | 'patch'
 
@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
     const cookie = res.request['responseHeaders']['Set-Cookie']
 
     if (cookie) {
-      storage.setItem('Cookie', cookie)
+      MMKVStorage.set('Cookie', cookie)
     }
     return res
   },
@@ -29,8 +29,8 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(
   (config) => {
     const tempConfig = config
-    const Cookie = storage.getItem('Cookie')
-    if (Cookie && typeof Cookie === 'string') {
+    const Cookie = MMKVStorage.getString('Cookie')
+    if (Cookie) {
       tempConfig.headers.set('Cookie', Cookie)
       tempConfig.headers.set('Set-Cookie', Cookie)
     }

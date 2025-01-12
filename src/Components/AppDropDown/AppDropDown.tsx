@@ -20,8 +20,19 @@ export default memo(({...rest}: AccountDropDownProps) => {
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
       iconStyle={styles.iconStyle}
-      renderRightIcon={() => {
-        return <SvgFromXml xml={SVGByteCode.downArrow} />
+      renderRightIcon={(visible) => {
+        return (
+          <SvgFromXml
+            style={{
+              transform: [
+                {
+                  rotate: visible ? '180deg' : '0deg'
+                }
+              ]
+            }}
+            xml={SVGByteCode.downArrow}
+          />
+        )
       }}
       {...rest}
     />

@@ -64,7 +64,6 @@
     "@types/eslint-plugin-jsx-a11y": "^6.10.0",
     "@types/eslint__js": "^8.42.3",
     "@types/react": "^18.2.6",
-    "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "@typescript-eslint/rule-tester": "^8.19.0",

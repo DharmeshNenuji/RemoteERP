@@ -28,7 +28,7 @@ export default () => {
   const [selectedType, setSelectedType] = useState<string>('')
   const isStockBalance = useMemo(() => selectedType === 'stock_balances', [selectedType])
   const [stockBalances, setStockBalances] = useState<StockBalancesType[]>([
-    {closing_date: new Date().toISOString(), value: ''}
+    {closing_date: '', value: ''}
   ])
   const {t} = useTranslation()
   const Fields = useMemo(
@@ -69,7 +69,7 @@ export default () => {
     setStockBalances((state) => {
       const clone = [...state]
       if (isAdd) {
-        clone.push({closing_date: new Date().toISOString(), value: ''})
+        clone.push({closing_date: '', value: ''})
       } else {
         clone.splice(index, 1)
       }

@@ -21,20 +21,24 @@ type DatePickerAnchorButtonProps = {
 export default memo(
   ({value, onPress, label, style = {}, children}: DatePickerAnchorButtonProps) => {
     return (
-      <TouchableOpacity style={[styles.inputHalf, style]} onPress={onPress}>
+      <View>
         <LabelText label={label} />
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputStyle}>{dayjs(value).format('DD/MM/YYYY')}</Text>
-          <View style={styles.leftImageContainer}>
-            <SvgFromXml
-              width={verticalScale(22)}
-              height={verticalScale(22)}
-              xml={SVGByteCode.calender2}
-            />
+        <TouchableOpacity style={[styles.inputHalf, style]} onPress={onPress}>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputStyle}>
+              {value ? dayjs(value).format('DD/MM/YYYY') : 'DD / MM /YYYY'}
+            </Text>
+            <View style={styles.leftImageContainer}>
+              <SvgFromXml
+                width={verticalScale(22)}
+                height={verticalScale(22)}
+                xml={SVGByteCode.calender2}
+              />
+            </View>
           </View>
-        </View>
-        {children}
-      </TouchableOpacity>
+          {children}
+        </TouchableOpacity>
+      </View>
     )
   }
 )
@@ -47,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: verticalScale(35),
     overflow: 'hidden',
-    paddingHorizontal: scale(5),
+    paddingHorizontal: scale(10),
     width: '100%'
   },
   inputHalf: {

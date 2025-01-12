@@ -4,17 +4,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {Menu, MenuItem} from 'react-native-material-menu'
 import {SvgFromXml} from 'react-native-svg'
 
+import type {UserAccountType} from '@/Helpers/InitialsAPICall'
 import {getFontSize, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
-
-export type UserAccountType = {
-  acc_id: number
-  acc_name: string
-  opening_bal: string
-  opening_date: string
-  acc_grp: string
-}
 
 export default memo(({item}: ItemType<UserAccountType>) => {
   const [visible, setVisible] = useState(false)

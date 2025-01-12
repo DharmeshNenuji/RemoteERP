@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     columnGap: scale(10),
     flexDirection: 'row',
     overflow: 'hidden',
-    paddingHorizontal: scale(5),
+    paddingHorizontal: scale(10),
     width: '100%'
   },
   inputStyle: {

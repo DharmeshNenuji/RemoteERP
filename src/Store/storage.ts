@@ -3,6 +3,8 @@ import type {StateStorage} from 'zustand/middleware'
 
 const storage = new MMKV()
 
+export const MMKVStorage = storage
+
 export default {
   setItem: (name, value) => {
     return storage.set(name, value)

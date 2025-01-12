@@ -1,10 +1,8 @@
 import React, {memo, useMemo} from 'react'
 import {useTranslation} from 'react-i18next'
 import {View} from 'react-native'
-import {SvgFromXml} from 'react-native-svg'
 
 import {AppDropDown, LabelText} from '@/Components'
-import SVGByteCode from '@/Helpers/SVGByteCode'
 
 import useAddAccountData from '../Hooks/useAddAccountData'
 
@@ -29,9 +27,6 @@ export default memo(({onChange, value}: AccountDropDownProps) => {
       <LabelText label={t('erp103')} />
       <AppDropDown
         data={data}
-        renderRightIcon={() => {
-          return <SvgFromXml xml={SVGByteCode.downArrow} />
-        }}
         search
         maxHeight={300}
         labelField="title"
