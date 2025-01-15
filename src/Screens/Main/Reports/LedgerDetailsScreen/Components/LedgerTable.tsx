@@ -1,4 +1,5 @@
 import React, {memo} from 'react'
+import {useTranslation} from 'react-i18next'
 import {ScrollView, StyleSheet, Text, View} from 'react-native'
 
 import {moderateScale, scale} from '@/Helpers/Responsive'
@@ -11,16 +12,26 @@ type LedgerTableProps = {
 }
 
 export default memo(({data}: LedgerTableProps) => {
-  const headers = ['Index', 'Date', 'Account', 'Type', 'Voucher', 'Dr', 'Cr', 'Balance']
+  const {t} = useTranslation()
+  const headers = [
+    'Index',
+    t('erp126'),
+    t('erp119'),
+    t('erp127'),
+    t('erp128'),
+    t('erp130'),
+    t('erp129'),
+    t('erp131')
+  ]
 
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <View>
           <View style={styles.row}>
-            {headers.map((header) => (
+            {headers.map((header, index) => (
               <View key={header} style={[styles.cell, getColumnStyle(header)]}>
-                {header === 'Index' ? null : <Text style={styles.headerText}>{header}</Text>}
+                {index === 0 ? null : <Text style={styles.headerText}>{header}</Text>}
               </View>
             ))}
           </View>

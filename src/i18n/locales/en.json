@@ -126,6 +126,13 @@
     "erp122": "Please select cost center",
     "erp123": "Please select account",
     "erp124": "Please select from date",
-    "erp125": "Please select to date"
+    "erp125": "Please select to date",
+    "erp126": "Date",
+    "erp127": "Type",
+    "erp128": "Voucher",
+    "erp129": "Cr",
+    "erp130": "Dr",
+    "erp131": "Balance",
+    "erp132": "Remark"
   }
 }

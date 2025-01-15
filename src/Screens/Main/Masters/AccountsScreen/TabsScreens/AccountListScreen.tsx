@@ -8,10 +8,10 @@ import {CommonStyle} from '@/Theme'
 import {useAddAccount} from '../Provider/AddAccountProvider'
 import RenderAccountItem from './Components/RenderAccountItem'
 
-const ACCOUNT_LIST = InitialsAPICall.getMasterAccounts()
 export default memo(() => {
-  const {search} = useAddAccount()
+  const {search, deletedIds} = useAddAccount()
   const filteredData = useMemo(() => {
+    const ACCOUNT_LIST = InitialsAPICall.getMasterAccounts()
     if (!search) {
       return ACCOUNT_LIST
     }
@@ -19,11 +19,12 @@ export default memo(() => {
     const searchLower = search.toLowerCase()
     return ACCOUNT_LIST.filter((item) => {
       return (
-        item.acc_grp.toLowerCase().includes(searchLower) ||
-        item.acc_name.toLowerCase().includes(searchLower)
+        (item.acc_grp.toLowerCase().includes(searchLower) ||
+          item.acc_name.toLowerCase().includes(searchLower)) &&
+        !deletedIds.includes(item.acc_id.toString() as never)
       )
     })
-  }, [search])
+  }, [deletedIds, search])
 
   return (
     <View style={CommonStyle.flex}>

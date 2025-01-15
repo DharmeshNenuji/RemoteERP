@@ -1,4 +1,5 @@
 import {memo, useMemo, useState} from 'react'
+import {useTranslation} from 'react-i18next'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import Animated, {
   interpolate,
@@ -54,6 +55,7 @@ export default memo(({item}: LedgerTableItemProps) => {
 
   const expandProgress = useSharedValue(0)
   const rotateProgress = useSharedValue(0)
+  const {t} = useTranslation()
 
   const toggleExpand = () => {
     setIsExpand((state) => !state)
@@ -130,7 +132,7 @@ export default memo(({item}: LedgerTableItemProps) => {
                 ...styles.headerText
               }}
             >
-              Cost Center
+              {t('erp118')}
             </Text>
             <Text style={styles.headerText}> : </Text>
             <Text
@@ -151,7 +153,7 @@ export default memo(({item}: LedgerTableItemProps) => {
                 ...styles.headerText
               }}
             >
-              Remark
+              {t('erp132')}
             </Text>
             <Text style={styles.headerText}> : </Text>
             <Text

@@ -9,15 +9,21 @@ import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
+import AccountDeleteModal from './AccountDeleteModal'
+
 export default memo(({item}: ItemType<UserAccountType>) => {
   const [visible, setVisible] = useState(false)
   const {t} = useTranslation()
+  const [isDeleteModal, setIsDeleteModal] = useState(false)
 
   const onPressEdit = useCallback(() => {
     setVisible(false)
   }, [])
   const onPressDelete = useCallback(() => {
     setVisible(false)
+    setTimeout(() => {
+      setIsDeleteModal(true)
+    }, 500)
   }, [])
 
   return (
@@ -53,6 +59,9 @@ export default memo(({item}: ItemType<UserAccountType>) => {
         <View style={styles.dotView} />
         <Text style={styles.groupStyle}>{item.acc_grp}</Text>
       </View>
+      {isDeleteModal && (
+        <AccountDeleteModal id={item.acc_id} onClose={() => setIsDeleteModal(false)} />
+      )}
     </View>
   )
 })
