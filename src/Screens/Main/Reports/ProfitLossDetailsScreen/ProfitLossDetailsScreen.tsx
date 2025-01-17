@@ -155,7 +155,11 @@ export default memo(() => {
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
-      <AppHeader backgroundColor={Colors.white} textColor={Colors.blackShade14} title={t('erp8')} />
+      <AppHeader
+        backgroundColor={Colors.white}
+        textColor={Colors.blackShade14}
+        title={t('erp25')}
+      />
       <View style={styles.container}>
         {isLoading ? (
           <LoadingView />
