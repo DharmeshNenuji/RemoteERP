@@ -4,9 +4,11 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {Menu, MenuItem} from 'react-native-material-menu'
 import {SvgFromXml} from 'react-native-svg'
 
+import {Screen} from '@/Helpers'
 import type {UserAccountType} from '@/Helpers/InitialsAPICall'
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
+import {useNavigation} from '@/Hooks'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
 import AccountDeleteModal from './AccountDeleteModal'
@@ -15,10 +17,15 @@ export default memo(({item}: ItemType<UserAccountType>) => {
   const [visible, setVisible] = useState(false)
   const {t} = useTranslation()
   const [isDeleteModal, setIsDeleteModal] = useState(false)
+  const {navigate} = useNavigation()
 
   const onPressEdit = useCallback(() => {
     setVisible(false)
-  }, [])
+    navigate(Screen.EditAccountScreen, {
+      acc_id: item.acc_id
+    })
+  }, [item.acc_id, navigate])
+
   const onPressDelete = useCallback(() => {
     setVisible(false)
     setTimeout(() => {

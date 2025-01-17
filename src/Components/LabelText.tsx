@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts[400],
     fontSize: moderateScale(14),
     lineHeight: 16,
-    marginBottom: verticalScale(10),
-    opacity: 0.75
+    marginBottom: verticalScale(10)
   }
 })

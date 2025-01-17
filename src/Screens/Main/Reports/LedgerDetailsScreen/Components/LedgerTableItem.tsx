@@ -95,6 +95,8 @@ export default memo(({item}: LedgerTableItemProps) => {
             <TouchableOpacity style={styles.expandBoxStyle} onPress={toggleExpand}>
               <Animated.View style={rotateAnimatedStyle}>
                 <SvgFromXml
+                  width={verticalScale(15)}
+                  height={verticalScale(15)}
                   xml={isExpand ? SVGByteCode.minus() : SVGByteCode.plus(Colors.primary)}
                 />
               </Animated.View>

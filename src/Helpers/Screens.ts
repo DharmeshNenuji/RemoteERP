@@ -8,9 +8,11 @@ enum Screens {
   DashBoardScreen = 'DashBoardScreen',
   // Master flow
   AccountsScreen = 'AccountsScreen',
+  EditAccountScreen = 'EditAccountScreen',
   // Voucher flow
   AddVoucherScreen = 'AddVoucherScreen',
   PurchaseScreen = 'PurchaseScreen',
+  ProfitLossDetailsScreen = 'ProfitLossDetailsScreen',
   // Reports flow
   LedgerScreen = 'LedgerScreen',
   LedgerDetailsScreen = 'LedgerDetailsScreen',

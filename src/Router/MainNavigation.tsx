@@ -6,8 +6,10 @@ import {
   AccountsScreen,
   AddVoucherScreen,
   DashBoardScreen,
+  EditAccountScreen,
   LedgerDetailsScreen,
   LedgerScreen,
+  ProfitLossDetailsScreen,
   ProfitLossScreen,
   PurchaseScreen
 } from '@/Screens'
@@ -21,6 +23,7 @@ export default memo(() => {
       <Stack.Screen name={Screen.DashBoardScreen} component={DashBoardScreen} />
       {/* Master flow */}
       <Stack.Screen name={Screen.AccountsScreen} component={AccountsScreen} />
+      <Stack.Screen name={Screen.EditAccountScreen} component={EditAccountScreen} />
       {/* Voucher flow */}
       <Stack.Screen name={Screen.AddVoucherScreen} component={AddVoucherScreen} />
       <Stack.Screen name={Screen.PurchaseScreen} component={PurchaseScreen} />
@@ -29,6 +32,7 @@ export default memo(() => {
       <Stack.Screen name={Screen.LedgerScreen} component={LedgerScreen} />
       <Stack.Screen name={Screen.LedgerDetailsScreen} component={LedgerDetailsScreen} />
       <Stack.Screen name={Screen.ProfitLossScreen} component={ProfitLossScreen} />
+      <Stack.Screen name={Screen.ProfitLossDetailsScreen} component={ProfitLossDetailsScreen} />
     </Stack.Navigator>
   )
 })

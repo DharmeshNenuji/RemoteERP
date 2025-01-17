@@ -43,7 +43,7 @@ export default memo(() => {
 
   const renderLedgerDetailsView = useMemo(() => {
     const [account] = InitialsAPICall.getMasterAccounts(acc_id)
-    const [costCenter] = InitialsAPICall.getMasterCostCenter(acc_id)
+    const [costCenter] = InitialsAPICall.getMasterCostCenter(site_id)
 
     return (
       <View style={styles.detailsContainer}>
@@ -61,7 +61,7 @@ export default memo(() => {
         </View>
       </View>
     )
-  }, [acc_id, fromdate, todate])
+  }, [acc_id, fromdate, site_id, todate])
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   tableTextStyle: {
     color: Colors.blackShade14,
-    fontFamily: Fonts[400],
+    fontFamily: Fonts[500],
     fontSize: moderateScale(14)
   }
 })

@@ -1,4 +1,5 @@
 import AppButton from './AppButton/AppButton'
+import AppCheckButton from './AppCheckButton'
 import AppContainer from './AppContainer/AppContainer'
 import AppDatePicker from './AppDatePicker/AppDatePicker'
 import AppDropDown from './AppDropDown/AppDropDown'
@@ -11,6 +12,7 @@ import LabelText from './LabelText'
 import LoadingView from './LoadingView'
 export {
   AppButton,
+  AppCheckButton,
   AppContainer,
   AppControllerInput,
   AppDatePicker,

@@ -5,7 +5,7 @@ import {StyleSheet, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
 import {AppButton, AppControllerInput, LabelText} from '@/Components'
-import {showToast} from '@/Helpers'
+import {InitialsAPICall, showToast} from '@/Helpers'
 import {verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {CommonStyle} from '@/Theme'
@@ -18,12 +18,17 @@ import StockBalanceComponent from './Components/StockBalanceComponent'
 import useAccountValidations from './Hooks/useAccountValidations'
 import useAddAccountData from './Hooks/useAddAccountData'
 
-export default () => {
+type AddAccountScreenProps = {
+  id?: number
+}
+
+export default ({id}: AddAccountScreenProps) => {
   const {
     control,
     handleSubmit,
     formState: {errors}
   } = useForm()
+  const [editItem] = InitialsAPICall.getMasterAccounts(id)
   const FIELDS = useAddAccountData()
   const [selectedType, setSelectedType] = useState<string>('')
   const isStockBalance = useMemo(() => selectedType === 'stock_balances', [selectedType])
@@ -84,6 +89,7 @@ export default () => {
         <Controller
           control={control}
           name={'name'}
+          defaultValue={editItem?.acc_name ?? ''}
           rules={validations['name'].rules}
           render={({field: {onChange, onBlur, value}}) => (
             <AppControllerInput
@@ -104,6 +110,7 @@ export default () => {
           <Controller
             control={control}
             name={'opening_date'}
+            defaultValue={editItem?.opening_date ?? ''}
             rules={validations['opening_date'].rules}
             render={({field: {onChange, onBlur, value}}) => {
               return (
@@ -126,6 +133,7 @@ export default () => {
             <Controller
               control={control}
               name={'opening_bal'}
+              defaultValue={editItem?.opening_bal ?? ''}
               rules={validations['opening_bal'].rules}
               render={({field: {onChange, onBlur, value}}) => {
                 return (
