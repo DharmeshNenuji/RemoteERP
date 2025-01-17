@@ -1,3 +1,4 @@
 import AccountsScreen from './AccountsScreen/AccountsScreen'
+import EditAccountScreen from './EditAccountScreen/EditAccountScreen'
 
-export {AccountsScreen}
+export {AccountsScreen, EditAccountScreen}

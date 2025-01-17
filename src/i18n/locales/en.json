@@ -133,6 +133,13 @@
     "erp129": "Cr",
     "erp130": "Dr",
     "erp131": "Balance",
-    "erp132": "Remark"
+    "erp132": "Remark",
+    "erp133": "Edit Accounts",
+    "erp134": "Include Inventory",
+    "erp135": "Opening Stock",
+    "erp136": "Sells",
+    "erp137": "Closing Stock",
+    "erp138": "Gross Profit :",
+    "erp139": "Net Profit :"
   }
 }

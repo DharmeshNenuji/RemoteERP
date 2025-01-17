@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: scale(10),
-    rowGap: verticalScale(10)
+    rowGap: verticalScale(15)
   },
   selfCenter: {
     alignSelf: 'center',

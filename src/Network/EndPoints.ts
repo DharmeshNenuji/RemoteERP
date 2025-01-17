@@ -5,5 +5,6 @@ export default {
   deleteMasterAccount: '?tag=acc_del',
   getConstCenterList:
     '?tag=cost_center_list&response_type=key_val&pagination=1&start=0&length=500&search[value]&order[0][column]=cost_center_id&order[0][dir]=asc',
-  getLedger: '?tag=ledger'
+  getLedger: '?tag=ledger',
+  getProfitLoss: '?tag=profit_loss'
 }

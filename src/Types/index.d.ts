@@ -18,6 +18,15 @@ type RootStackParamList = {
     todate: string
   }
   ProfitLossScreen: undefined
+  ProfitLossDetailsScreen: {
+    site_id: number
+    fromdate: string
+    todate: string
+    has_inv: number
+  }
+  EditAccountScreen: {
+    acc_id: number
+  }
 }
 type ItemType<T> = {
   item: T
