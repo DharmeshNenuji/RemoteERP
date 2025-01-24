@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import React, {useCallback, useMemo, useRef, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
@@ -6,7 +5,7 @@ import type {GestureResponderEvent} from 'react-native'
 import {StyleSheet, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
-import {AppButton, AppCheckButton, AppControllerInput, LabelText} from '@/Components'
+import {AppButton, AppControllerInput, LabelText} from '@/Components'
 import Loader from '@/Components/AppLoader/Loader'
 import {showToast, Utility} from '@/Helpers'
 import {verticalScale} from '@/Helpers/Responsive'
@@ -22,23 +21,21 @@ import StockBalanceComponent from './Components/StockBalanceComponent'
 import useAccountValidations from './Hooks/useAccountValidations'
 import useAddAccountData from './Hooks/useAddAccountData'
 
-type AddAccountScreenProps = {
-  id?: number
-}
+// type AddAccountScreenProps = {
+//   id?: number
+// }
 
-export default ({id}: AddAccountScreenProps) => {
+export default () => {
   const {
     control,
     handleSubmit,
     formState: {errors},
-    reset,
-    watch
+    reset
   } = useForm()
+
   const FIELDS = useAddAccountData()
   const [selectedType, setSelectedType] = useState<string>('')
   const isStockBalance = useMemo(() => selectedType === 'stock_in_hand', [selectedType])
-  const isTDSTextType = watch('tax_type')
-  console.log('isTDSTextType', isTDSTextType)
 
   const [stockBalances, setStockBalances] = useState<StockBalancesType[]>([
     {closing_date: '', value: ''}
@@ -54,7 +51,6 @@ export default ({id}: AddAccountScreenProps) => {
 
   const onSubmit = useCallback(
     (data: any) => {
-      console.log('data', data)
       const payload: any = {}
       if (data?.name) {
         payload.acc_name = data?.name
@@ -69,6 +65,9 @@ export default ({id}: AddAccountScreenProps) => {
 
       if (data?.opening_bal_type) {
         payload.opening_bal_type = data.opening_bal_type
+      }
+      if (data?.opening_bal) {
+        payload.opening_bal = data.opening_bal
       }
       if (data?.description) {
         payload.description = data.description
@@ -100,6 +99,9 @@ export default ({id}: AddAccountScreenProps) => {
       if (data?.bank_ac_no) {
         payload.bank_ac_no = data.bank_ac_no
       }
+      if (data?.address) {
+        payload.address = data.address
+      }
       if (stockBalances?.length >= 1) {
         const filtered = stockBalances?.filter((i) => i?.closing_date && i?.value)
         payload.stock_balances = filtered.map((i) => ({
@@ -107,12 +109,10 @@ export default ({id}: AddAccountScreenProps) => {
           closing_date: Utility.formatDated(i?.closing_date)
         }))
       }
-      console.log('payload', payload)
-      return
+
       Loader.isLoading(true)
       APICall('post', payload, EndPoints.addEditAccount)
         .then((resp) => {
-          console.log('resp', resp)
           if (resp?.status === 200) {
             showToast('Account added successfully', 'success')
             reset()

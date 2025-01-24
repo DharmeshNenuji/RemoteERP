@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {StyleSheet} from 'react-native'
 
 import {AppDatePicker, AppFromFrame, AppInput, DatePickerAnchorButton} from '@/Components'
+import {Colors} from '@/Theme'
 
 export type StockBalancesType = {
   closing_date: string
@@ -67,6 +68,7 @@ export default ({value, onChange, onPressAddRemove}: StockBalanceComponentProps)
 }
 const styles = StyleSheet.create({
   inputHalf: {
+    backgroundColor: Colors.white,
     width: '48%'
   }
 })

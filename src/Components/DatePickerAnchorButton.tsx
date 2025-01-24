@@ -40,7 +40,7 @@ export default memo(
               rightImage={SVGByteCode.calender2}
               onPressRightImage={onPress}
               value={value}
-              placeholder="DD / MM /YYYY"
+              placeholder="DD/MM/YYYY"
               onChangeText={(text) =>
                 onChangeDateText(
                   mask(text, 'DD/MM/YYYY', 'date', {
