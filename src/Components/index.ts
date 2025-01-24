@@ -3,6 +3,7 @@ import AppCheckButton from './AppCheckButton'
 import AppContainer from './AppContainer/AppContainer'
 import AppDatePicker from './AppDatePicker/AppDatePicker'
 import AppDropDown from './AppDropDown/AppDropDown'
+import AppFromFrame from './AppFromFrame'
 import AppControllerInput from './AppInput/AppControllerInput'
 import AppInput from './AppInput/AppInput'
 import AppLoader from './AppLoader/AppLoader'
@@ -17,6 +18,7 @@ export {
   AppControllerInput,
   AppDatePicker,
   AppDropDown,
+  AppFromFrame,
   AppInput,
   AppLoader,
   DatePickerAnchorButton,

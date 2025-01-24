@@ -259,6 +259,9 @@ export default ({id}: AddAccountScreenProps) => {
           )}
         </View>
         {Fields.map((field: any) => {
+          if (field === 'stock_balances') {
+            return null
+          }
           const {rules, ...props} = validations[field]
           const nextField = Fields[Fields.indexOf(field) + 1]
           return (

@@ -11,5 +11,8 @@ export default {
   greyShade14: '#89898e',
   themeBackground: '#f8fafd',
   themeBorder: '#14141E1A',
-  redShadeB00: '#B00020'
+  redShadeB00: '#B00020',
+  blueShade006: '#0066F91A',
+  lightblue: '#E5EEFD',
+  greyShadeEBEB: '#EBEBEB'
 }

@@ -156,6 +156,20 @@
     "erp152": "Sub Total",
     "erp153": "Search here",
     "erp154": "Sales",
-    "erp155": "Affect Inventory"
+    "erp155": "Affect Inventory",
+    "erp156": "Items",
+    "erp157": "Unit",
+    "erp158": "Quantity",
+    "erp159": "Rate",
+    "erp160": "Amount",
+    "erp161": "Sub Total",
+    "erp162": "Accounts(Taxes, Expenses, etc...)",
+    "erp163": "Grand Total",
+    "erp164": "Remarks",
+    "erp165": "Invoice No",
+    "erp166": "Document",
+    "erp167": "Payment By",
+    "erp168": "Select Payment By",
+    "erp169": "Choose File"
   }
 }

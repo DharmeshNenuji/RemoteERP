@@ -16,17 +16,25 @@ type DatePickerAnchorButtonProps = {
   label: string
   style?: StyleProp<ViewStyle>
   children?: React.ReactNode
+  isDateField?: boolean
 }
 
 export default memo(
-  ({value, onPress, label, style = {}, children}: DatePickerAnchorButtonProps) => {
+  ({
+    value,
+    onPress,
+    label,
+    style = {},
+    children,
+    isDateField = true
+  }: DatePickerAnchorButtonProps) => {
     return (
       <View style={style}>
         <LabelText label={label} />
         <TouchableOpacity style={styles.inputHalf} onPress={onPress}>
           <View style={styles.inputContainer}>
             <Text style={styles.inputStyle}>
-              {value ? Utility.formatDated(value) : 'DD / MM /YYYY'}
+              {isDateField ? (value ? Utility.formatDated(value) : 'DD / MM /YYYY') : value}
             </Text>
             <View style={styles.leftImageContainer}>
               <SvgFromXml

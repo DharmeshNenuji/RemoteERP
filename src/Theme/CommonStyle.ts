@@ -11,6 +11,10 @@ export default StyleSheet.create({
   flex: {
     flex: 1
   },
+  modalStyle: {
+    margin: 0,
+    padding: 0
+  },
   row: {
     alignItems: 'center',
     flexDirection: 'row'

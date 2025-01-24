@@ -94,6 +94,11 @@ export default () => {
         data: COMMON_FIELD_2,
         value: 'Bank'
       },
+      stock_in_hand: {
+        title: t('erp71'),
+        data: ['stock_balances'],
+        value: 'Stock In Hand'
+      },
       suspense: {
         title: t('erp72'),
         value: 'Suspense'

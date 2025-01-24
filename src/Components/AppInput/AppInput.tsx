@@ -1,6 +1,6 @@
 import React, {forwardRef, useMemo, useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
-import type {StyleProp, TextInputProps, ViewStyle} from 'react-native'
+import type {DimensionValue, StyleProp, TextInputProps, ViewStyle} from 'react-native'
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
 import Animated from 'react-native-reanimated'
 import {SvgFromXml} from 'react-native-svg'
@@ -19,6 +19,8 @@ export type AppInputProps = {
   control?: Control<FieldValues>
   isMultiLine?: boolean
   parentStyle?: StyleProp<ViewStyle>
+  width?: DimensionValue
+  containerStyle?: StyleProp<ViewStyle>
 } & TextInputProps
 
 export default forwardRef<TextInput, AppInputProps>(
@@ -32,17 +34,23 @@ export default forwardRef<TextInput, AppInputProps>(
       leftImage,
       leftImageSize,
       parentStyle = {},
+      containerStyle = {},
+      placeholder,
+      width = '100%',
       ...rest
     },
     ref
   ) => {
     const [isFocus, setIsFocus] = useState(false)
-    const placeHolder = useMemo(() => label?.replace('(%)', ''), [label])
+    const placeHolder = useMemo(
+      () => placeholder ?? label?.replace('(%)', ''),
+      [label, placeholder]
+    )
 
     return (
-      <Animated.View style={[styles.container, parentStyle]}>
+      <Animated.View style={[{width}, parentStyle]}>
         {label && <Text style={styles.titleTextStyle}>{label}</Text>}
-        <View style={styles.inputContainer}>
+        <View style={[styles.inputContainer, containerStyle]}>
           {leftImage && (
             <Pressable style={styles.leftImageContainer}>
               <SvgFromXml width={leftImageSize} height={leftImageSize} xml={leftImage} />
@@ -89,9 +97,6 @@ const styles = StyleSheet.create({
   activeInputStyle: {
     backgroundColor: Colors.white
   },
-  container: {
-    width: '100%'
-  },
 
   inputContainer: {
     alignItems: 'center',
@@ -126,6 +131,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts[400],
     fontSize: moderateScale(14),
     lineHeight: 16,
-    marginBottom: verticalScale(10)
+    marginBottom: verticalScale(5)
   }
 })

@@ -72,6 +72,16 @@ export default class InitialsAPICall {
     })
   }
 
+  static convertToDropDown(_array: any[] = []) {
+    return _array.reduce((array, item) => {
+      array.push({
+        value: item[0],
+        title: item[1]
+      })
+      return array
+    }, [] as DropDownType[])
+  }
+
   static getSyncCostCentersDropDown() {
     return InitialsAPICall.SyncConstCenters.data.reduce((array, item) => {
       array.push({

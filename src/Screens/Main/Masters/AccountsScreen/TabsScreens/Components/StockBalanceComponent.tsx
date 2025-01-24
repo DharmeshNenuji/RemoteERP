@@ -1,12 +1,8 @@
 import {useCallback, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet, TouchableOpacity, View} from 'react-native'
-import {SvgFromXml} from 'react-native-svg'
+import {StyleSheet} from 'react-native'
 
-import {AppDatePicker, AppInput, DatePickerAnchorButton} from '@/Components'
-import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
-import SVGByteCode from '@/Helpers/SVGByteCode'
-import {Colors} from '@/Theme'
+import {AppDatePicker, AppFromFrame, AppInput, DatePickerAnchorButton} from '@/Components'
 
 export type StockBalancesType = {
   closing_date: string
@@ -43,35 +39,21 @@ export default ({value, onChange, onPressAddRemove}: StockBalanceComponentProps)
   )
 
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <View style={styles.row}>
-          <DatePickerAnchorButton
-            value={value.closing_date}
-            label={t('erp108')}
-            style={styles.inputHalf}
-            onPress={() => setIsDatePicker(true)}
-          />
+    <AppFromFrame onPressAddRemove={onPressAddRemove}>
+      <DatePickerAnchorButton
+        value={value.closing_date}
+        label={t('erp108')}
+        style={styles.inputHalf}
+        onPress={() => setIsDatePicker(true)}
+      />
 
-          <AppInput
-            label={t('erp109')}
-            value={value.value}
-            onChangeText={onChangeText}
-            parentStyle={styles.inputHalf} // Apply style for half width
-          />
-          <View style={styles.boxRow}>
-            <TouchableOpacity style={styles.box} onPress={() => onPressAddRemove(false)}>
-              <SvgFromXml xml={SVGByteCode.minus()} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.box, styles.borderLessBox]}
-              onPress={() => onPressAddRemove(true)}
-            >
-              <SvgFromXml xml={SVGByteCode.plus()} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <AppInput
+        label={t('erp109')}
+        value={value.value}
+        onChangeText={onChangeText}
+        parentStyle={styles.inputHalf} // Apply style for half width
+      />
+
       {isDatePicker && (
         <AppDatePicker
           date={value.closing_date}
@@ -79,53 +61,11 @@ export default ({value, onChange, onPressAddRemove}: StockBalanceComponentProps)
           onClose={() => setIsDatePicker(false)}
         />
       )}
-    </View>
+    </AppFromFrame>
   )
 }
 const styles = StyleSheet.create({
-  borderLessBox: {
-    backgroundColor: Colors.primary
-  },
-  box: {
-    alignItems: 'center',
-    borderColor: Colors.primary,
-    borderRadius: moderateScale(5),
-    borderWidth: 2,
-    height: verticalScale(25),
-    justifyContent: 'center',
-    width: verticalScale(25)
-  },
-  boxRow: {
-    alignItems: 'center',
-    bottom: -(scale(20) + verticalScale(25) / 2),
-    columnGap: scale(15),
-    flexDirection: 'row',
-    position: 'absolute',
-    right: scale(10)
-  },
-  container: {
-    backgroundColor: Colors.lightPrimary,
-    borderRadius: moderateScale(5),
-    flex: 1,
-    padding: scale(10),
-    paddingBottom: verticalScale(20)
-  },
-  innerContainer: {
-    backgroundColor: Colors.white,
-    borderRadius: moderateScale(5),
-    flex: 1,
-    padding: scale(10),
-    paddingBottom: verticalScale(20)
-  },
-
   inputHalf: {
     width: '48%'
-  },
-
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%'
   }
 })
