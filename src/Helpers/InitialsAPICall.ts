@@ -43,9 +43,22 @@ export default class InitialsAPICall {
   static SyncItems: SyncItemType = initialData as unknown as SyncItemType
 
   static SyncFromLocal() {
-    this.SyncAccounts = JSON.parse(MMKVStorage.getString('SyncAccounts') as string)
-    this.SyncConstCenters = JSON.parse(MMKVStorage.getString('SyncConstCenter') as string)
-    this.SyncItems = JSON.parse(MMKVStorage.getString('SyncItems') as string)
+    try {
+      const accounts = MMKVStorage.getString('SyncAccounts')
+      if (accounts) {
+        this.SyncAccounts = JSON.parse(accounts)
+      }
+      const costCenters = MMKVStorage.getString('SyncConstCenter')
+      if (costCenters) {
+        this.SyncAccounts = JSON.parse(costCenters)
+      }
+      const items = MMKVStorage.getString('SyncItems')
+      if (items) {
+        this.SyncAccounts = JSON.parse(items)
+      }
+    } catch (_) {
+      //empty3
+    }
   }
 
   static Sync() {

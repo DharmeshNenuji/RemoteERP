@@ -70,11 +70,12 @@ const APICall = async (
   if (url) {
     config.url = url
   }
+
   if (body && method === 'get') {
     config.params = body
   } else if (body && (method === 'post' || method === 'put') && formData) {
     config.data = getFormData(body)
-    config.headers = {'Content-Type': 'multipart/form-data'}
+    config.headers = {...config.headers, 'Content-Type': 'multipart/form-data'}
   } else {
     config.data = body
   }
@@ -86,7 +87,7 @@ const APICall = async (
     }
   }
 
-  if (headers) {
+  if (Object.keys(headers).length > 0) {
     config.headers = headers
   }
 
@@ -103,7 +104,6 @@ const APICall = async (
         return resolve({status: res.status, data: res.data})
       })
       .catch((error) => {
-        console.log('error', error)
         if (
           error?.response?.status === 500 ||
           error?.status === 500 ||
