@@ -94,20 +94,18 @@ export default memo(() => {
   }, [])
 
   const subTotal = useMemo(() => {
-    return items
-      .reduce((acc, val) => {
-        return acc + (val.amount ?? 0)
-      }, 0)
-      .toFixed(2)
+    return items.reduce((acc, val) => {
+      return acc + (val.amount ?? 0)
+    }, 0)
   }, [items])
 
   const grandTotal = useMemo(() => {
-    return accounts
-      .reduce((acc, val) => {
+    return (
+      accounts.reduce((acc, val) => {
         return acc + (val.amount ?? 0)
-      }, 0)
-      .toFixed(2)
-  }, [accounts])
+      }, 0) + subTotal
+    )
+  }, [accounts, subTotal])
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
@@ -247,7 +245,7 @@ export default memo(() => {
             }}
           />
           <View>
-            <LabelText label={t('erp156')} />
+            <LabelText label={t('erp11')} />
             <View style={styles.stockBalanceContainer}>
               <AppFromFrame isNormal>
                 {items.map((i, index) => (
@@ -260,7 +258,9 @@ export default memo(() => {
                 ))}
                 <View style={styles.itemRowView}>
                   <Text style={styles.labelTextStyle}>{t('erp161')}</Text>
-                  <Text style={[styles.labelTextStyle, styles.boldStyle]}>{subTotal}</Text>
+                  <Text style={[styles.labelTextStyle, styles.boldStyle]}>
+                    {subTotal.toFixed(2)}
+                  </Text>
                 </View>
               </AppFromFrame>
             </View>
@@ -279,7 +279,9 @@ export default memo(() => {
                 ))}
                 <View style={styles.itemRowView}>
                   <Text style={styles.labelTextStyle}>{t('erp163')}</Text>
-                  <Text style={[styles.labelTextStyle, styles.boldStyle]}>{grandTotal}</Text>
+                  <Text style={[styles.labelTextStyle, styles.boldStyle]}>
+                    {grandTotal.toFixed(2)}
+                  </Text>
                 </View>
               </AppFromFrame>
             </View>

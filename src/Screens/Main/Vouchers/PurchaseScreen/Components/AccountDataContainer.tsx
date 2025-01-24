@@ -5,6 +5,7 @@ import {StyleSheet, View} from 'react-native'
 import {AppDropDown, AppFromFrame, AppInput, LabelText} from '@/Components'
 import {InitialsAPICall} from '@/Helpers'
 import {scale, verticalScale} from '@/Helpers/Responsive'
+import {Colors} from '@/Theme'
 
 export type AccountDataItemType = {
   account: string
@@ -45,7 +46,7 @@ export default memo(({value, onChange, onPressAddRemove}: AccountDataContainerPr
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.grow}>
-            <LabelText label={t('erp156')} />
+            <LabelText label={t('erp170')} />
             <AppDropDown
               data={ACCOUNTS}
               value={value.account}
@@ -62,7 +63,8 @@ export default memo(({value, onChange, onPressAddRemove}: AccountDataContainerPr
           <AppInput
             onChangeText={(text) => onChangeText(text, 'amount')}
             value={value.amount.toString()}
-            label={t('erp157')}
+            label={t('erp160')}
+            parentStyle={styles.parentStyle}
             width={'40%'}
           />
         </View>
@@ -78,6 +80,9 @@ const styles = StyleSheet.create({
   },
   grow: {
     flexGrow: 1
+  },
+  parentStyle: {
+    backgroundColor: Colors.white
   },
   row: {
     alignItems: 'center',

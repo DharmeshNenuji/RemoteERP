@@ -5,6 +5,7 @@ import {StyleSheet, View} from 'react-native'
 import {AppDropDown, AppFromFrame, AppInput, LabelText} from '@/Components'
 import {InitialsAPICall} from '@/Helpers'
 import {scale, verticalScale} from '@/Helpers/Responsive'
+import {Colors} from '@/Theme'
 
 export type ItemType = {
   item: string
@@ -67,7 +68,7 @@ export default memo(({value, onChange, onPressAddRemove}: ItemDataContainerProps
       <View style={styles.container}>
         <View style={styles.row}>
           <View style={styles.grow}>
-            <LabelText label={t('erp156')} />
+            <LabelText label={t('erp11')} />
             <AppDropDown
               data={ITEMS}
               value={value.item}
@@ -81,12 +82,19 @@ export default memo(({value, onChange, onPressAddRemove}: ItemDataContainerProps
               labelField={'title'}
             />
           </View>
-          <AppInput editable={false} value={value.unit} label={t('erp157')} width={'40%'} />
+          <AppInput
+            parentStyle={styles.parentStyle}
+            editable={false}
+            value={value.unit}
+            label={t('erp157')}
+            width={'40%'}
+          />
         </View>
         <View style={styles.row}>
           <AppInput
             label={t('erp158')}
             width={'31%'}
+            parentStyle={styles.parentStyle}
             value={value.quantity.toString()}
             keyboardType="decimal-pad"
             onChangeText={(text) => onChangeText(text, 'quantity')}
@@ -94,6 +102,7 @@ export default memo(({value, onChange, onPressAddRemove}: ItemDataContainerProps
           <AppInput
             label={t('erp159')}
             width={'31%'}
+            parentStyle={styles.parentStyle}
             value={value.rate.toString()}
             keyboardType="decimal-pad"
             onChangeText={(text) => onChangeText(text, 'rate')}
@@ -103,6 +112,7 @@ export default memo(({value, onChange, onPressAddRemove}: ItemDataContainerProps
             placeholder="0"
             value={value.amount.toFixed(2)}
             label={t('erp160')}
+            parentStyle={styles.parentStyle}
             width={'31%'}
             keyboardType="decimal-pad"
           />
@@ -119,6 +129,9 @@ const styles = StyleSheet.create({
   },
   grow: {
     flexGrow: 1
+  },
+  parentStyle: {
+    backgroundColor: Colors.white
   },
   row: {
     alignItems: 'center',
