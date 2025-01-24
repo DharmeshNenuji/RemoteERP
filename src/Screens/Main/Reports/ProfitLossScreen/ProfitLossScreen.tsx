@@ -18,14 +18,7 @@ import {scale, verticalScale} from '@/Helpers/Responsive'
 import {useNavigation} from '@/Hooks'
 import {Colors} from '@/Theme'
 
-const COST_CENTER_LIST = InitialsAPICall.getMasterCostCenter()
-const ConstCenters = COST_CENTER_LIST.reduce((array, item) => {
-  array.push({
-    value: item.cost_center_id.toString(),
-    title: item.cost_center_name
-  })
-  return array
-}, [] as any[])
+const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
 
 const InitialErrors = {
   site: '',

@@ -214,12 +214,6 @@ export default () => {
           required: t('erp85')
         },
         returnKeyType: 'next'
-      },
-      stock_balances: {
-        label: t('erp107'),
-        keyboardType: 'default',
-        rules: {},
-        returnKeyType: 'next'
       }
     }
     return Validations

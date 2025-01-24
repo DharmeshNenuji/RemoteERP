@@ -55,7 +55,7 @@ export default () => {
       .then((resp) => {
         if (resp.status === HttpCodes.OK && resp?.data) {
           useUserStore.getState().setUserData(resp?.data)
-          InitialsAPICall.init()
+          InitialsAPICall.Sync()
           showToast(t('erp52'))
           NavigateToMain()
         } else {

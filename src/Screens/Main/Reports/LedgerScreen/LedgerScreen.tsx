@@ -17,24 +17,9 @@ import {scale, verticalScale} from '@/Helpers/Responsive'
 import {useNavigation} from '@/Hooks'
 import {Colors} from '@/Theme'
 
-const ACCOUNT_LIST = InitialsAPICall.getMasterAccounts()
-const COST_CENTER_LIST = InitialsAPICall.getMasterCostCenter()
+const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
 
-const ConstCenters = COST_CENTER_LIST.reduce((array, item) => {
-  array.push({
-    value: item.cost_center_id.toString(),
-    title: item.cost_center_name
-  })
-  return array
-}, [] as any[])
-
-const Accounts = ACCOUNT_LIST.reduce((array, item) => {
-  array.push({
-    value: item.acc_id.toString(),
-    title: item.acc_name
-  })
-  return array
-}, [] as any[])
+const Accounts = InitialsAPICall.getSyncAccountsDropDown()
 const InitialErrors = {
   site: '',
   account: '',

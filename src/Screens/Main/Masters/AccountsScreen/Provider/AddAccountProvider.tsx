@@ -4,15 +4,11 @@ import React, {createContext, useContext, useMemo, useState} from 'react'
 type AddAccountContextType = {
   search: string
   setSearch: React.Dispatch<React.SetStateAction<string>>
-  deletedIds: []
-  setDeletedIds: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 const defaultContext: AddAccountContextType = {
   search: '',
-  setSearch: () => {},
-  deletedIds: [],
-  setDeletedIds: () => {}
+  setSearch: () => {}
 }
 
 const AddAccountProviderContext = createContext<AddAccountContextType>(defaultContext)
@@ -23,11 +19,7 @@ type AddAccountProviderProps = {
 
 export const AddAccountProvider: React.FC<AddAccountProviderProps> = ({children}) => {
   const [search, setSearch] = useState('')
-  const [deletedIds, setDeletedIds] = useState<string[]>([])
-  const values = useMemo(
-    () => ({search, deletedIds, setDeletedIds, setSearch}),
-    [deletedIds, search]
-  )
+  const values = useMemo(() => ({search, setSearch}), [search])
 
   return (
     <AddAccountProviderContext.Provider value={values}>

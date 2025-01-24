@@ -1,9 +1,9 @@
-import dayjs from 'dayjs'
 import React, {memo} from 'react'
 import type {StyleProp, ViewStyle} from 'react-native'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
+import {Utility} from '@/Helpers'
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors} from '@/Theme'
@@ -21,12 +21,12 @@ type DatePickerAnchorButtonProps = {
 export default memo(
   ({value, onPress, label, style = {}, children}: DatePickerAnchorButtonProps) => {
     return (
-      <View>
+      <View style={style}>
         <LabelText label={label} />
-        <TouchableOpacity style={[styles.inputHalf, style]} onPress={onPress}>
+        <TouchableOpacity style={styles.inputHalf} onPress={onPress}>
           <View style={styles.inputContainer}>
             <Text style={styles.inputStyle}>
-              {value ? dayjs(value).format('DD/MM/YYYY') : 'DD / MM /YYYY'}
+              {value ? Utility.formatDated(value) : 'DD / MM /YYYY'}
             </Text>
             <View style={styles.leftImageContainer}>
               <SvgFromXml
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     color: Colors.black,
-    flex: 1,
+    flexGrow: 1,
     fontSize: moderateScale(15),
     textAlignVertical: 'center'
   },

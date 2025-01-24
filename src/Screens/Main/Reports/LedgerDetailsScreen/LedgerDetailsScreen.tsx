@@ -42,16 +42,16 @@ export default memo(() => {
   }, [])
 
   const renderLedgerDetailsView = useMemo(() => {
-    const [account] = InitialsAPICall.getMasterAccounts(acc_id)
-    const [costCenter] = InitialsAPICall.getMasterCostCenter(site_id)
+    const account = InitialsAPICall.findItemByType(acc_id, 'account')
+    const costCenter = InitialsAPICall.findItemByType(site_id, 'costCenter')
 
     return (
       <View style={styles.detailsContainer}>
-        <Text style={[styles.tableTextStyle, styles.bigText]}>{costCenter?.cost_center_name}</Text>
+        <Text style={[styles.tableTextStyle, styles.bigText]}>{costCenter?.title}</Text>
         <View style={styles.divider} />
         <View>
           <Text style={styles.headerText}>Account:</Text>
-          <Text style={styles.tableTextStyle}>{account?.acc_name}</Text>
+          <Text style={styles.tableTextStyle}>{account?.title}</Text>
         </View>
         <View>
           <Text style={styles.headerText}>Period:</Text>

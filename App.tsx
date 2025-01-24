@@ -2,7 +2,7 @@ import './src/i18n/i18n'
 
 import {Toasts} from '@backpackapp-io/react-native-toast'
 import {NavigationContainer} from '@react-navigation/native'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {KeyboardProvider} from 'react-native-keyboard-controller'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
@@ -10,9 +10,14 @@ import SplashScreen from 'react-native-splash-screen'
 
 import {AppLoader} from '@/Components'
 import Loader from '@/Components/AppLoader/Loader'
+import {InitialsAPICall} from '@/Helpers'
 import {AppNavigation, navigationRef} from '@/Router'
 import {CommonStyle} from '@/Theme'
 export default () => {
+  useEffect(() => {
+    InitialsAPICall.SyncFromLocal()
+  }, [])
+
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={CommonStyle.flex}>

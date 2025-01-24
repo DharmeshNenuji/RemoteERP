@@ -1,149 +1,179 @@
+/* eslint-disable prefer-destructuring */
 import {APICall, EndPoints} from '@/Network'
 import {MMKVStorage} from '@/Store'
 
 import HttpCodes from './HttpCodes'
-export type UserAccountType = {
-  acc_id: number
-  acc_name: string
-  opening_bal: string
-  opening_date: string
-  acc_grp: string
+
+export type SyncDataType = Array<
+  [number, string, string, string, number, number, number, string[] | undefined]
+>
+export type SyncType = {
+  data: SyncDataType
+  del_ids_array: number[]
+  refresh_flag: number
+}
+export type SyncDataItemType = {
+  id: number
+  title: string
+  group: string
+}
+export type SyncAccountsType = {
+  accs_last_ts_int: number
+} & SyncType
+export type SyncConstCenterType = {
+  cost_centers_last_ts_int: number
+} & SyncType
+export type SyncItemType = {
+  items_last_ts_int: number
+} & SyncType
+type DropDownType = {
+  title: string
+  value: string
 }
 
-export type CostCenterType = {
-  address: string
-  cost_center_id: number
-  cost_center_name: string
-  pac_amount: string
-  work_order_date: string
+type ItemType = 'item' | 'account' | 'costCenter'
+
+const initialData = {
+  data: []
 }
 
 export default class InitialsAPICall {
-  static masterAccounts = [] as UserAccountType[]
-  static constCenters = [] as CostCenterType[]
+  static SyncAccounts: SyncAccountsType = initialData as unknown as SyncAccountsType
+  static SyncConstCenters: SyncConstCenterType = initialData as unknown as SyncConstCenterType
+  static SyncItems: SyncItemType = initialData as unknown as SyncItemType
 
-  /**
-   * Fetches and stores the master accounts and cost centers in the
-   * MMKVStorage and the class properties.
-   *
-   * This function should be called once when the app is started.
-   */
-  static init() {
-    this.fetchMasterAccounts()
-    this.fetchMasterCostCenter()
+  static SyncFromLocal() {
+    this.SyncAccounts = JSON.parse(MMKVStorage.getString('SyncAccounts') as string)
+    this.SyncConstCenters = JSON.parse(MMKVStorage.getString('SyncConstCenter') as string)
+    this.SyncItems = JSON.parse(MMKVStorage.getString('SyncItems') as string)
   }
-  /**
-   * Fetches master accounts from the server and stores the result in
-   * MMKVStorage under the key `getMasterAccounts`. The result is also stored
-   * in the class property `masterAccounts`.
-   *
-   * @returns Promise that resolves when the data is fetched and stored.
-   */
 
-  static fetchMasterAccounts() {
-    APICall('get', {}, EndPoints.getMasterAccounts).then((resp) => {
+  static Sync() {
+    APICall('get', {}, EndPoints.SyncAccounts).then((resp) => {
       if (resp.status === HttpCodes.OK && resp?.data) {
-        MMKVStorage.delete('getMasterAccounts')
-        MMKVStorage.set('getMasterAccounts', JSON.stringify(resp?.data))
-        this.masterAccounts = resp?.data
+        MMKVStorage.delete('SyncAccounts')
+        MMKVStorage.set('SyncAccounts', JSON.stringify(resp?.data))
+        this.SyncAccounts = resp?.data
+      }
+    })
+    APICall('get', {}, EndPoints.SyncConstCenter).then((resp) => {
+      if (resp.status === HttpCodes.OK && resp?.data) {
+        MMKVStorage.delete('SyncConstCenter')
+        MMKVStorage.set('SyncConstCenter', JSON.stringify(resp?.data))
+        this.SyncConstCenters = resp?.data
+      }
+    })
+    APICall('get', {}, EndPoints.SyncItems).then((resp) => {
+      if (resp.status === HttpCodes.OK && resp?.data) {
+        MMKVStorage.delete('SyncItems')
+        MMKVStorage.set('SyncItems', JSON.stringify(resp?.data))
+        this.SyncItems = resp?.data
       }
     })
   }
-  /**
-   * Retrieves the list of master accounts from storage. If an ID is provided,
-   * filters the accounts to return only the one with the matching ID.
-   *
-   * @param {string | number} [id] - Optional account ID to filter the accounts.
-   * @returns {UserAccountType[]} - An array of user account objects, or an empty
-   * array if an error occurs or no accounts match the provided ID.
-   */
 
-  static getMasterAccounts(id?: string | number): UserAccountType[] {
-    try {
-      const list = JSON.parse(
-        MMKVStorage.getString('getMasterAccounts') as string
-      ) as UserAccountType[]
-      this.masterAccounts = list
-      if (id) {
-        return list.filter((i) => i?.acc_id?.toString() === id?.toString())
-      }
-      if (this.masterAccounts.length === 0) {
-        return list
-      } else {
-        return this.masterAccounts
-      }
-    } catch (_) {
-      return []
+  static getSyncCostCentersDropDown() {
+    return InitialsAPICall.SyncConstCenters.data.reduce((array, item) => {
+      array.push({
+        value: item[0].toString(),
+        title: item[1]
+      })
+      return array
+    }, [] as DropDownType[])
+  }
+  static getSyncAccountsDropDown() {
+    return InitialsAPICall.SyncAccounts.data.reduce((array, item) => {
+      array.push({
+        value: item[0].toString(),
+        title: item[1]
+      })
+      return array
+    }, [] as DropDownType[])
+  }
+  static getSyncItemsDropDown() {
+    return InitialsAPICall.SyncItems.data.reduce((array, item) => {
+      array.push({
+        value: item[0].toString(),
+        title: item[1]
+      })
+      return array
+    }, [] as DropDownType[])
+  }
+  static findItemByType(id: number, type: ItemType): SyncDataItemType | null {
+    let data: Array<
+      [number, string, string, string, number, number, number, string[] | undefined]
+    > = []
+
+    switch (type) {
+      case 'account':
+        data = this.SyncAccounts.data
+        break
+      case 'costCenter':
+        data = this.SyncConstCenters.data
+        break
+      case 'item':
+        data = this.SyncItems.data
+        break
+      default:
+        throw new Error('Invalid type provided')
     }
+
+    const item = data.find((entry) => +entry[0] === +id)
+    return item
+      ? {
+          id: item[0],
+          title: item[1],
+          group: item[2]
+        }
+      : null
   }
 
-  /**
-   * Deletes a master account by its ID and updates the stored list of
-   * master accounts in MMKVStorage.
-   *
-   * @param {string | number} id - The ID of the account to delete.
-   */
-  static deleteMasterAccount(id: string | number): void {
+  static deleteItemByIDAndType(id: number, type: ItemType): void {
+    let key
     try {
-      const list = JSON.parse(
-        MMKVStorage.getString('getMasterAccounts') as string
-      ) as UserAccountType[]
+      switch (type) {
+        case 'account':
+          key = 'SyncAccounts'
+          break
 
-      const index = list.findIndex((i) => i?.acc_id?.toString() === id?.toString())
-      list.splice(index, 1)
-      this.masterAccounts = list
-      MMKVStorage.delete('getMasterAccounts')
-      MMKVStorage.set('getMasterAccounts', JSON.stringify(list))
+        case 'item': {
+          key = 'SyncItems'
+          break
+        }
+        case 'costCenter': {
+          key = 'SyncConstCenter'
+          break
+        }
+        default:
+          break
+      }
+      if (key) {
+        const currentObject = JSON.parse(MMKVStorage.getString(key) as string)
+        const list = currentObject?.data
+        const index = list?.findIndex((i: any) => +i[0] === +id)
+        list.splice(index, 1)
+        const packedObject = {...currentObject, data: list}
+        MMKVStorage.delete(key)
+        MMKVStorage.set('getMasterAccounts', JSON.stringify(packedObject))
+        switch (type) {
+          case 'item': {
+            this.SyncItems = packedObject
+            break
+          }
+          case 'account': {
+            this.SyncAccounts = packedObject
+            break
+          }
+          case 'costCenter': {
+            this.SyncConstCenters = packedObject
+            break
+          }
+          default:
+            break
+        }
+      }
     } catch (_) {
       //
-    }
-  }
-
-  /**
-   * Fetches master cost centers from the server and stores the result in
-   * MMKVStorage under the key `getConstCenterList`. The result is also stored
-   * in the class property `constCenters`.
-   *
-   * @returns Promise that resolves when the data is fetched and stored.
-   */
-  static fetchMasterCostCenter() {
-    APICall('get', {}, EndPoints.getConstCenterList).then((resp) => {
-      if (resp.status === HttpCodes.OK && resp?.data) {
-        MMKVStorage.delete('getConstCenterList')
-        MMKVStorage.set('getConstCenterList', JSON.stringify(resp?.data))
-        this.constCenters = resp?.data
-      }
-    })
-  }
-
-  static getMasterCostCenter(id?: string | number): CostCenterType[] {
-    /*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Returns an array of master cost centers. If an ID is provided, only cost
-     * centers with a matching `cost_center_id` are returned.
-     *
-     * If the data has not been fetched yet, an empty array is returned. If an
-     * error occurs while parsing the stored data, an empty array is returned.
-     *
-     * @param {string|number} [id] - Optional ID to filter by.
-     * @returns {CostCenterType[]} - An array of cost center objects, or an empty
-     * array if an error occurs or no cost centers match the provided ID.
-     */
-    /******  72d7a06b-76b8-4531-a3e2-8e4ee21d7ee0  *******/ try {
-      const list = JSON.parse(
-        MMKVStorage.getString('getConstCenterList') as string
-      ) as CostCenterType[]
-      this.constCenters = list
-      if (id) {
-        return list.filter((i) => i?.cost_center_id?.toString() === id?.toString())
-      }
-      if (this.constCenters.length === 0) {
-        return list
-      } else {
-        return this.constCenters
-      }
-    } catch (_) {
-      return []
     }
   }
 }

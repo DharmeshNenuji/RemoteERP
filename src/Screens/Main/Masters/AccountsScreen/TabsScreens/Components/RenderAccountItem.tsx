@@ -5,15 +5,15 @@ import {Menu, MenuItem} from 'react-native-material-menu'
 import {SvgFromXml} from 'react-native-svg'
 
 import {Screen} from '@/Helpers'
-import type {UserAccountType} from '@/Helpers/InitialsAPICall'
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {useNavigation} from '@/Hooks'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
 
+import type {MasterAccountItemType} from '../Hooks/useSearchAccountList'
 import AccountDeleteModal from './AccountDeleteModal'
 
-export default memo(({item}: ItemType<UserAccountType>) => {
+export default memo(({item}: ItemType<MasterAccountItemType>) => {
   const [visible, setVisible] = useState(false)
   const {t} = useTranslation()
   const [isDeleteModal, setIsDeleteModal] = useState(false)
@@ -24,7 +24,7 @@ export default memo(({item}: ItemType<UserAccountType>) => {
     navigate(Screen.EditAccountScreen, {
       acc_id: item.acc_id
     })
-  }, [item.acc_id, navigate])
+  }, [item, navigate])
 
   const onPressDelete = useCallback(() => {
     setVisible(false)
@@ -37,7 +37,6 @@ export default memo(({item}: ItemType<UserAccountType>) => {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text style={styles.titleStyle}>{item.acc_name}</Text>
-        <TouchableOpacity></TouchableOpacity>
         <Menu
           style={styles.menuStyle}
           visible={visible}

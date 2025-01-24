@@ -140,6 +140,22 @@
     "erp136": "Sells",
     "erp137": "Closing Stock",
     "erp138": "Gross Profit :",
-    "erp139": "Net Profit :"
+    "erp139": "Net Profit :",
+    "erp140": "Save Voucher",
+    "erp141": "Is Bill Received",
+    "erp142": "Select Party",
+    "erp143": "Select Purchase",
+    "erp144": "Purchase Account",
+    "erp145": "Party",
+    "erp146": "Additional Cost Center",
+    "erp147": "GRN or PO No.",
+    "erp148": "Unit",
+    "erp149": "Quantity",
+    "erp150": "Rate",
+    "erp151": "Amount",
+    "erp152": "Sub Total",
+    "erp153": "Search here",
+    "erp154": "Sales",
+    "erp155": "Affect Inventory"
   }
 }

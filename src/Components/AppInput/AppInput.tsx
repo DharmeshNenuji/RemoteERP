@@ -1,4 +1,4 @@
-import React, {forwardRef, useState} from 'react'
+import React, {forwardRef, useMemo, useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
 import type {StyleProp, TextInputProps, ViewStyle} from 'react-native'
 import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
@@ -37,6 +37,7 @@ export default forwardRef<TextInput, AppInputProps>(
     ref
   ) => {
     const [isFocus, setIsFocus] = useState(false)
+    const placeHolder = useMemo(() => label?.replace('(%)', ''), [label])
 
     return (
       <Animated.View style={[styles.container, parentStyle]}>
@@ -49,6 +50,8 @@ export default forwardRef<TextInput, AppInputProps>(
           )}
           <TextInput
             {...rest}
+            placeholder={placeHolder}
+            placeholderTextColor={Colors.blackShade14}
             ref={ref}
             style={[
               styles.inputStyle,

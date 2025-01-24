@@ -32,7 +32,7 @@ export default ({onClose, id}: AccountDeleteModalProps) => {
           setDeletedIds((state) => {
             const clone = [...state]
             clone.push(id.toString())
-            InitialsAPICall.deleteMasterAccount(id)
+            InitialsAPICall.deleteItemByIDAndType(id, 'account')
             return clone
           })
         }

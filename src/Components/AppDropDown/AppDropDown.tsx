@@ -15,6 +15,7 @@ type AccountDropDownProps = {
 export default memo(({...rest}: AccountDropDownProps) => {
   return (
     <Dropdown
+      {...rest}
       style={styles.dropdown}
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
@@ -35,7 +36,6 @@ export default memo(({...rest}: AccountDropDownProps) => {
           />
         )
       }}
-      {...rest}
     />
   )
 })

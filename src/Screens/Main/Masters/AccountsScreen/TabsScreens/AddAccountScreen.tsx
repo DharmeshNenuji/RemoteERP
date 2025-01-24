@@ -1,13 +1,17 @@
+import dayjs from 'dayjs'
 import React, {useCallback, useMemo, useRef, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
+import type {GestureResponderEvent} from 'react-native'
 import {StyleSheet, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 
-import {AppButton, AppControllerInput, LabelText} from '@/Components'
-import {InitialsAPICall, showToast} from '@/Helpers'
+import {AppButton, AppCheckButton, AppControllerInput, LabelText} from '@/Components'
+import Loader from '@/Components/AppLoader/Loader'
+import {showToast, Utility} from '@/Helpers'
 import {verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
+import {APICall, EndPoints} from '@/Network'
 import {CommonStyle} from '@/Theme'
 
 import AccountDropDown from './Components/AccountDropDown'
@@ -26,35 +30,113 @@ export default ({id}: AddAccountScreenProps) => {
   const {
     control,
     handleSubmit,
-    formState: {errors}
+    formState: {errors},
+    reset,
+    watch
   } = useForm()
-  const [editItem] = InitialsAPICall.getMasterAccounts(id)
   const FIELDS = useAddAccountData()
   const [selectedType, setSelectedType] = useState<string>('')
-  const isStockBalance = useMemo(() => selectedType === 'stock_balances', [selectedType])
+  const isStockBalance = useMemo(() => selectedType === 'stock_in_hand', [selectedType])
+  const isTDSTextType = watch('tax_type')
+  console.log('isTDSTextType', isTDSTextType)
+
   const [stockBalances, setStockBalances] = useState<StockBalancesType[]>([
     {closing_date: '', value: ''}
   ])
   const {t} = useTranslation()
   const Fields = useMemo(
-    () =>
-      (FIELDS[selectedType as keyof typeof FIELDS]?.data ?? FIELDS['purchase'].data) as string[],
+    () => (FIELDS[selectedType as keyof typeof FIELDS] as any)?.data ?? ([] as string[]),
     [FIELDS, selectedType]
   )
+
   const inputRefs = useRef<{[key: string]: any}>({})
   const validations = useAccountValidations()
 
-  const onSubmit = () => {
-    // console.log(data)
-  }
+  const onSubmit = useCallback(
+    (data: any) => {
+      console.log('data', data)
+      const payload: any = {}
+      if (data?.name) {
+        payload.acc_name = data?.name
+      }
+      if (selectedType) {
+        payload.acc_grp = FIELDS[selectedType as keyof typeof FIELDS].value
+      }
 
-  const onPressValidate = useCallback(() => {
-    if (!selectedType) {
-      showToast('Please select account group', 'error')
+      if (data?.opening_date) {
+        payload.opening_date = Utility.formatDated(data.opening_date)
+      }
+
+      if (data?.opening_bal_type) {
+        payload.opening_bal_type = data.opening_bal_type
+      }
+      if (data?.description) {
+        payload.description = data.description
+      }
+      if (data?.gstn) {
+        payload.gstn = data.gstn
+      }
+      if (data?.ifsc) {
+        payload.ifsc = data.ifsc
+      }
+      if (data?.itax) {
+        payload.itax = data.itax
+      }
+      if (data?.pan) {
+        payload.pan = data.pan
+      }
+      if (data?.stax) {
+        payload.stax = data.stax
+      }
+      if (data?.ctax) {
+        payload.ctax = data.ctax
+      }
+      if (data?.contact_no) {
+        payload.contact_no = data.contact_no
+      }
+      if (data?.bank_name) {
+        payload.bank_name = data.bank_name
+      }
+      if (data?.bank_ac_no) {
+        payload.bank_ac_no = data.bank_ac_no
+      }
+      if (stockBalances?.length >= 1) {
+        const filtered = stockBalances?.filter((i) => i?.closing_date && i?.value)
+        payload.stock_balances = filtered.map((i) => ({
+          ...i,
+          closing_date: Utility.formatDated(i?.closing_date)
+        }))
+      }
+      console.log('payload', payload)
       return
-    }
-    handleSubmit(onSubmit)
-  }, [handleSubmit, selectedType])
+      Loader.isLoading(true)
+      APICall('post', payload, EndPoints.addEditAccount)
+        .then((resp) => {
+          console.log('resp', resp)
+          if (resp?.status === 200) {
+            showToast('Account added successfully', 'success')
+            reset()
+          }
+          Loader.isLoading(false)
+        })
+        .catch((error) => {
+          showToast(error, 'error')
+          Loader.isLoading(false)
+        })
+    },
+    [FIELDS, reset, selectedType, stockBalances]
+  )
+
+  const onPressValidate = useCallback(
+    (event: GestureResponderEvent) => {
+      if (!selectedType) {
+        showToast('Please select account group', 'error')
+        return
+      }
+      handleSubmit(onSubmit)(event)
+    },
+    [handleSubmit, onSubmit, selectedType]
+  )
 
   const onChangeStockBalance = useCallback((value: StockBalancesType, index: number) => {
     setStockBalances((state) => {
@@ -89,7 +171,6 @@ export default ({id}: AddAccountScreenProps) => {
         <Controller
           control={control}
           name={'name'}
-          defaultValue={editItem?.acc_name ?? ''}
           rules={validations['name'].rules}
           render={({field: {onChange, onBlur, value}}) => (
             <AppControllerInput
@@ -106,34 +187,30 @@ export default ({id}: AddAccountScreenProps) => {
         />
 
         <AccountDropDown value={selectedType} onChange={setSelectedType} />
-        {!isStockBalance && (
-          <Controller
-            control={control}
-            name={'opening_date'}
-            defaultValue={editItem?.opening_date ?? ''}
-            rules={validations['opening_date'].rules}
-            render={({field: {onChange, onBlur, value}}) => {
-              return (
-                <FormDatePicker
-                  rightImage={SVGByteCode.calender2}
-                  name="opening_date"
-                  control={control}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  error={errors['opening_date']?.message as string}
-                  {...validations.opening_date}
-                />
-              )
-            }}
-          />
-        )}
+        <Controller
+          control={control}
+          name={'opening_date'}
+          rules={validations['opening_date'].rules}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <FormDatePicker
+                rightImage={SVGByteCode.calender2}
+                name="opening_date"
+                control={control}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={errors['opening_date']?.message as string}
+                {...validations.opening_date}
+              />
+            )
+          }}
+        />
         <View style={[styles.row, isStockBalance && styles.end]}>
           {!isStockBalance && (
             <Controller
               control={control}
               name={'opening_bal'}
-              defaultValue={editItem?.opening_bal ?? ''}
               rules={validations['opening_bal'].rules}
               render={({field: {onChange, onBlur, value}}) => {
                 return (
@@ -155,31 +232,33 @@ export default ({id}: AddAccountScreenProps) => {
               }}
             />
           )}
-          <Controller
-            control={control}
-            name={'opening_bal_type'}
-            rules={validations.opening_bal_type.rules}
-            render={({field: {onChange, onBlur, value}}) => {
-              return (
-                <FormDropDown
-                  value={value}
-                  control={control}
-                  name="opening_bal_type"
-                  options={validations.opening_bal_type.options}
-                  // @ts-ignore
-                  onBlur={onBlur}
-                  onChange={onChange}
-                  valueField="value"
-                  labelField="title"
-                  data={validations?.opening_bal_type?.options ?? []}
-                  {...validations.opening_bal_type}
-                  style={styles.inputHalf}
-                />
-              )
-            }}
-          />
+          {!isStockBalance && (
+            <Controller
+              control={control}
+              name={'opening_bal_type'}
+              rules={validations.opening_bal_type.rules}
+              render={({field: {onChange, onBlur, value}}) => {
+                return (
+                  <FormDropDown
+                    value={value}
+                    control={control}
+                    name="opening_bal_type"
+                    options={validations.opening_bal_type.options}
+                    // @ts-ignore
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    valueField="value"
+                    labelField="title"
+                    data={validations?.opening_bal_type?.options ?? []}
+                    {...validations.opening_bal_type}
+                    style={styles.inputHalf}
+                  />
+                )
+              }}
+            />
+          )}
         </View>
-        {Fields.map((field) => {
+        {Fields.map((field: any) => {
           const {rules, ...props} = validations[field]
           const nextField = Fields[Fields.indexOf(field) + 1]
           return (
@@ -222,16 +301,21 @@ export default ({id}: AddAccountScreenProps) => {
             />
           )
         })}
-        {isStockBalance && <LabelText label={t('erp107')} />}
-        {isStockBalance &&
-          stockBalances.map((i, index) => (
-            <StockBalanceComponent
-              value={i}
-              onPressAddRemove={(state) => onPressAddRemoveStockBalance(state, index)}
-              key={`${index.toString()}`}
-              onChange={(state) => onChangeStockBalance(state, index)}
-            />
-          ))}
+        {isStockBalance && (
+          <View>
+            <LabelText label={t('erp107')} />
+            <View style={styles.stockBalanceContainer}>
+              {stockBalances.map((i, index) => (
+                <StockBalanceComponent
+                  value={i}
+                  onPressAddRemove={(state) => onPressAddRemoveStockBalance(state, index)}
+                  key={`${index.toString()}`}
+                  onChange={(state) => onChangeStockBalance(state, index)}
+                />
+              ))}
+            </View>
+          </View>
+        )}
         <Controller
           control={control}
           name={'description'}
@@ -245,7 +329,6 @@ export default ({id}: AddAccountScreenProps) => {
               onChangeText={onChange}
               value={value}
               error={errors['description']?.message as string}
-              onSubmitEditing={onPressValidate}
               {...validations['description']}
             />
           )}
@@ -270,7 +353,9 @@ const styles = StyleSheet.create({
   row: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: verticalScale(15)
+    justifyContent: 'space-between'
+  },
+  stockBalanceContainer: {
+    rowGap: verticalScale(15)
   }
 })

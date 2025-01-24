@@ -58,11 +58,11 @@ export default memo(() => {
   }, [])
 
   const renderProfitLossDetailsView = useMemo(() => {
-    const [costCenter] = InitialsAPICall.getMasterCostCenter(site_id)
+    const costCenter = InitialsAPICall.findItemByType(site_id, 'costCenter')
 
     return (
       <View style={styles.detailsContainer}>
-        <Text style={[styles.tableTextStyle, styles.bigText]}>{costCenter?.cost_center_name}</Text>
+        <Text style={[styles.tableTextStyle, styles.bigText]}>{costCenter?.title}</Text>
         <View style={styles.divider} />
         <View>
           <Text style={styles.headerText}>Period:</Text>
