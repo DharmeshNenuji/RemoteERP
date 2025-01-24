@@ -1,13 +1,13 @@
 import dayjs, {extend} from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import React, {memo, useState} from 'react'
-import {StyleSheet, View} from 'react-native'
-import Modal from 'react-native-modal'
+import {StyleSheet} from 'react-native'
 import DateTimePicker from 'react-native-ui-datepicker'
 
 extend(customParseFormat)
 import {moderateScale} from '@/Helpers/Responsive'
-import {Colors} from '@/Theme'
+
+import NativeModal from '../NativeModal'
 type AppDatePickerProps = {
   onChange: (date: string) => void
   date: string
@@ -20,28 +20,28 @@ export default memo(({date, onChange, onClose}: AppDatePickerProps) => {
   const [isVisible, setIsVisible] = useState(true)
 
   return (
-    <Modal
+    <NativeModal
       onBackButtonPress={() => setIsVisible(false)}
       onBackdropPress={() => setIsVisible(false)}
       isVisible={isVisible}
+      statusBarTranslucent
       onModalHide={onClose}
+      style={styles.container}
     >
-      <View style={styles.container}>
-        <DateTimePicker
-          mode="single"
-          date={dayjs(date, 'DD/MM/YYYY').isValid() ? dayjs(date, 'DD/MM/YYYY') : defaultDateString}
-          onChange={({date}: any) => {
-            onChange(date)
-            setIsVisible(false)
-          }}
-        />
-      </View>
-    </Modal>
+      <DateTimePicker
+        mode="single"
+        date={dayjs(date, 'DD/MM/YYYY').isValid() ? dayjs(date, 'DD/MM/YYYY') : defaultDateString}
+        onChange={({date}: any) => {
+          onChange(date)
+          setIsVisible(false)
+        }}
+      />
+    </NativeModal>
   )
 })
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
-    borderRadius: moderateScale(10)
+    borderRadius: moderateScale(10),
+    overflow: 'hidden'
   }
 })

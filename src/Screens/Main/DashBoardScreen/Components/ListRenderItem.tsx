@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react'
-import {Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {Alert, Dimensions, StyleSheet, Text, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import {SvgFromXml} from 'react-native-svg'
 
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'

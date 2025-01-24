@@ -1,5 +1,6 @@
 import {memo, useCallback, useState} from 'react'
-import {Platform, StyleSheet, Text, TouchableOpacity, UIManager, View} from 'react-native'
+import {Platform, StyleSheet, Text, UIManager, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import Animated, {
   CurvedTransition,
   Easing,

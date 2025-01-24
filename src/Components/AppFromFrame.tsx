@@ -1,5 +1,6 @@
 import {memo} from 'react'
-import {StyleSheet, TouchableOpacity, View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import {SvgFromXml} from 'react-native-svg'
 
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'

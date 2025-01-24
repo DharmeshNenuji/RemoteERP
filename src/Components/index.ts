@@ -11,6 +11,7 @@ import DatePickerAnchorButton from './DatePickerAnchorButton'
 import ErrorText from './ErrorText'
 import LabelText from './LabelText'
 import LoadingView from './LoadingView'
+import NativeModal from './NativeModal'
 export {
   AppButton,
   AppCheckButton,
@@ -24,5 +25,6 @@ export {
   DatePickerAnchorButton,
   ErrorText,
   LabelText,
-  LoadingView
+  LoadingView,
+  NativeModal
 }

@@ -19,9 +19,9 @@ type ItemDataContainerProps = {
   onChange: (value: ItemType) => void
   onPressAddRemove: (isAdd: boolean) => void
 }
-const ITEMS = InitialsAPICall.getSyncItemsDropDown()
 
 export default memo(({value, onChange, onPressAddRemove}: ItemDataContainerProps) => {
+  const ITEMS = InitialsAPICall.getSyncItemsDropDown()
   const {t} = useTranslation()
 
   const onChangeText = useCallback(
@@ -86,6 +86,7 @@ export default memo(({value, onChange, onPressAddRemove}: ItemDataContainerProps
             parentStyle={styles.parentStyle}
             editable={false}
             value={value.unit}
+            placeholder=""
             label={t('erp157')}
             width={'40%'}
           />

@@ -16,9 +16,9 @@ type AccountDataContainerProps = {
   onChange: (value: AccountDataItemType) => void
   onPressAddRemove: (isAdd: boolean) => void
 }
-const ACCOUNTS = InitialsAPICall.getSyncAccountsDropDown()
 
 export default memo(({value, onChange, onPressAddRemove}: AccountDataContainerProps) => {
+  const ACCOUNTS = InitialsAPICall.getSyncAccountsDropDown()
   const {t} = useTranslation()
 
   const onChangeText = useCallback(

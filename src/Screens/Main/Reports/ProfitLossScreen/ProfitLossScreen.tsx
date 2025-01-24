@@ -18,14 +18,13 @@ import {scale, verticalScale} from '@/Helpers/Responsive'
 import {useNavigation} from '@/Hooks'
 import {Colors} from '@/Theme'
 
-const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
-
 const InitialErrors = {
   site: '',
   fromDate: '',
   toDate: ''
 }
 export default memo(() => {
+  const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
   const {t} = useTranslation()
   const [site, setSite] = useState('')
   const [fromDate, setFromDate] = useState('')

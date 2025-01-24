@@ -68,7 +68,7 @@ const getFontSize = (baseSize: number) => {
   return Math.round(PixelRatio.roundToNearestPixel(newSize))
 }
 const moderateScale = getFontSize
-
+const INPUT_HEIGHT = verticalScale(40)
 const isTab = isTablet()
 
 export {
@@ -76,6 +76,7 @@ export {
   getFontSize,
   getStatusBarHeight,
   heightPx,
+  INPUT_HEIGHT,
   isAndroidNotch,
   isIPhoneX,
   isIPhoneXSeries,

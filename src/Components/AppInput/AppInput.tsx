@@ -1,11 +1,12 @@
 import React, {forwardRef, useMemo, useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
 import type {DimensionValue, StyleProp, TextInputProps, ViewStyle} from 'react-native'
-import {Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import {SvgFromXml} from 'react-native-svg'
 
-import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {INPUT_HEIGHT, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import {Colors, Fonts} from '@/Theme'
 
 import ErrorText from '../ErrorText'
@@ -63,6 +64,7 @@ export default forwardRef<TextInput, AppInputProps>(
             placeholder={placeHolder}
             placeholderTextColor={Colors.blackShade14}
             ref={ref}
+            textAlignVertical="top"
             style={[styles.inputStyle, isMultiLine && styles.multiLineInputStyle]}
             onFocus={(event) => {
               if (rest?.onFocus) {
@@ -113,8 +115,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     color: Colors.black,
     flex: 1,
-    height: verticalScale(35),
-    textAlignVertical: 'top' // Makes the text start from the top when multiline
+    height: INPUT_HEIGHT
   },
   leftImageContainer: {
     alignItems: 'center',

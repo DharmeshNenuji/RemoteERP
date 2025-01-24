@@ -4,7 +4,7 @@ import {Dropdown} from 'react-native-element-dropdown'
 import type {DropdownProps} from 'react-native-element-dropdown/lib/typescript/components/Dropdown/model'
 import {SvgFromXml} from 'react-native-svg'
 
-import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {INPUT_HEIGHT, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors} from '@/Theme'
 
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     fontSize: moderateScale(16),
-    height: verticalScale(40)
+    height: INPUT_HEIGHT
   },
   placeholderStyle: {
     color: Colors.blackShade14,

@@ -1,7 +1,8 @@
 import React, {memo, useCallback, useMemo, useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
 import Animated, {LinearTransition} from 'react-native-reanimated'
 
@@ -31,13 +32,12 @@ import ItemDataContainer from './Components/ItemDataContainer'
 import RenderFileItem from './Components/RenderFileItem'
 import {PurchaseAccounts} from './Helpers/PurchaseVoucherData'
 
-const Accounts = InitialsAPICall.getSyncAccountsDropDown()
-const PAYMENTS = InitialsAPICall.convertToDropDown(
-  InitialsAPICall.SyncAccounts.data.filter((i) => i[2] === 'Cash')
-)
-const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
-
 export default memo(() => {
+  const Accounts = InitialsAPICall.getSyncAccountsDropDown()
+  const PAYMENTS = InitialsAPICall.convertToDropDown(
+    InitialsAPICall.SyncAccounts.data.filter((i) => i[2] === 'Cash')
+  )
+  const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
   const [isBilled, setIsBilled] = useState(false)
   const {t} = useTranslation()
   const [files, setFiles] = useState<FileType[]>([])

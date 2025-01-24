@@ -1,6 +1,7 @@
 import React, {memo, useCallback, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import {Menu, MenuItem} from 'react-native-material-menu'
 import {SvgFromXml} from 'react-native-svg'
 

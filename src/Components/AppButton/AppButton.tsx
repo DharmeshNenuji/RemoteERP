@@ -1,6 +1,7 @@
 import React, {memo, useMemo} from 'react'
 import type {GestureResponderEvent, StyleProp, ViewStyle} from 'react-native'
-import {ActivityIndicator, StyleSheet, Text, TouchableOpacity} from 'react-native'
+import {ActivityIndicator, StyleSheet, Text} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import {Colors, Fonts} from '@/Theme'

@@ -1,10 +1,11 @@
 import React, {memo} from 'react'
 import type {StyleProp, ViewStyle} from 'react-native'
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import {mask} from 'react-native-mask-text'
 
 import {Utility} from '@/Helpers'
-import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {INPUT_HEIGHT, moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors} from '@/Theme'
 
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(10),
     borderWidth: 1,
     flexDirection: 'row',
-    height: verticalScale(35),
+    height: INPUT_HEIGHT,
     overflow: 'hidden',
     paddingHorizontal: scale(10),
     width: '100%'

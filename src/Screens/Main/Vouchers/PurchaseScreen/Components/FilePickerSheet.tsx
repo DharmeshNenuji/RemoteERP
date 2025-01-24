@@ -1,12 +1,13 @@
 import BottomSheet, {BottomSheetBackdrop, BottomSheetView} from '@gorhom/bottom-sheet'
 import {pick} from '@react-native-documents/picker'
 import {memo, useCallback, useRef} from 'react'
-import {Alert, StyleSheet, TouchableOpacity} from 'react-native'
+import {Alert, StyleSheet} from 'react-native'
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
-import ReactNativeModal from 'react-native-modal'
 import {openSettings} from 'react-native-permissions'
 import {SvgFromXml} from 'react-native-svg'
 
+import {NativeModal} from '@/Components'
 import {Permission, showToast} from '@/Helpers'
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
@@ -127,14 +128,7 @@ export default memo(({onClose, onFilePick}: FilePickerSheetProps) => {
   }, [onFilePick, onPermissionReject])
 
   return (
-    <ReactNativeModal
-      statusBarTranslucent
-      isVisible
-      animationInTiming={-5}
-      animationOutTiming={-5}
-      backdropOpacity={0}
-      style={CommonStyle.modalStyle}
-    >
+    <NativeModal statusBarTranslucent isVisible style={CommonStyle.modalStyle}>
       <BottomSheet
         enablePanDownToClose
         onClose={onClose}
@@ -179,7 +173,7 @@ export default memo(({onClose, onFilePick}: FilePickerSheetProps) => {
           </TouchableOpacity>
         </BottomSheetView>
       </BottomSheet>
-    </ReactNativeModal>
+    </NativeModal>
   )
 })
 const styles = StyleSheet.create({

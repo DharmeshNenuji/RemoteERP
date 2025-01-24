@@ -1,17 +1,14 @@
 import React, {useCallback, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {StyleSheet, Text, View} from 'react-native'
-import ReactNativeModal from 'react-native-modal'
 import {SvgFromXml} from 'react-native-svg'
 
-import {AppButton} from '@/Components'
+import {AppButton, NativeModal} from '@/Components'
 import {HttpCodes, InitialsAPICall} from '@/Helpers'
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {APICall, EndPoints} from '@/Network'
 import {Colors, CommonStyle, Fonts} from '@/Theme'
-
-import {useAddAccount} from '../../Provider/AddAccountProvider'
 
 type AccountDeleteModalProps = {
   onClose: () => void
@@ -21,7 +18,6 @@ type AccountDeleteModalProps = {
 export default ({onClose, id}: AccountDeleteModalProps) => {
   const [isVisible, setIsVisible] = useState(true)
   const {t} = useTranslation()
-  const {setDeletedIds} = useAddAccount()
   const [isLoading, setIsLoading] = useState(false)
 
   const onPressDelete = useCallback(() => {
@@ -29,12 +25,7 @@ export default ({onClose, id}: AccountDeleteModalProps) => {
     APICall('get', {}, EndPoints.deleteMasterAccount)
       .then((resp) => {
         if (resp.status === HttpCodes.OK) {
-          setDeletedIds((state) => {
-            const clone = [...state]
-            clone.push(id.toString())
-            InitialsAPICall.deleteItemByIDAndType(id, 'account')
-            return clone
-          })
+          InitialsAPICall.deleteItemByIDAndType(id, 'account')
         }
         setIsLoading(false)
         setIsVisible(false)
@@ -43,10 +34,10 @@ export default ({onClose, id}: AccountDeleteModalProps) => {
         setIsLoading(false)
         setIsVisible(false)
       })
-  }, [id, setDeletedIds])
+  }, [id])
 
   return (
-    <ReactNativeModal
+    <NativeModal
       onBackButtonPress={() => setIsVisible(false)}
       onBackdropPress={() => setIsVisible(false)}
       isVisible={isVisible}
@@ -74,7 +65,7 @@ export default ({onClose, id}: AccountDeleteModalProps) => {
           />
         </View>
       </View>
-    </ReactNativeModal>
+    </NativeModal>
   )
 }
 

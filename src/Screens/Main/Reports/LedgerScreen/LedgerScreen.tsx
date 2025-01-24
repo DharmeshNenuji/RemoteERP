@@ -17,9 +17,6 @@ import {scale, verticalScale} from '@/Helpers/Responsive'
 import {useNavigation} from '@/Hooks'
 import {Colors} from '@/Theme'
 
-const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
-
-const Accounts = InitialsAPICall.getSyncAccountsDropDown()
 const InitialErrors = {
   site: '',
   account: '',
@@ -27,6 +24,8 @@ const InitialErrors = {
   toDate: ''
 }
 export default memo(() => {
+  const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
+  const Accounts = InitialsAPICall.getSyncAccountsDropDown()
   const {t} = useTranslation()
   const [site, setSite] = useState('')
   const [account, setAccount] = useState('')

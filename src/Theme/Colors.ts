@@ -14,5 +14,6 @@ export default {
   redShadeB00: '#B00020',
   blueShade006: '#0066F91A',
   lightblue: '#E5EEFD',
-  greyShadeEBEB: '#EBEBEB'
+  greyShadeEBEB: '#EBEBEB',
+  blackBackDrop: 'rgba(0, 0, 0, 0.5)'
 }
