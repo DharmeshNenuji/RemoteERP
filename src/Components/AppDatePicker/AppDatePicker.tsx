@@ -1,8 +1,11 @@
+import dayjs, {extend} from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import React, {memo, useState} from 'react'
 import {StyleSheet, View} from 'react-native'
 import Modal from 'react-native-modal'
 import DateTimePicker from 'react-native-ui-datepicker'
 
+extend(customParseFormat)
 import {moderateScale} from '@/Helpers/Responsive'
 import {Colors} from '@/Theme'
 type AppDatePickerProps = {
@@ -15,6 +18,7 @@ const defaultDateString = new Date().toISOString()
 
 export default memo(({date, onChange, onClose}: AppDatePickerProps) => {
   const [isVisible, setIsVisible] = useState(true)
+
   return (
     <Modal
       onBackButtonPress={() => setIsVisible(false)}
@@ -25,7 +29,7 @@ export default memo(({date, onChange, onClose}: AppDatePickerProps) => {
       <View style={styles.container}>
         <DateTimePicker
           mode="single"
-          date={date || defaultDateString}
+          date={dayjs(date, 'DD/MM/YYYY').isValid() ? dayjs(date, 'DD/MM/YYYY') : defaultDateString}
           onChange={({date}: any) => {
             onChange(date)
             setIsVisible(false)

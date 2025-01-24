@@ -41,6 +41,7 @@ export default ({value, onChange, onPressAddRemove}: StockBalanceComponentProps)
   return (
     <AppFromFrame onPressAddRemove={onPressAddRemove}>
       <DatePickerAnchorButton
+        onChangeDateText={onSelectData}
         value={value.closing_date}
         label={t('erp108')}
         style={styles.inputHalf}

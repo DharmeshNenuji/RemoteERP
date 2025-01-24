@@ -1,13 +1,14 @@
 import React, {memo} from 'react'
 import type {StyleProp, ViewStyle} from 'react-native'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import {SvgFromXml} from 'react-native-svg'
+import {mask} from 'react-native-mask-text'
 
 import {Utility} from '@/Helpers'
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors} from '@/Theme'
 
+import AppInput from './AppInput/AppInput'
 import LabelText from './LabelText'
 
 type DatePickerAnchorButtonProps = {
@@ -17,6 +18,7 @@ type DatePickerAnchorButtonProps = {
   style?: StyleProp<ViewStyle>
   children?: React.ReactNode
   isDateField?: boolean
+  onChangeDateText: (date: string) => void
 }
 
 export default memo(
@@ -26,24 +28,35 @@ export default memo(
     label,
     style = {},
     children,
-    isDateField = true
+    isDateField = true,
+    onChangeDateText = () => {}
   }: DatePickerAnchorButtonProps) => {
     return (
       <View style={style}>
         <LabelText label={label} />
-        <TouchableOpacity style={styles.inputHalf} onPress={onPress}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputStyle}>
-              {isDateField ? (value ? Utility.formatDated(value) : 'DD / MM /YYYY') : value}
-            </Text>
-            <View style={styles.leftImageContainer}>
-              <SvgFromXml
-                width={verticalScale(22)}
-                height={verticalScale(22)}
-                xml={SVGByteCode.calender2}
-              />
+        <TouchableOpacity disabled={isDateField} style={styles.inputHalf} onPress={onPress}>
+          {isDateField ? (
+            <AppInput
+              rightImage={SVGByteCode.calender2}
+              onPressRightImage={onPress}
+              value={value}
+              placeholder="DD / MM /YYYY"
+              onChangeText={(text) =>
+                onChangeDateText(
+                  mask(text, 'DD/MM/YYYY', 'date', {
+                    dateFormat: 'DD/MM/YYYY'
+                  })
+                )
+              }
+            />
+          ) : (
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputStyle}>
+                {isDateField ? (value ? Utility.formatDated(value) : 'DD / MM /YYYY') : value}
+              </Text>
             </View>
-          </View>
+          )}
+
           {children}
         </TouchableOpacity>
       </View>
@@ -51,6 +64,9 @@ export default memo(
   }
 )
 const styles = StyleSheet.create({
+  activeInputStyle: {
+    backgroundColor: Colors.white
+  },
   inputContainer: {
     alignItems: 'center',
     borderColor: Colors.themeBorder,

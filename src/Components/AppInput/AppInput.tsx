@@ -1,7 +1,7 @@
 import React, {forwardRef, useMemo, useState} from 'react'
 import type {Control, FieldValues} from 'react-hook-form'
 import type {DimensionValue, StyleProp, TextInputProps, ViewStyle} from 'react-native'
-import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native'
+import {Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import Animated from 'react-native-reanimated'
 import {SvgFromXml} from 'react-native-svg'
 
@@ -21,6 +21,7 @@ export type AppInputProps = {
   parentStyle?: StyleProp<ViewStyle>
   width?: DimensionValue
   containerStyle?: StyleProp<ViewStyle>
+  onPressRightImage?: () => void
 } & TextInputProps
 
 export default forwardRef<TextInput, AppInputProps>(
@@ -37,6 +38,7 @@ export default forwardRef<TextInput, AppInputProps>(
       containerStyle = {},
       placeholder,
       width = '100%',
+      onPressRightImage,
       ...rest
     },
     ref
@@ -48,9 +50,9 @@ export default forwardRef<TextInput, AppInputProps>(
     )
 
     return (
-      <Animated.View style={[{width}, parentStyle]}>
+      <Animated.View style={[styles.container, {width}, parentStyle]}>
         {label && <Text style={styles.titleTextStyle}>{label}</Text>}
-        <View style={[styles.inputContainer, containerStyle]}>
+        <View style={[styles.inputContainer, isFocus && styles.activeInputStyle, containerStyle]}>
           {leftImage && (
             <Pressable style={styles.leftImageContainer}>
               <SvgFromXml width={leftImageSize} height={leftImageSize} xml={leftImage} />
@@ -61,11 +63,7 @@ export default forwardRef<TextInput, AppInputProps>(
             placeholder={placeHolder}
             placeholderTextColor={Colors.blackShade14}
             ref={ref}
-            style={[
-              styles.inputStyle,
-              isFocus && styles.activeInputStyle,
-              isMultiLine && styles.multiLineInputStyle
-            ]}
+            style={[styles.inputStyle, isMultiLine && styles.multiLineInputStyle]}
             onFocus={(event) => {
               if (rest?.onFocus) {
                 rest.onFocus(event)
@@ -82,9 +80,9 @@ export default forwardRef<TextInput, AppInputProps>(
             numberOfLines={isMultiLine ? 4 : 1}
           />
           {rightImage && (
-            <Pressable style={styles.leftImageContainer}>
+            <TouchableOpacity style={styles.leftImageContainer} onPress={onPressRightImage}>
               <SvgFromXml width={verticalScale(22)} height={verticalScale(22)} xml={rightImage} />
-            </Pressable>
+            </TouchableOpacity>
           )}
         </View>
         {error && <ErrorText error={error} />}
@@ -96,6 +94,9 @@ export default forwardRef<TextInput, AppInputProps>(
 const styles = StyleSheet.create({
   activeInputStyle: {
     backgroundColor: Colors.white
+  },
+  container: {
+    backgroundColor: Colors.themeBackground
   },
 
   inputContainer: {

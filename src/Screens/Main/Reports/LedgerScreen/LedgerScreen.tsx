@@ -143,6 +143,7 @@ export default memo(() => {
         </View>
 
         <DatePickerAnchorButton
+          onChangeDateText={setFromDate}
           onPress={() => onPressOpenDatePicker(true)}
           value={fromDate}
           label={t('erp116')}
@@ -150,6 +151,7 @@ export default memo(() => {
         {errors.fromDate && <ErrorText error={errors.fromDate} />}
 
         <DatePickerAnchorButton
+          onChangeDateText={setToDate}
           onPress={() => onPressOpenDatePicker(false)}
           value={toDate}
           label={t('erp117')}

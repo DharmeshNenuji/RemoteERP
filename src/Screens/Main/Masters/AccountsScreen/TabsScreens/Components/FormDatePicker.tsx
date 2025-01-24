@@ -25,6 +25,7 @@ export default ({control, name, error, label}: FormDatePickerProps) => {
     <DatePickerAnchorButton
       value={field.value}
       label={label}
+      onChangeDateText={field.onChange}
       style={styles.container}
       onPress={() => setOpen(true)}
     >
