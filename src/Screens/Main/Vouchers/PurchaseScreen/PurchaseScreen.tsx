@@ -3,6 +3,7 @@ import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
+import Animated, {LinearTransition} from 'react-native-reanimated'
 
 import {
   AppButton,
@@ -23,9 +24,11 @@ import FormDatePicker from '../../Masters/AccountsScreen/TabsScreens/Components/
 import FormDropDown from '../../Masters/AccountsScreen/TabsScreens/Components/FormDropDown'
 import type {AccountDataItemType} from './Components/AccountDataContainer'
 import AccountDataContainer from './Components/AccountDataContainer'
+import type {FileType} from './Components/FilePickerSheet'
 import FilePickerSheet from './Components/FilePickerSheet'
 import type {ItemType} from './Components/ItemDataContainer'
 import ItemDataContainer from './Components/ItemDataContainer'
+import RenderFileItem from './Components/RenderFileItem'
 import {PurchaseAccounts} from './Helpers/PurchaseVoucherData'
 
 const Accounts = InitialsAPICall.getSyncAccountsDropDown()
@@ -37,7 +40,7 @@ const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
 export default memo(() => {
   const [isBilled, setIsBilled] = useState(false)
   const {t} = useTranslation()
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<FileType[]>([])
   const [isFilePicker, setIsFilePicker] = useState(false)
   const [items, setItems] = useState<ItemType[]>([
     {amount: 0, item: '', quantity: 0, rate: 0, unit: ''}
@@ -46,7 +49,6 @@ export default memo(() => {
 
   const {
     control,
-
     formState: {errors}
   } = useForm()
 
@@ -320,16 +322,26 @@ export default memo(() => {
               )
             }}
           />
-          <TouchableOpacity activeOpacity={0.5} onPress={() => setIsFilePicker(true)}>
-            <AppInput
-              pointerEvents="none"
-              label={t('erp166')}
-              containerStyle={styles.containerStyle}
-              placeholder={t('erp169')}
-              editable={false}
-              leftImage={SVGByteCode.upload}
-            />
-          </TouchableOpacity>
+          <Animated.View layout={LinearTransition} style={styles.fileContainer}>
+            <TouchableOpacity activeOpacity={0.5} onPress={() => setIsFilePicker(true)}>
+              <AppInput
+                pointerEvents="none"
+                label={t('erp166')}
+                containerStyle={styles.containerStyle}
+                placeholder={t('erp169')}
+                editable={false}
+                leftImage={SVGByteCode.upload}
+              />
+            </TouchableOpacity>
+            {files.map((i, index) => (
+              <RenderFileItem
+                key={i.name.toString() + index.toString()}
+                file={i}
+                onDelete={() => setFiles((state) => state.filter((f) => f.name !== i.name))}
+                isLast={index === files.length - 1}
+              />
+            ))}
+          </Animated.View>
           <Controller
             control={control}
             name={'remarks'}
@@ -351,7 +363,12 @@ export default memo(() => {
           <AppButton onPress={() => {}} title={t('erp140')} />
         </KeyboardAwareScrollView>
       </View>
-      {isFilePicker && <FilePickerSheet onClose={() => setIsFilePicker(false)} />}
+      {isFilePicker && (
+        <FilePickerSheet
+          onFilePick={(file) => setFiles((state) => [file, ...state])}
+          onClose={() => setIsFilePicker(false)}
+        />
+      )}
     </AppContainer>
   )
 })
@@ -367,6 +384,12 @@ const styles = StyleSheet.create({
   contentStyle: {
     padding: 20,
     rowGap: verticalScale(15)
+  },
+  fileContainer: {
+    backgroundColor: Colors.white,
+    borderRadius: moderateScale(8),
+    flex: 1,
+    overflow: 'hidden'
   },
   itemRowView: {
     alignItems: 'center',
