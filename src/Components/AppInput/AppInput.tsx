@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
   },
   multiLineInputStyle: {
     height: verticalScale(100),
-    maxHeight: verticalScale(100)
+    maxHeight: verticalScale(100),
+    paddingTop: verticalScale(10)
   },
   titleTextStyle: {
     color: Colors.blackShade14,
