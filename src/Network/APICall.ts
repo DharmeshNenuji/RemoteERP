@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable default-param-last */
 
 import axios, {type AxiosRequestConfig} from 'axios'
@@ -13,6 +12,8 @@ type Methodtype = 'post' | 'get' | 'put' | 'delete' | 'patch'
 const axiosInstance = axios.create({
   baseURL: Config.API_URL
 })
+
+const isLogsEnabled = false
 
 axiosInstance.interceptors.response.use(
   (res) => {
@@ -32,6 +33,14 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+const logs = (...logs: any) => {
+  if (!isLogsEnabled) {
+    return
+  }
+  // eslint-disable-next-line no-console
+  console.log('logs', ...logs)
+}
 
 axiosInstance.interceptors.request.use(
   (config) => {
@@ -94,7 +103,7 @@ const APICall = async (
   return new Promise<any>((resolve, reject) => {
     axiosInstance(config)
       .then((res) => {
-        console.log('success', '<=======API Response======>', {
+        logs('success', '<=======API Response======>', {
           requestedData: res.config.data,
           status: res.status,
           data: res.data,
@@ -122,10 +131,10 @@ const APICall = async (
                 "We're sorry for the inconvenience. We've encountered a technical issue and our team is currently working on resolving it."
             }
           }
-          console.log('error', '<=======API Error======>', error)
+          logs('error', '<=======API Error======>', error)
           return reject(errorData?.response || errorData)
         }
-        console.log('warning', '<=======API Bad Request======>', error)
+        logs('warning', '<=======API Bad Request======>', error)
         return resolve(error?.response)
       })
   })
