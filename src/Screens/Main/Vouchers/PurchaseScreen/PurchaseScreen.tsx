@@ -1,36 +1,43 @@
-import React, {memo, useCallback, useMemo, useState} from 'react'
+import React, {memo, useCallback} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet, Text, View} from 'react-native'
-import {TouchableOpacity} from 'react-native-gesture-handler'
+import {StyleSheet, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
-import Animated, {LinearTransition} from 'react-native-reanimated'
 
 import {
   AppButton,
   AppCheckButton,
   AppContainer,
-  AppControllerInput,
-  AppFromFrame,
-  AppInput,
-  LabelText
+  AppControllerDatePicker,
+  AppControllerDropDown,
+  AppControllerInput
 } from '@/Components'
 import AppHeader from '@/Components/AppHeader/AppHeader'
 import {InitialsAPICall} from '@/Helpers'
-import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
-import {Colors, CommonStyle, Fonts} from '@/Theme'
+import {Colors, CommonStyle} from '@/Theme'
 
-import FormDatePicker from '../../Masters/AccountsScreen/TabsScreens/Components/FormDatePicker'
-import FormDropDown from '../../Masters/AccountsScreen/TabsScreens/Components/FormDropDown'
-import type {AccountDataItemType} from './Components/AccountDataContainer'
 import AccountDataContainer from './Components/AccountDataContainer'
-import type {FileType} from './Components/FilePickerSheet'
-import FilePickerSheet from './Components/FilePickerSheet'
-import type {ItemType} from './Components/ItemDataContainer'
+import FilesContainer from './Components/FilesContainer'
 import ItemDataContainer from './Components/ItemDataContainer'
-import RenderFileItem from './Components/RenderFileItem'
 import {PurchaseAccounts} from './Helpers/PurchaseVoucherData'
+
+type FormValues = {
+  invoice_no: string
+  remarks: string
+  accounts: ArrayLike<{account: string; amount: string}>
+  items: [{items: string; unit: string; quantity: string; rate: string; amount: string}]
+  grn_po: string
+  date: string
+  purchase_account: string
+  party: string
+  const_center: string
+  payment: string
+  files: File[]
+  add_const_center: string
+  has_billed: boolean
+}
 
 export default memo(() => {
   const Accounts = InitialsAPICall.getSyncAccountsDropDown()
@@ -38,74 +45,36 @@ export default memo(() => {
     InitialsAPICall.SyncAccounts.data.filter((i) => i[2] === 'Cash')
   )
   const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
-  const [isBilled, setIsBilled] = useState(false)
   const {t} = useTranslation()
-  const [files, setFiles] = useState<FileType[]>([])
-  const [isFilePicker, setIsFilePicker] = useState(false)
-  const [items, setItems] = useState<ItemType[]>([
-    {amount: 0, item: '', quantity: 0, rate: 0, unit: ''}
-  ])
-  const [accounts, setAccounts] = useState<AccountDataItemType[]>([{account: '', amount: 0}])
 
   const {
     control,
-    formState: {errors}
-  } = useForm()
+    formState: {errors},
+    setValue,
+    watch,
+    handleSubmit
+  } = useForm<FormValues>({
+    defaultValues: {
+      invoice_no: '',
+      remarks: '',
+      accounts: [{account: '', amount: ''}],
+      items: [{items: '', unit: '', quantity: '', rate: '', amount: ''}],
+      grn_po: '',
+      date: '',
+      purchase_account: '',
+      party: '',
+      const_center: '',
+      payment: '',
+      files: [],
+      add_const_center: '',
+      has_billed: false
+    }
+  })
 
-  const onChangeItem = useCallback((value: ItemType, index: number) => {
-    setItems((state) => {
-      const clone = [...state]
-      clone[index] = value
-      return clone
-    })
+  const onPressSubmit = useCallback((data: FormValues) => {
+    // eslint-disable-next-line no-console
+    console.log('data', data)
   }, [])
-  const onChangeAccount = useCallback((value: AccountDataItemType, index: number) => {
-    setAccounts((state) => {
-      const clone = [...state]
-      clone[index] = value
-      return clone
-    })
-  }, [])
-
-  const onPressAddRemoveItems = useCallback((isAdd: boolean, index: number) => {
-    setItems((state) => {
-      const clone = [...state]
-      if (isAdd) {
-        clone.push({amount: 0, item: '', quantity: 0, rate: 0, unit: ''})
-      } else {
-        clone.splice(index, 1)
-      }
-
-      return clone
-    })
-  }, [])
-
-  const onPressAddRemoveAccounts = useCallback((isAdd: boolean, index: number) => {
-    setAccounts((state) => {
-      const clone = [...state]
-      if (isAdd) {
-        clone.push({account: '', amount: 0})
-      } else {
-        clone.splice(index, 1)
-      }
-
-      return clone
-    })
-  }, [])
-
-  const subTotal = useMemo(() => {
-    return items.reduce((acc, val) => {
-      return acc + (val.amount ?? 0)
-    }, 0)
-  }, [items])
-
-  const grandTotal = useMemo(() => {
-    return (
-      accounts.reduce((acc, val) => {
-        return acc + (val.amount ?? 0)
-      }, 0) + subTotal
-    )
-  }, [accounts, subTotal])
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
@@ -117,13 +86,16 @@ export default memo(() => {
       <View style={CommonStyle.flex}>
         <KeyboardAwareScrollView contentContainerStyle={styles.contentStyle}>
           <Controller
-            control={control}
+            control={control as any}
             name={'const_center'}
+            rules={{
+              required: t('erp175')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <FormDropDown
+                <AppControllerDropDown
                   value={value}
-                  control={control}
+                  control={control as any}
                   label={t('erp118')}
                   name="const_center"
                   search
@@ -132,22 +104,24 @@ export default memo(() => {
                   onBlur={onBlur}
                   placeholder={t('erp120')}
                   onChange={onChange}
-                  valueField="value"
-                  labelField="title"
                   data={ConstCenters}
+                  error={errors?.const_center?.message as string}
                 />
               )
             }}
           />
           <Controller
-            control={control}
+            control={control as any}
             name={'party'}
+            rules={{
+              required: t('erp176')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <FormDropDown
+                <AppControllerDropDown
                   value={value}
                   label={t('erp145')}
-                  control={control}
+                  control={control as any}
                   name="party"
                   search
                   searchPlaceholder={t('erp105')}
@@ -155,43 +129,47 @@ export default memo(() => {
                   onBlur={onBlur}
                   placeholder={t('erp142')}
                   onChange={onChange}
-                  valueField="value"
-                  labelField="title"
                   data={Accounts}
+                  error={errors?.party?.message as string}
                 />
               )
             }}
           />
           <Controller
-            control={control}
+            control={control as any}
             name={'purchase_account'}
+            rules={{
+              required: t('erp177')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <FormDropDown
+                <AppControllerDropDown
                   value={value}
-                  control={control}
+                  control={control as any}
                   label={t('erp144')}
                   name="purchase_account"
                   // @ts-ignore
                   onBlur={onBlur}
                   placeholder={t('erp143')}
                   onChange={onChange}
-                  valueField="value"
-                  labelField="title"
                   data={PurchaseAccounts}
+                  error={errors?.purchase_account?.message as string}
                 />
               )
             }}
           />
           <Controller
-            control={control}
+            control={control as any}
             name={'date'}
+            rules={{
+              required: t('erp178')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <FormDatePicker
+                <AppControllerDatePicker
                   rightImage={SVGByteCode.calender2}
                   name="date"
-                  control={control}
+                  control={control as any}
                   label={t('erp126')}
                   // @ts-ignore
                   onBlur={onBlur}
@@ -203,155 +181,109 @@ export default memo(() => {
             }}
           />
           <Controller
-            control={control}
+            control={control as any}
             name={'grn_po'}
-            rules={{required: true}}
+            rules={{
+              required: t('erp179')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
                 <AppControllerInput
                   name="grn_po"
                   leftImage={SVGByteCode.search}
                   leftImageSize={verticalScale(20)}
-                  control={control}
+                  control={control as any}
                   placeholder={'Search here'}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
                   label={t('erp147')}
-                  error={errors['opening_bal']?.message as string}
+                  error={errors?.grn_po?.message as string}
                 />
               )
             }}
           />
           <Controller
-            control={control}
+            control={control as any}
             name={'add_const_center'}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <FormDropDown
+                <AppControllerDropDown
                   value={value}
-                  control={control}
+                  control={control as any}
                   label={t('erp146')}
                   name="add_const_center"
                   // @ts-ignore
                   onBlur={onBlur}
                   placeholder={t('erp120')}
                   onChange={onChange}
-                  valueField="value"
-                  labelField="title"
                   data={ConstCenters}
                 />
               )
             }}
           />
-          <View>
-            <LabelText label={t('erp11')} />
-            <View style={styles.stockBalanceContainer}>
-              <AppFromFrame isNormal>
-                {items.map((i, index) => (
-                  <ItemDataContainer
-                    value={i}
-                    onPressAddRemove={(state) => onPressAddRemoveItems(state, index)}
-                    key={`${index.toString()}`}
-                    onChange={(state) => onChangeItem(state, index)}
-                  />
-                ))}
-                <View style={styles.itemRowView}>
-                  <Text style={styles.labelTextStyle}>{t('erp161')}</Text>
-                  <Text style={[styles.labelTextStyle, styles.boldStyle]}>
-                    {subTotal.toFixed(2)}
-                  </Text>
-                </View>
-              </AppFromFrame>
-            </View>
-          </View>
-          <View>
-            <LabelText label={t('erp162')} />
-            <View style={styles.stockBalanceContainer}>
-              <AppFromFrame isNormal>
-                {accounts.map((i, index) => (
-                  <AccountDataContainer
-                    value={i}
-                    onPressAddRemove={(state) => onPressAddRemoveAccounts(state, index)}
-                    key={`${index.toString()}`}
-                    onChange={(state) => onChangeAccount(state, index)}
-                  />
-                ))}
-                <View style={styles.itemRowView}>
-                  <Text style={styles.labelTextStyle}>{t('erp163')}</Text>
-                  <Text style={[styles.labelTextStyle, styles.boldStyle]}>
-                    {grandTotal.toFixed(2)}
-                  </Text>
-                </View>
-              </AppFromFrame>
-            </View>
-          </View>
+          <ItemDataContainer
+            setValue={setValue}
+            name="items"
+            watch={watch}
+            control={control as any}
+            errors={errors}
+          />
+          <AccountDataContainer control={control as any} errors={errors} name="accounts" />
+
           <Controller
-            control={control}
+            control={control as any}
             name={'payment'}
+            rules={{
+              required: t('erp180')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
-                <FormDropDown
+                <AppControllerDropDown
                   value={value}
-                  control={control}
+                  control={control as any}
                   label={t('erp167')}
                   name="payment"
                   // @ts-ignore
                   onBlur={onBlur}
+                  error={errors?.payment?.message as string}
                   placeholder={t('erp168')}
                   onChange={onChange}
-                  valueField="value"
-                  labelField="title"
                   data={PAYMENTS}
                 />
               )
             }}
           />
           <Controller
-            control={control}
-            name={'invoice'}
+            control={control as any}
+            name={'invoice_no'}
+            rules={{
+              required: t('erp181')
+            }}
             render={({field: {onChange, onBlur, value}}) => {
               return (
                 <AppControllerInput
-                  name="invoice"
-                  control={control}
+                  name="invoice_no"
+                  control={control as any}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
                   label={t('erp165')}
-                  error={errors['invoice']?.message as string}
+                  error={errors.invoice_no?.message as string}
                 />
               )
             }}
           />
-          <Animated.View layout={LinearTransition} style={styles.fileContainer}>
-            <TouchableOpacity activeOpacity={0.5} onPress={() => setIsFilePicker(true)}>
-              <AppInput
-                pointerEvents="none"
-                label={t('erp166')}
-                containerStyle={styles.containerStyle}
-                placeholder={t('erp169')}
-                editable={false}
-                leftImage={SVGByteCode.upload}
-              />
-            </TouchableOpacity>
-            {files.map((i, index) => (
-              <RenderFileItem
-                key={i.name.toString() + index.toString()}
-                file={i}
-                onDelete={() => setFiles((state) => state.filter((f) => f.name !== i.name))}
-                isLast={index === files.length - 1}
-              />
-            ))}
-          </Animated.View>
+          <FilesContainer control={control as any} error={errors?.files?.message} />
+
           <Controller
-            control={control}
+            control={control as any}
             name={'remarks'}
             render={({field: {onChange, onBlur, value}}) => {
               return (
                 <AppControllerInput
                   name="remarks"
-                  control={control}
+                  control={control as any}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -361,55 +293,16 @@ export default memo(() => {
               )
             }}
           />
-          <AppCheckButton label={t('erp141')} checked={isBilled} onChange={setIsBilled} />
-          <AppButton onPress={() => {}} title={t('erp140')} />
+          <AppCheckButton label={t('erp141')} name="has_billed" control={control as any} />
+          <AppButton onPress={handleSubmit(onPressSubmit)} title={t('erp140')} />
         </KeyboardAwareScrollView>
       </View>
-      {isFilePicker && (
-        <FilePickerSheet
-          onFilePick={(file) => setFiles((state) => [file, ...state])}
-          onClose={() => setIsFilePicker(false)}
-        />
-      )}
     </AppContainer>
   )
 })
 const styles = StyleSheet.create({
-  boldStyle: {
-    fontFamily: Fonts[600]
-  },
-  containerStyle: {
-    backgroundColor: Colors.lightblue,
-    borderColor: Colors.blueShade006,
-    borderStyle: 'dashed'
-  },
   contentStyle: {
     padding: 20,
-    rowGap: verticalScale(15)
-  },
-  fileContainer: {
-    backgroundColor: Colors.white,
-    borderRadius: moderateScale(8),
-    flex: 1,
-    overflow: 'hidden'
-  },
-  itemRowView: {
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-    borderRadius: moderateScale(8),
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    margin: scale(10),
-    padding: scale(10)
-  },
-  labelTextStyle: {
-    color: Colors.blackShade14,
-    fontFamily: Fonts[400],
-    fontSize: moderateScale(14),
-    lineHeight: 16
-  },
-  stockBalanceContainer: {
     rowGap: verticalScale(15)
   }
 })

@@ -1,4 +1,5 @@
 import React, {memo} from 'react'
+import {type Control, type FieldValues, useController} from 'react-hook-form'
 import {Pressable, StyleSheet, Text, View} from 'react-native'
 import {SvgFromXml} from 'react-native-svg'
 
@@ -6,12 +7,18 @@ import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, Fonts} from '@/Theme'
 
-type AppCheckButtonProps = {
-  checked: boolean
-  onChange: (value: boolean) => void
+type AppControllerCheckButtonProps = {
   label: string
+  name: string
+  control?: Control<FieldValues>
 }
-export default memo(({checked, onChange, label}: AppCheckButtonProps) => {
+export default memo(({label, name, control}: AppControllerCheckButtonProps) => {
+  const {
+    field: {onChange, value: checked}
+  } = useController({
+    name,
+    control
+  })
   return (
     <Pressable onPress={() => onChange(!checked)} style={styles.container}>
       <View style={styles.checkBoxStyle}>

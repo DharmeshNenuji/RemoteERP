@@ -1,171 +1,148 @@
-import React, {memo, useCallback, useRef, useState} from 'react'
+import React, {memo, useCallback} from 'react'
+import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import {StyleSheet, View} from 'react-native'
 
-import {
-  AppButton,
-  AppContainer,
-  AppDatePicker,
-  AppDropDown,
-  DatePickerAnchorButton,
-  ErrorText,
-  LabelText
-} from '@/Components'
+import {AppButton, AppContainer, AppControllerDatePicker, AppControllerDropDown} from '@/Components'
 import AppHeader from '@/Components/AppHeader/AppHeader'
-import {InitialsAPICall, Screen, Utility} from '@/Helpers'
+import {InitialsAPICall, Screen} from '@/Helpers'
 import {scale, verticalScale} from '@/Helpers/Responsive'
 import {useNavigation} from '@/Hooks'
 import {Colors} from '@/Theme'
 
-const InitialErrors = {
-  site: '',
-  account: '',
-  fromDate: '',
-  toDate: ''
+type LedgerFormValues = {
+  site: string
+  account: string
+  fromDate: string
+  toDate: string
 }
+
 export default memo(() => {
+  const {
+    control,
+    formState: {errors},
+    handleSubmit
+  } = useForm<LedgerFormValues>({
+    defaultValues: {
+      account: '',
+      fromDate: '',
+      site: '',
+      toDate: ''
+    }
+  })
   const ConstCenters = InitialsAPICall.getSyncCostCentersDropDown()
   const Accounts = InitialsAPICall.getSyncAccountsDropDown()
   const {t} = useTranslation()
-  const [site, setSite] = useState('')
-  const [account, setAccount] = useState('')
-  const [fromDate, setFromDate] = useState('')
-  const [toDate, setToDate] = useState('')
-  const [isDatePicker, setIsDataPicker] = useState(false)
-  const isFromDate = useRef(false)
-  const [errors, setErrors] = useState(InitialErrors)
+
   const navigation = useNavigation()
 
-  const onPressOpenDatePicker = useCallback((isFrm: boolean) => {
-    isFromDate.current = isFrm
-    setIsDataPicker(true)
-  }, [])
-
-  const onDateChange = useCallback((date: string) => {
-    if (isFromDate.current) {
-      setErrors((state) => {
-        const clone = {...state}
-        clone['fromDate'] = ''
-        return clone
+  const onPressSearch = useCallback(
+    (data: LedgerFormValues) => {
+      navigation.navigate(Screen.LedgerDetailsScreen, {
+        acc_id: +data.account,
+        site_id: +data.site,
+        fromdate: data.fromDate,
+        todate: data.toDate
       })
-      setFromDate(date)
-    } else {
-      setErrors((state) => {
-        const clone = {...state}
-        clone['toDate'] = ''
-        return clone
-      })
-      setToDate(date)
-    }
-  }, [])
-
-  const onPressSearch = useCallback(() => {
-    const cloneErrors = {...InitialErrors}
-    let hasError = false
-
-    if (!site?.trim()) {
-      cloneErrors['site'] = t('erp122')
-      hasError = true
-    }
-    if (!account?.trim()) {
-      cloneErrors['account'] = t('erp123')
-      hasError = true
-    }
-    if (!fromDate) {
-      cloneErrors['fromDate'] = t('erp124')
-      hasError = true
-    }
-    if (!toDate) {
-      cloneErrors['toDate'] = t('erp125')
-      hasError = true
-    }
-
-    setErrors(cloneErrors)
-
-    if (hasError) {
-      return
-    }
-    navigation.navigate(Screen.LedgerDetailsScreen, {
-      acc_id: +account,
-      site_id: +site,
-      fromdate: Utility.formatDated(fromDate),
-      todate: Utility.formatDated(toDate)
-    })
-  }, [site, account, fromDate, toDate, navigation, t])
+    },
+    [navigation]
+  )
 
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
       <AppHeader backgroundColor={Colors.white} textColor={Colors.blackShade14} title={t('erp8')} />
       <View style={styles.container}>
-        <View>
-          <LabelText label={t('erp118')} />
-          <AppDropDown
-            data={ConstCenters}
-            value={site}
-            search
-            searchPlaceholder={t('erp105')}
-            onChange={({value}) => {
-              setErrors((state) => {
-                const clone = {...state}
-                clone['site'] = ''
-                return clone
-              })
-              setSite(value)
-            }}
-            placeholder={t('erp120')}
-            valueField={'value'}
-            labelField={'title'}
-          />
-          {errors.site && <ErrorText error={errors.site} />}
-        </View>
-
-        <View>
-          <LabelText label={t('erp119')} />
-          <AppDropDown
-            data={Accounts}
-            value={account}
-            search
-            searchPlaceholder={t('erp105')}
-            placeholder={t('erp121')}
-            onChange={({value}) => {
-              setErrors((state) => {
-                const clone = {...state}
-                clone['account'] = ''
-                return clone
-              })
-              setAccount(value)
-            }}
-            valueField={'value'}
-            labelField={'title'}
-          />
-          {errors.account && <ErrorText error={errors.account} />}
-        </View>
-
-        <DatePickerAnchorButton
-          onChangeDateText={setFromDate}
-          onPress={() => onPressOpenDatePicker(true)}
-          value={fromDate}
-          label={t('erp116')}
+        <Controller
+          control={control}
+          name={'site'}
+          rules={{required: t('erp122')}}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <AppControllerDropDown
+                name="site"
+                data={ConstCenters}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                search
+                searchPlaceholder={t('erp105')}
+                placeholder={t('erp120')}
+                control={control}
+                error={errors?.site?.message}
+                label={t('erp118')}
+              />
+            )
+          }}
         />
-        {errors.fromDate && <ErrorText error={errors.fromDate} />}
-
-        <DatePickerAnchorButton
-          onChangeDateText={setToDate}
-          onPress={() => onPressOpenDatePicker(false)}
-          value={toDate}
-          label={t('erp117')}
+        <Controller
+          control={control}
+          name={'account'}
+          rules={{required: t('erp123')}}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <AppControllerDropDown
+                name="account"
+                data={Accounts}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                search
+                searchPlaceholder={t('erp105')}
+                placeholder={t('erp121')}
+                control={control}
+                label={t('erp119')}
+                error={errors?.account?.message}
+              />
+            )
+          }}
         />
-        {errors.toDate && <ErrorText error={errors.toDate} />}
 
-        <AppButton style={styles.selfCenter} title={t('erp110')} onPress={onPressSearch} />
+        <Controller
+          control={control}
+          name={'fromDate'}
+          rules={{
+            required: t('erp124')
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <AppControllerDatePicker
+                label={t('erp116')}
+                name="fromDate"
+                control={control as any}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={errors?.fromDate?.message as string}
+              />
+            )
+          }}
+        />
+        <Controller
+          control={control}
+          name={'toDate'}
+          rules={{
+            required: t('erp125')
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <AppControllerDatePicker
+                label={t('erp117')}
+                name="toDate"
+                control={control as any}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={errors?.toDate?.message as string}
+              />
+            )
+          }}
+        />
 
-        {isDatePicker && (
-          <AppDatePicker
-            onChange={onDateChange}
-            onClose={() => setIsDataPicker(false)}
-            date={isFromDate.current ? fromDate : toDate}
-          />
-        )}
+        <AppButton
+          style={styles.selfCenter}
+          title={t('erp110')}
+          onPress={handleSubmit(onPressSearch)}
+        />
       </View>
     </AppContainer>
   )

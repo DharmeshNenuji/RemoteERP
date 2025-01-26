@@ -17,35 +17,41 @@ const BalanceTypeData = [
 const TaxTypeData = [
   {
     title: 'State Tax',
-    value: 'cr'
+    value: 'State Tax'
   },
   {
     title: 'Central Tax',
-    value: 'dr'
+    value: 'Central Tax'
   },
   {
     title: 'Integrated Tax',
-    value: 'dr'
+    value: 'Integrated Tax',
+    isTextRate: false
   },
   {
     title: 'TDS Payable',
-    value: 'dr'
+    value: 'TDS Payable',
+    isTextRate: true
   },
   {
     title: 'TDS Receivable',
-    value: 'dr'
+    value: 'TDS Receivable',
+    isTextRate: true
   },
   {
     title: 'TCS Payable',
-    value: 'dr'
+    value: 'TCS Payable',
+    isTextRate: true
   },
   {
     title: 'TCS Receivable',
-    value: 'dr'
+    value: 'TCS Receivable',
+    isTextRate: true
   },
   {
     title: 'Other Deductions',
-    value: 'dr'
+    value: 'Other Deductions',
+    isTextRate: true
   }
 ]
 
@@ -60,9 +66,15 @@ export default () => {
       TextInputProps & {
         label: string
         rules: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'>
-        options?: typeof BalanceTypeData
+        options?: typeof TaxTypeData
       }
     > = {
+      acc_grp: {
+        label: t('erp103'),
+        rules: {
+          required: t('erp171')
+        }
+      },
       name: {
         label: t('erp99'),
         rules: {
@@ -89,11 +101,7 @@ export default () => {
         keyboardType: 'decimal-pad',
         rules: {
           required: t('erp74'),
-          min: 0,
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid balance'
-          }
+          min: 0
         },
         returnKeyType: 'next'
       },
@@ -113,15 +121,18 @@ export default () => {
         options: TaxTypeData,
         returnKeyType: 'next'
       },
+      tds: {
+        label: t('erp174'),
+        keyboardType: 'decimal-pad',
+        rules: {
+          required: t('erp175')
+        }
+      },
       gstn: {
         label: t('erp89'),
         keyboardType: 'decimal-pad',
         rules: {
-          required: t('erp76'),
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid balance'
-          }
+          required: t('erp76')
         },
         returnKeyType: 'next'
       },
@@ -129,11 +140,7 @@ export default () => {
         label: t('erp90'),
         keyboardType: 'decimal-pad',
         rules: {
-          required: t('erp77'),
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid balance'
-          }
+          required: t('erp77')
         },
         returnKeyType: 'next'
       },
@@ -141,22 +148,14 @@ export default () => {
         label: t('erp91'),
         keyboardType: 'decimal-pad',
         rules: {
-          required: t('erp78'),
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid balance'
-          }
+          required: t('erp78')
         }
       },
       itax: {
         label: t('erp92'),
         keyboardType: 'decimal-pad',
         rules: {
-          required: t('erp79'),
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid balance'
-          }
+          required: t('erp79')
         }
       },
       pan: {
@@ -172,11 +171,7 @@ export default () => {
         label: t('erp94'),
         keyboardType: 'decimal-pad',
         rules: {
-          required: t('erp81'),
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid balance'
-          }
+          required: t('erp81')
         },
         returnKeyType: 'next'
       },
@@ -199,11 +194,7 @@ export default () => {
         label: t('erp97'),
         keyboardType: 'decimal-pad',
         rules: {
-          required: t('erp84'),
-          pattern: {
-            value: /^[0-9]*$/,
-            message: 'Please enter a valid Bank number'
-          }
+          required: t('erp84')
         },
         returnKeyType: 'next'
       },

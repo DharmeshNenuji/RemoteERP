@@ -45,16 +45,19 @@ export default class InitialsAPICall {
   static SyncFromLocal() {
     try {
       const accounts = MMKVStorage.getString('SyncAccounts')
+
       if (accounts) {
         this.SyncAccounts = JSON.parse(accounts)
       }
       const costCenters = MMKVStorage.getString('SyncConstCenter')
+
       if (costCenters) {
-        this.SyncAccounts = JSON.parse(costCenters)
+        this.SyncConstCenters = JSON.parse(costCenters)
       }
       const items = MMKVStorage.getString('SyncItems')
+
       if (items) {
-        this.SyncAccounts = JSON.parse(items)
+        this.SyncItems = JSON.parse(items)
       }
     } catch (_) {
       //empty3

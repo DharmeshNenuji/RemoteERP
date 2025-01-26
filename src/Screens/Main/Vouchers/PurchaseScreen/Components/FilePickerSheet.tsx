@@ -9,7 +9,13 @@ import {SvgFromXml} from 'react-native-svg'
 
 import {NativeModal} from '@/Components'
 import {Permission, showToast} from '@/Helpers'
-import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
+import {
+  moderateScale,
+  scale,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  verticalScale
+} from '@/Helpers/Responsive'
 import SVGByteCode from '@/Helpers/SVGByteCode'
 import {Colors, CommonStyle} from '@/Theme'
 
@@ -128,7 +134,18 @@ export default memo(({onClose, onFilePick}: FilePickerSheetProps) => {
   }, [onFilePick, onPermissionReject])
 
   return (
-    <NativeModal statusBarTranslucent isVisible style={CommonStyle.modalStyle}>
+    <NativeModal
+      statusBarTranslucent
+      isVisible
+      style={[
+        CommonStyle.modalStyle,
+        {
+          width: SCREEN_WIDTH,
+          height: SCREEN_HEIGHT,
+          backgroundColor: Colors.transparent
+        }
+      ]}
+    >
       <BottomSheet
         enablePanDownToClose
         onClose={onClose}

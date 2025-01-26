@@ -1,8 +1,11 @@
-import {useCallback, useState} from 'react'
+import React, {useCallback} from 'react'
+import type {Control, FieldValues} from 'react-hook-form'
+import {Controller, useFieldArray} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {StyleSheet} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 
-import {AppDatePicker, AppFromFrame, AppInput, DatePickerAnchorButton} from '@/Components'
+import {AppControllerDatePicker, AppControllerInput, AppFromFrame, LabelText} from '@/Components'
+import {verticalScale} from '@/Helpers/Responsive'
 import {Colors} from '@/Theme'
 
 export type StockBalancesType = {
@@ -11,64 +14,91 @@ export type StockBalancesType = {
 }
 
 type StockBalanceComponentProps = {
-  value: StockBalancesType
-  onChange: (value: StockBalancesType) => void
-  onPressAddRemove: (isAdd: boolean) => void
+  control: Control<FieldValues>
+  name: string
+  errors: any
 }
 
-export default ({value, onChange, onPressAddRemove}: StockBalanceComponentProps) => {
-  const [isDatePicker, setIsDatePicker] = useState(false)
+export default ({name, control, errors}: StockBalanceComponentProps) => {
   const {t} = useTranslation()
-  const onSelectData = useCallback(
-    (date: string) => {
-      onChange({
-        ...value,
-        closing_date: date
-      })
-    },
-    [onChange, value]
-  )
+  const {append, remove, fields} = useFieldArray({
+    control,
+    name,
+    rules: {
+      minLength: 1,
+      required: true
+    }
+  })
 
-  const onChangeText = useCallback(
-    (text: string) => {
-      onChange({
-        ...value,
-        value: text
-      })
+  const onPressAddRemove = useCallback(
+    (state: boolean, index: number) => {
+      if (fields.length < 2 && !state) {
+        return
+      }
+      if (state) {
+        // Add new field
+        append({closing_date: '', value: ''})
+      } else if (index !== undefined) {
+        // Remove specific field
+        remove(index)
+      }
     },
-    [onChange, value]
+    [append, fields.length, remove]
   )
 
   return (
-    <AppFromFrame onPressAddRemove={onPressAddRemove}>
-      <DatePickerAnchorButton
-        onChangeDateText={onSelectData}
-        value={value.closing_date}
-        label={t('erp108')}
-        style={styles.inputHalf}
-        onPress={() => setIsDatePicker(true)}
-      />
+    <View>
+      <LabelText label={t('erp107')} />
+      <View style={styles.stockBalanceContainer}>
+        {fields.map((field, index) => (
+          <AppFromFrame key={field.id} onPressAddRemove={(state) => onPressAddRemove(state, index)}>
+            <Controller
+              control={control}
+              name={`${name}.${index}.closing_date`}
+              rules={{required: t('erp172')}}
+              render={({field: {onChange, value}}) => (
+                <AppControllerDatePicker
+                  label={t('erp108')}
+                  name={`${name}.${index}.closing_date`}
+                  parentStyle={styles.inputHalf}
+                  onChangeText={onChange}
+                  value={value}
+                  control={control}
+                  error={errors?.[name]?.[index]?.closing_date?.message as string}
+                />
+              )}
+            />
 
-      <AppInput
-        label={t('erp109')}
-        value={value.value}
-        onChangeText={onChangeText}
-        parentStyle={styles.inputHalf} // Apply style for half width
-      />
-
-      {isDatePicker && (
-        <AppDatePicker
-          date={value.closing_date}
-          onChange={onSelectData}
-          onClose={() => setIsDatePicker(false)}
-        />
-      )}
-    </AppFromFrame>
+            <Controller
+              control={control}
+              name={`${name}.${index}.value`}
+              rules={{required: t('erp173')}}
+              render={({field: {onChange, value, onBlur}}) => (
+                <AppControllerInput
+                  label={t('erp109')}
+                  name={`${name}.${index}.value`}
+                  onBlur={onBlur}
+                  control={control}
+                  onChangeText={onChange}
+                  value={value}
+                  error={errors?.[name]?.[index]?.value?.message as string}
+                  parentStyle={styles.inputHalf}
+                />
+              )}
+            />
+          </AppFromFrame>
+        ))}
+      </View>
+    </View>
   )
 }
+
 const styles = StyleSheet.create({
   inputHalf: {
     backgroundColor: Colors.white,
     width: '48%'
+  },
+  stockBalanceContainer: {
+    rowGap: verticalScale(15)
   }
 })

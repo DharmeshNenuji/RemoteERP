@@ -149,7 +149,6 @@
     "erp145": "Party",
     "erp146": "Additional Cost Center",
     "erp147": "GRN or PO No.",
-    "erp148": "Unit",
     "erp149": "Quantity",
     "erp150": "Rate",
     "erp151": "Amount",
@@ -161,7 +160,6 @@
     "erp157": "Unit",
     "erp158": "Quantity",
     "erp159": "Rate",
-    "erp160": "Amount",
     "erp161": "Sub Total",
     "erp162": "Accounts(Taxes, Expenses, etc...)",
     "erp163": "Grand Total",
@@ -171,6 +169,19 @@
     "erp167": "Payment By",
     "erp168": "Select Payment By",
     "erp169": "Choose File",
-    "erp170": "Account"
+    "erp170": "Account",
+    "erp171": "Please select account group",
+    "erp172": "Closing date is required",
+    "erp173": "Value select account group",
+    "erp174": "Tax Rate (%)",
+    "erp175": "Cost Center is required",
+    "erp176": "Party is required",
+    "erp177": "Purchase Account is required",
+    "erp178": "Date is required",
+    "erp179": "GRN is required",
+    "erp180": "Payment By is required",
+    "erp181": "Invoice No is required",
+    "erp182": "Select Document",
+    "erp183": "Remarks is required"
   }
 }
