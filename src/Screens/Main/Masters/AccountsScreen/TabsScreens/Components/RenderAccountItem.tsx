@@ -23,7 +23,7 @@ export default memo(({item}: ItemType<MasterAccountItemType>) => {
   const onPressEdit = useCallback(() => {
     setVisible(false)
     navigate(Screen.EditAccountScreen, {
-      acc_id: item.acc_id
+      item
     })
   }, [item, navigate])
 

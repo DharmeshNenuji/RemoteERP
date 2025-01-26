@@ -25,7 +25,13 @@ type RootStackParamList = {
     has_inv: number
   }
   EditAccountScreen: {
-    acc_id: number
+    item: {
+      acc_id: number
+      acc_grp: string
+      acc_name: string
+      opening_bal: string
+      opening_date: string
+    }
   }
 }
 type ItemType<T> = {

@@ -11,7 +11,7 @@ import AddAccountScreen from '../AccountsScreen/TabsScreens/AddAccountScreen'
 
 export default () => {
   const {t} = useTranslation()
-  const {acc_id} = useRoute<Screen.EditAccountScreen>().params
+  const {item} = useRoute<Screen.EditAccountScreen>().params
   return (
     <AppContainer barStyle="dark-content" statusbarColor={Colors.white}>
       <AppHeader
@@ -19,7 +19,7 @@ export default () => {
         textColor={Colors.blackShade14}
         title={t('erp133')}
       />
-      <AddAccountScreen id={acc_id} />
+      <AddAccountScreen item={item} />
     </AppContainer>
   )
 }

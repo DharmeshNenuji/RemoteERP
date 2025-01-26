@@ -1,7 +1,7 @@
 import React, {memo, useMemo} from 'react'
 import type {GestureResponderEvent, StyleProp, ViewStyle} from 'react-native'
 import {ActivityIndicator, StyleSheet, Text} from 'react-native'
-import {TouchableOpacity} from 'react-native-gesture-handler'
+import {Pressable} from 'react-native-gesture-handler'
 
 import {moderateScale, scale, verticalScale} from '@/Helpers/Responsive'
 import {Colors, Fonts} from '@/Theme'
@@ -46,19 +46,18 @@ export default memo(
             color
           }
     }, [color, isFilled])
-
     return (
-      <TouchableOpacity
+      <Pressable
         disabled={disabled}
         style={[styles.button, buttonStyle, style]}
-        onPress={onPress}
+        onPress={onPress as any}
       >
         {isLoading ? (
           <ActivityIndicator color={isFilled ? Colors.white : color} />
         ) : (
           <Text style={[styles.buttonText, buttonTextStyle]}>{title}</Text>
         )}
-      </TouchableOpacity>
+      </Pressable>
     )
   }
 )
@@ -68,7 +67,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: moderateScale(10),
     justifyContent: 'center',
-    opacity: 0.9,
     paddingHorizontal: scale(20),
     paddingVertical: verticalScale(12)
   },

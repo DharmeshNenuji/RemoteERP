@@ -42,28 +42,27 @@ export default ({onClose, id}: AccountDeleteModalProps) => {
       onBackdropPress={() => setIsVisible(false)}
       isVisible={isVisible}
       onModalHide={onClose}
+      style={styles.container}
     >
-      <View style={styles.container}>
-        <SvgFromXml xml={SVGByteCode.deleteBigIcon} />
-        <Text style={styles.titleTextStyle}>{t('erp112')}</Text>
-        <Text style={styles.modalTextStyle}>Are you sure you want to delete this account?</Text>
-        <View style={styles.buttonRow}>
-          <AppButton
-            color={Colors.blackShade14}
-            isFilled={false}
-            disabled={isLoading}
-            onPress={() => setIsVisible(false)}
-            style={CommonStyle.flex}
-            title="Cancel"
-          />
-          <AppButton
-            disabled={isLoading}
-            isLoading={isLoading}
-            onPress={onPressDelete}
-            style={CommonStyle.flex}
-            title="Delete"
-          />
-        </View>
+      <SvgFromXml xml={SVGByteCode.deleteBigIcon} />
+      <Text style={styles.titleTextStyle}>{t('erp112')}</Text>
+      <Text style={styles.modalTextStyle}>{t('erp184')}</Text>
+      <View style={styles.buttonRow}>
+        <AppButton
+          color={Colors.blackShade14}
+          isFilled={false}
+          disabled={isLoading}
+          onPress={() => setIsVisible(false)}
+          style={CommonStyle.flex}
+          title={t('erp185')}
+        />
+        <AppButton
+          disabled={isLoading}
+          isLoading={isLoading}
+          onPress={onPressDelete}
+          style={CommonStyle.flex}
+          title={t('erp186')}
+        />
       </View>
     </NativeModal>
   )

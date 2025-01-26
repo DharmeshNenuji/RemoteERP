@@ -11,7 +11,7 @@ import {
   AppControllerInput
 } from '@/Components'
 import Loader from '@/Components/AppLoader/Loader'
-import {showToast} from '@/Helpers'
+import {showToast, Utility} from '@/Helpers'
 import {verticalScale} from '@/Helpers/Responsive'
 import {APICall, EndPoints} from '@/Network'
 import {CommonStyle} from '@/Theme'
@@ -40,7 +40,18 @@ type FormValues = {
   stock_balances: Array<{closing_date: string; value: string}>
   tds: string
 }
-export default memo(() => {
+
+type AddAccountScreenProps = {
+  item: {
+    acc_id: number
+    acc_grp: string
+    acc_name: string
+    opening_bal: string
+    opening_date: string
+  }
+}
+
+export default memo(({item}: AddAccountScreenProps) => {
   const {
     control,
     handleSubmit,
@@ -48,8 +59,8 @@ export default memo(() => {
     reset
   } = useForm<FormValues>({
     defaultValues: {
-      opening_date: '',
-      opening_bal: '',
+      opening_date: item?.opening_date ?? '',
+      opening_bal: item?.opening_bal ?? '',
       opening_bal_type: 'cr',
       gstn: '',
       pan: '',
@@ -62,9 +73,11 @@ export default memo(() => {
       ctax: '',
       itax: '',
       description: '',
-      name: '',
+      name: item?.acc_name ?? '',
       stock_balances: [{closing_date: '', value: ''}],
-      tds: ''
+      tds: '',
+      acc_grp: item?.acc_name ? Utility.snakeCase(item?.acc_grp) : '',
+      tax_type: ''
     }
   })
 
@@ -164,7 +177,11 @@ export default memo(() => {
       APICall('post', payload, EndPoints.addEditAccount)
         .then((resp) => {
           if (resp?.status === 200) {
-            showToast('Account added successfully', 'success')
+            if (item) {
+              showToast('Account updated successfully', 'success')
+            } else {
+              showToast('Account added successfully', 'success')
+            }
             reset()
           }
           Loader.isLoading(false)
@@ -174,7 +191,7 @@ export default memo(() => {
           Loader.isLoading(false)
         })
     },
-    [FIELDS, reset]
+    [FIELDS, item, reset]
   )
 
   const handleFocusNext = (nextField: string) => {

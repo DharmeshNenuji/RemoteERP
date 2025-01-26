@@ -182,6 +182,9 @@
     "erp180": "Payment By is required",
     "erp181": "Invoice No is required",
     "erp182": "Select Document",
-    "erp183": "Remarks is required"
+    "erp183": "Remarks is required",
+    "erp184": "Are you sure you want to delete this account?",
+    "erp185": "Cancel",
+    "erp186": "Delete"
   }
 }
